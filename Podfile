@@ -4,6 +4,7 @@
 # use_frameworks!
 
 target 'Venue' do
-pod “Masonry”
+pod "Masonry"
+pod "AFNetworking"
 end
 
