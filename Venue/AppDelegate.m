@@ -19,6 +19,19 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    if(true)
+    {
+        [UIView transitionWithView:self.window
+                          duration:.25
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+            [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[AXCoursesViewController alloc] init]]];
+        } completion:nil];
+    }
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

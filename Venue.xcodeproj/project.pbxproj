@@ -11,6 +11,7 @@
 		0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96B2571C377B8B000A78FB /* AppDelegate.m */; };
 		0C96B25A1C377B8B000A78FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B2591C377B8B000A78FB /* Assets.xcassets */; };
 		0C96B25D1C377B8C000A78FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */; };
+		0CCEDE011C3B4838009F8C4D /* AXCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */; };
 		D266B5D7446DE4C01F819171 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 682280CADD0598C0549A0ED1 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +23,8 @@
 		0C96B2591C377B8B000A78FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C96B25C1C377B8C000A78FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C96B25E1C377B8C000A78FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CCEDDFF1C3B4838009F8C4D /* AXCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCoursesViewController.h; sourceTree = "<group>"; };
+		0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCoursesViewController.m; sourceTree = "<group>"; };
 		511075A7347B15DB74DA1CC4 /* Pods-Venue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.release.xcconfig"; sourceTree = "<group>"; };
 		59B43D7024979AEA6410CC7E /* Pods-Venue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.debug.xcconfig"; sourceTree = "<group>"; };
 		682280CADD0598C0549A0ED1 /* libPods-Venue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Venue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +65,7 @@
 			children = (
 				0C96B2561C377B8B000A78FB /* AppDelegate.h */,
 				0C96B2571C377B8B000A78FB /* AppDelegate.m */,
+				0CCEDE021C3B4874009F8C4D /* Courses and Events */,
 				0C96B2591C377B8B000A78FB /* Assets.xcassets */,
 				0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */,
 				0C96B25E1C377B8C000A78FB /* Info.plist */,
@@ -76,6 +80,15 @@
 				0C96B2541C377B8B000A78FB /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0CCEDE021C3B4874009F8C4D /* Courses and Events */ = {
+			isa = PBXGroup;
+			children = (
+				0CCEDDFF1C3B4838009F8C4D /* AXCoursesViewController.h */,
+				0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */,
+			);
+			name = "Courses and Events";
 			sourceTree = "<group>";
 		};
 		6B99269703627AEB211CB9DA /* Frameworks */ = {
@@ -217,6 +230,7 @@
 			files = (
 				0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,
+				0CCEDE011C3B4838009F8C4D /* AXCoursesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
