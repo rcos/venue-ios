@@ -10,7 +10,8 @@
 
 @interface AXCoursesViewController ()
 @property UITableView* tableview;
-@property UIToolbar* modeToolBar;
+@property AXContentSelectionToolbar* modeToolBar;
+@property AXContentMode contentMode;
 @end
 
 @implementation AXCoursesViewController
@@ -21,12 +22,13 @@
     self = [super init];
     if(self)
     {
+        self.title = @"Venue_x";
+        
         tableview = [[UITableView alloc] init];
         tableview.delegate = self;
         tableview.dataSource = self;
         
-        modeToolBar = [[UIToolbar alloc] init];
-        modeToolBar.delegate = self;
+        modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
     }
     return self;
 }
@@ -38,13 +40,17 @@
     [self.view addSubview:modeToolBar];
     [self.view addSubview:tableview];
 
-//    [modeToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.view.mas_top);
-//        make.right.equalTo(self.view.mas_right);
-//        make.left.equalTo(self.view.mas_left);
-//    }];
+    [modeToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top);
+        make.right.equalTo(self.view.mas_right);
+        make.left.equalTo(self.view.mas_left);
+        make.height.equalTo(@44);
+    }];
     [tableview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.top.equalTo(modeToolBar.mas_bottom);
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
     }];
 }
 
@@ -68,6 +74,13 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [[UITableViewCell alloc] init];
+}
+
+#pragma mark - AXContentSelectionToolbarDelegate
+
+-(void)contentModeDidChange:(AXContentMode)mode
+{
+    
 }
 
 @end

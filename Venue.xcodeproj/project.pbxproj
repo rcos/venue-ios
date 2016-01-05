@@ -14,6 +14,8 @@
 		0CCEDE011C3B4838009F8C4D /* AXCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */; };
 		0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE041C3C44E8009F8C4D /* AXExec.m */; };
 		0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */; };
+		0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */; };
+		0CCEDE121C3C6929009F8C4D /* UIColor+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */; };
 		D266B5D7446DE4C01F819171 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 682280CADD0598C0549A0ED1 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +33,11 @@
 		0CCEDE041C3C44E8009F8C4D /* AXExec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXExec.m; sourceTree = "<group>"; };
 		0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAPI.h; sourceTree = "<group>"; };
 		0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAPI.m; sourceTree = "<group>"; };
+		0CCEDE0D1C3C6771009F8C4D /* AXContentSelectionToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXContentSelectionToolbar.h; sourceTree = "<group>"; };
+		0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXContentSelectionToolbar.m; sourceTree = "<group>"; };
+		0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Venue.h"; sourceTree = "<group>"; };
+		0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Venue.m"; sourceTree = "<group>"; };
+		0CCEDE141C3C6BF1009F8C4D /* Venue-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Venue-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		511075A7347B15DB74DA1CC4 /* Pods-Venue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.release.xcconfig"; sourceTree = "<group>"; };
 		59B43D7024979AEA6410CC7E /* Pods-Venue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.debug.xcconfig"; sourceTree = "<group>"; };
 		682280CADD0598C0549A0ED1 /* libPods-Venue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Venue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +83,7 @@
 				0C96B2591C377B8B000A78FB /* Assets.xcassets */,
 				0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */,
 				0C96B25E1C377B8C000A78FB /* Info.plist */,
+				0CCEDE141C3C6BF1009F8C4D /* Venue-Prefix.pch */,
 				0C96B2531C377B8B000A78FB /* Supporting Files */,
 			);
 			path = Venue;
@@ -92,6 +100,8 @@
 		0CCEDE021C3B4874009F8C4D /* Courses and Events */ = {
 			isa = PBXGroup;
 			children = (
+				0CCEDE0D1C3C6771009F8C4D /* AXContentSelectionToolbar.h */,
+				0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */,
 				0CCEDDFF1C3B4838009F8C4D /* AXCoursesViewController.h */,
 				0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */,
 			);
@@ -105,6 +115,8 @@
 				0CCEDE041C3C44E8009F8C4D /* AXExec.m */,
 				0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */,
 				0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */,
+				0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */,
+				0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -249,7 +261,9 @@
 				0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */,
 				0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
+				0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,
+				0CCEDE121C3C6929009F8C4D /* UIColor+Venue.m in Sources */,
 				0CCEDE011C3B4838009F8C4D /* AXCoursesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +369,7 @@
 			baseConfigurationReference = 59B43D7024979AEA6410CC7E /* Pods-Venue.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;
@@ -367,6 +382,7 @@
 			baseConfigurationReference = 511075A7347B15DB74DA1CC4 /* Pods-Venue.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;

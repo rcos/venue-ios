@@ -30,6 +30,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor venueRedColor]];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     
     if(true)
     {
