@@ -7,6 +7,7 @@
 //
 
 #import "AXTableViewCell.h"
+#import "AXContentSelectionToolbar.h"
 #import "Masonry.h"
 
 @interface AXCourseTableViewCell : AXTableViewCell

@@ -10,8 +10,8 @@
 #import "Masonry.h"
 
 typedef NS_ENUM(NSInteger, AXContentMode){
-    AXContentModeCourses,
     AXContentModeEvents,
+    AXContentModeCourses,
 };
 
 @protocol AXContentSelectionToolbarDelegate <NSObject>

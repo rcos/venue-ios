@@ -30,6 +30,8 @@
         self.tableview.dataSource = self;
         
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
+        
+        contentMode = AXContentModeEvents;
     }
     return self;
 }
@@ -81,7 +83,8 @@
         cell = [[AXCourseTableViewCell alloc] init];
     }
     
-    NSDictionary* object;
+    NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
+    [object setObject:@(contentMode) forKey:@"contentMode"];
     
     [cell configureWithDictionary:object];
     

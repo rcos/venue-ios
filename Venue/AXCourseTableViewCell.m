@@ -101,7 +101,7 @@
 
 -(void)configureWithDictionary:(NSDictionary*)dict
 {
-    
+    [eventsLabel setHidden:([dict objectForKey:@"contentMode"]==AXContentModeEvents)];
 }
 
 @end

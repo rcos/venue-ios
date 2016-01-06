@@ -26,6 +26,7 @@
         self.delegate = delegate;
         
         segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Events", @"Courses"]];
+        segmentedControl.selectedSegmentIndex = AXContentModeEvents;
         [segmentedControl setTintColor:[UIColor venueRedColor]];
         [segmentedControl addTarget:self action:@selector(controlValueDidChange:) forControlEvents:UIControlEventValueChanged];
         
