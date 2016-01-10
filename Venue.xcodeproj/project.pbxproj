@@ -43,7 +43,7 @@
 		0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXContentSelectionToolbar.m; sourceTree = "<group>"; };
 		0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Venue.h"; sourceTree = "<group>"; };
 		0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Venue.m"; sourceTree = "<group>"; };
-		0CCEDE141C3C6BF1009F8C4D /* Venue-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Venue-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		0CCEDE141C3C6BF1009F8C4D /* Venue-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Venue-Prefix.pch"; sourceTree = "<group>"; };
 		0CCEDE171C3D8C80009F8C4D /* AXTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXTableViewCell.h; sourceTree = "<group>"; };
 		0CCEDE181C3D8C81009F8C4D /* AXTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXTableViewCell.m; sourceTree = "<group>"; };
 		0CCEDE1A1C3D9F08009F8C4D /* AXCourseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCourseTableViewCell.h; sourceTree = "<group>"; };
@@ -76,10 +76,10 @@
 		0C96B2471C377B8B000A78FB = {
 			isa = PBXGroup;
 			children = (
-				0C96B2521C377B8B000A78FB /* Venue */,
-				0C96B2511C377B8B000A78FB /* Products */,
-				DFDC71E64328308EEAF48F07 /* Pods */,
 				6B99269703627AEB211CB9DA /* Frameworks */,
+				DFDC71E64328308EEAF48F07 /* Pods */,
+				0C96B2511C377B8B000A78FB /* Products */,
+				0C96B2521C377B8B000A78FB /* Venue */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,18 +94,18 @@
 		0C96B2521C377B8B000A78FB /* Venue */ = {
 			isa = PBXGroup;
 			children = (
+				0CCEDE161C3D8C66009F8C4D /* Cells */,
+				0CCEDE211C417F76009F8C4D /* Course */,
+				0CCEDE061C3C44EE009F8C4D /* Managers */,
+				0CCEDE021C3B4874009F8C4D /* Overview */,
+				0C96B2531C377B8B000A78FB /* Supporting Files */,
+				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
 				0C96B2561C377B8B000A78FB /* AppDelegate.h */,
 				0C96B2571C377B8B000A78FB /* AppDelegate.m */,
-				0CCEDE061C3C44EE009F8C4D /* Managers */,
-				0CCEDE211C417F76009F8C4D /* Course */,
-				0CCEDE021C3B4874009F8C4D /* Overview */,
-				0CCEDE161C3D8C66009F8C4D /* Cells */,
-				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
 				0C96B2591C377B8B000A78FB /* Assets.xcassets */,
-				0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */,
 				0C96B25E1C377B8C000A78FB /* Info.plist */,
+				0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */,
 				0CCEDE141C3C6BF1009F8C4D /* Venue-Prefix.pch */,
-				0C96B2531C377B8B000A78FB /* Supporting Files */,
 			);
 			path = Venue;
 			sourceTree = "<group>";
@@ -115,7 +115,7 @@
 			children = (
 				0C96B2541C377B8B000A78FB /* main.m */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		0CCEDE021C3B4874009F8C4D /* Overview */ = {
@@ -126,22 +126,22 @@
 				0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */,
 				0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */,
 			);
-			name = Overview;
+			path = Overview;
 			sourceTree = "<group>";
 		};
 		0CCEDE061C3C44EE009F8C4D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				0CCEDE031C3C44E8009F8C4D /* AXExec.h */,
-				0CCEDE041C3C44E8009F8C4D /* AXExec.m */,
 				0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */,
 				0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */,
+				0CCEDE031C3C44E8009F8C4D /* AXExec.h */,
+				0CCEDE041C3C44E8009F8C4D /* AXExec.m */,
 				0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */,
 				0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */,
 				0CCEDE1E1C3DB7FC009F8C4D /* UIFont+Venue.h */,
 				0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */,
 			);
-			name = Managers;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		0CCEDE161C3D8C66009F8C4D /* Cells */ = {
@@ -152,18 +152,18 @@
 				0CFBCA851C42CADB00303C89 /* AXEventTableViewCell.h */,
 				0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */,
 			);
-			name = Cells;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		0CCEDE1D1C3D9F17009F8C4D /* Templates */ = {
 			isa = PBXGroup;
 			children = (
-				0CCEDE171C3D8C80009F8C4D /* AXTableViewCell.h */,
-				0CCEDE181C3D8C81009F8C4D /* AXTableViewCell.m */,
 				0CCEDE251C41869D009F8C4D /* AXDetailViewController.h */,
 				0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */,
+				0CCEDE171C3D8C80009F8C4D /* AXTableViewCell.h */,
+				0CCEDE181C3D8C81009F8C4D /* AXTableViewCell.m */,
 			);
-			name = Templates;
+			path = Templates;
 			sourceTree = "<group>";
 		};
 		0CCEDE211C417F76009F8C4D /* Course */ = {
@@ -172,7 +172,7 @@
 				0CCEDE221C417FFA009F8C4D /* AXCourseViewController.h */,
 				0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */,
 			);
-			name = Course;
+			path = Course;
 			sourceTree = "<group>";
 		};
 		6B99269703627AEB211CB9DA /* Frameworks */ = {
@@ -337,6 +337,7 @@
 				0C96B25C1C377B8C000A78FB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
