@@ -6,16 +6,17 @@
 //  Copyright © 2016 JimBoulter. All rights reserved.
 //
 
-#import "AXCoursesViewController.h"
+#import "AXOverviewViewController.h"
 #import "AXCourseTableViewCell.h"
+#import "AXCourseViewController.h"
 
-@interface AXCoursesViewController ()
+@interface AXOverviewViewController ()
 @property UITableView* tableview;
 @property AXContentSelectionToolbar* modeToolBar;
 @property AXContentMode contentMode;
 @end
 
-@implementation AXCoursesViewController
+@implementation AXOverviewViewController
 @synthesize modeToolBar, contentMode;
 
 -(instancetype)init
@@ -23,8 +24,6 @@
     self = [super init];
     if(self)
     {
-        self.title = @"Venue_x";
-        
         self.tableview = [[UITableView alloc] init];
         self.tableview.delegate = self;
         self.tableview.dataSource = self;
@@ -57,7 +56,20 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.title = @"Venue_x";
+}
+
 #pragma mark - UITableView
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.title = @"";
+    [self.navigationController pushViewController:[[AXCourseViewController alloc] init] animated:YES];
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

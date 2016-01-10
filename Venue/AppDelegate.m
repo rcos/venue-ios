@@ -32,6 +32,8 @@
     [[UINavigationBar appearance] setTranslucent:NO];
     [[UINavigationBar appearance] setBarTintColor:[UIColor venueRedColor]];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
     
     if(true)
     {
@@ -39,7 +41,7 @@
                           duration:.25
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-            [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[AXCoursesViewController alloc] init]]];
+            [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]]];
         } completion:nil];
     }
     

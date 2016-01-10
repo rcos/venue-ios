@@ -11,6 +11,6 @@
 #import "Masonry.h"
 #import "AXContentSelectionToolbar.h"
 
-@interface AXCoursesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXContentSelectionToolbarDelegate>
+@interface AXOverviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXContentSelectionToolbarDelegate>
 
 @end

@@ -11,7 +11,7 @@
 		0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96B2571C377B8B000A78FB /* AppDelegate.m */; };
 		0C96B25A1C377B8B000A78FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B2591C377B8B000A78FB /* Assets.xcassets */; };
 		0C96B25D1C377B8C000A78FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */; };
-		0CCEDE011C3B4838009F8C4D /* AXCoursesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */; };
+		0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */; };
 		0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE041C3C44E8009F8C4D /* AXExec.m */; };
 		0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */; };
 		0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */; };
@@ -19,6 +19,9 @@
 		0CCEDE191C3D8C81009F8C4D /* AXTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE181C3D8C81009F8C4D /* AXTableViewCell.m */; };
 		0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */; };
 		0CCEDE201C3DB7FC009F8C4D /* UIFont+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */; };
+		0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */; };
+		0CCEDE271C41869D009F8C4D /* AXDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */; };
+		0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */; };
 		D266B5D7446DE4C01F819171 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 682280CADD0598C0549A0ED1 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
 
@@ -30,8 +33,8 @@
 		0C96B2591C377B8B000A78FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C96B25C1C377B8C000A78FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C96B25E1C377B8C000A78FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0CCEDDFF1C3B4838009F8C4D /* AXCoursesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCoursesViewController.h; sourceTree = "<group>"; };
-		0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCoursesViewController.m; sourceTree = "<group>"; };
+		0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXOverviewViewController.h; sourceTree = "<group>"; };
+		0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXOverviewViewController.m; sourceTree = "<group>"; };
 		0CCEDE031C3C44E8009F8C4D /* AXExec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXExec.h; sourceTree = "<group>"; };
 		0CCEDE041C3C44E8009F8C4D /* AXExec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXExec.m; sourceTree = "<group>"; };
 		0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAPI.h; sourceTree = "<group>"; };
@@ -47,6 +50,12 @@
 		0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCourseTableViewCell.m; sourceTree = "<group>"; };
 		0CCEDE1E1C3DB7FC009F8C4D /* UIFont+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Venue.h"; sourceTree = "<group>"; };
 		0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Venue.m"; sourceTree = "<group>"; };
+		0CCEDE221C417FFA009F8C4D /* AXCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXCourseViewController.h; sourceTree = "<group>"; };
+		0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXCourseViewController.m; sourceTree = "<group>"; };
+		0CCEDE251C41869D009F8C4D /* AXDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDetailViewController.h; sourceTree = "<group>"; };
+		0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDetailViewController.m; sourceTree = "<group>"; };
+		0CFBCA851C42CADB00303C89 /* AXEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXEventTableViewCell.h; sourceTree = "<group>"; };
+		0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEventTableViewCell.m; sourceTree = "<group>"; };
 		511075A7347B15DB74DA1CC4 /* Pods-Venue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.release.xcconfig"; sourceTree = "<group>"; };
 		59B43D7024979AEA6410CC7E /* Pods-Venue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.debug.xcconfig"; sourceTree = "<group>"; };
 		682280CADD0598C0549A0ED1 /* libPods-Venue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Venue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,7 +97,8 @@
 				0C96B2561C377B8B000A78FB /* AppDelegate.h */,
 				0C96B2571C377B8B000A78FB /* AppDelegate.m */,
 				0CCEDE061C3C44EE009F8C4D /* Managers */,
-				0CCEDE021C3B4874009F8C4D /* Courses and Events */,
+				0CCEDE211C417F76009F8C4D /* Course */,
+				0CCEDE021C3B4874009F8C4D /* Overview */,
 				0CCEDE161C3D8C66009F8C4D /* Cells */,
 				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
 				0C96B2591C377B8B000A78FB /* Assets.xcassets */,
@@ -108,15 +118,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0CCEDE021C3B4874009F8C4D /* Courses and Events */ = {
+		0CCEDE021C3B4874009F8C4D /* Overview */ = {
 			isa = PBXGroup;
 			children = (
 				0CCEDE0D1C3C6771009F8C4D /* AXContentSelectionToolbar.h */,
 				0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */,
-				0CCEDDFF1C3B4838009F8C4D /* AXCoursesViewController.h */,
-				0CCEDE001C3B4838009F8C4D /* AXCoursesViewController.m */,
+				0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */,
+				0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */,
 			);
-			name = "Courses and Events";
+			name = Overview;
 			sourceTree = "<group>";
 		};
 		0CCEDE061C3C44EE009F8C4D /* Managers */ = {
@@ -139,6 +149,8 @@
 			children = (
 				0CCEDE1A1C3D9F08009F8C4D /* AXCourseTableViewCell.h */,
 				0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */,
+				0CFBCA851C42CADB00303C89 /* AXEventTableViewCell.h */,
+				0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -148,8 +160,19 @@
 			children = (
 				0CCEDE171C3D8C80009F8C4D /* AXTableViewCell.h */,
 				0CCEDE181C3D8C81009F8C4D /* AXTableViewCell.m */,
+				0CCEDE251C41869D009F8C4D /* AXDetailViewController.h */,
+				0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */,
 			);
 			name = Templates;
+			sourceTree = "<group>";
+		};
+		0CCEDE211C417F76009F8C4D /* Course */ = {
+			isa = PBXGroup;
+			children = (
+				0CCEDE221C417FFA009F8C4D /* AXCourseViewController.h */,
+				0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */,
+			);
+			name = Course;
 			sourceTree = "<group>";
 		};
 		6B99269703627AEB211CB9DA /* Frameworks */ = {
@@ -295,10 +318,13 @@
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
 				0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */,
+				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,
+				0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,
 				0CCEDE121C3C6929009F8C4D /* UIColor+Venue.m in Sources */,
 				0CCEDE201C3DB7FC009F8C4D /* UIFont+Venue.m in Sources */,
-				0CCEDE011C3B4838009F8C4D /* AXCoursesViewController.m in Sources */,
+				0CCEDE271C41869D009F8C4D /* AXDetailViewController.m in Sources */,
+				0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

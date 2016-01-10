@@ -28,6 +28,8 @@
     {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         sideImageView = [[UIImageView alloc] init];
         sideImageView.backgroundColor = [UIColor blackColor];
         [self.view addSubview:sideImageView];

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AXCoursesViewController.h"
+#import "AXOverviewViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
