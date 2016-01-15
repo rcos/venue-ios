@@ -53,10 +53,10 @@
         [self.view addSubview:classLabel];
         
         eventsLabel = [[UILabel alloc] init];
-        eventsLabel.font = [UIFont systemFontOfSize:14];
+        eventsLabel.font = [UIFont systemFontOfSize:10];
         eventsLabel.textColor = [UIColor whiteColor];
         eventsLabel.backgroundColor = [UIColor venueRedColor];
-        eventsLabel.text = @"2 events";
+        eventsLabel.text = @"2 EVENTS";
         eventsLabel.textAlignment = NSTextAlignmentCenter;
         eventsLabel.layer.cornerRadius = 8;
         eventsLabel.clipsToBounds = YES;
@@ -96,6 +96,7 @@
             make.left.equalTo(classLabel.mas_left);
             make.right.equalTo(classLabel.mas_right);
             make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
+            make.height.equalTo(@16);
         }];
     }
     return self;
