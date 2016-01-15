@@ -32,6 +32,7 @@
 +(void)loginWithUsername:(NSString*)username password:(NSString*)password block:(void(^)(BOOL))completion
 {
     //Shoot our credentials to the server and acquire a new session token
+    completion(1);
 }
 
 #pragma mark - Session Manager

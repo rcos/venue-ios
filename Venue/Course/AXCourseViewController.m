@@ -7,7 +7,6 @@
 //
 
 #import "AXCourseViewController.h"
-
 @interface AXCourseViewController ()
 
 @end
@@ -57,14 +56,17 @@
     return 5;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell* cell =  [tableView_ dequeueReusableCellWithIdentifier:@""];
+    UITableViewCell* cell =  [tableView dequeueReusableCellWithIdentifier:[AXEventTableViewCell reuseIdentifier]];
     
-    cell.textLabel.text = @"Override cellForRowAtIndexPath";
+    if(!cell)
+    {
+        cell = [[AXEventTableViewCell alloc] init];
+    }
     
-    return [[UITableViewCell alloc] init];
+    return cell;
 }
 
 @end

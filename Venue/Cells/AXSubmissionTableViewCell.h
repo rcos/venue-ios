@@ -1,14 +1,14 @@
 //
-//  AXEventTableViewCell.h
+//  AXSubmissionTableViewCell.h
 //  Venue
 //
-//  Created by Jim Boulter on 1/10/16.
+//  Created by Jim Boulter on 1/14/16.
 //  Copyright © 2016 JimBoulter. All rights reserved.
 //
 
 #import "AXTableViewCell.h"
 #import "Masonry.h"
 
-@interface AXEventTableViewCell : AXTableViewCell
+@interface AXSubmissionTableViewCell : AXTableViewCell
 
 @end

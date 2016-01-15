@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "AXAPI.h"
+#import "AXLoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,12 +18,23 @@
 
 -(void)setLoggedIn
 {
-    
+    [UIView transitionWithView:self.window
+                      duration:.25
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]]];
+                    } completion:nil];
+
 }
 
 -(void)setLoggedOut
 {
-    
+    [UIView transitionWithView:self.window
+                      duration:.25
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [self.window setRootViewController:[[AXLoginViewController alloc] init]];
+                    } completion:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -35,15 +48,11 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    if(true)
+    if(false)
     {
-        [UIView transitionWithView:self.window
-                          duration:.25
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-            [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]]];
-        } completion:nil];
+        [self setLoggedIn];
     }
+    else [self setLoggedOut];
     
     [self.window makeKeyAndVisible];
     return YES;

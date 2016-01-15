@@ -11,4 +11,12 @@
 
 @interface AXDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property UIImageView* imageView;
+@property UIVisualEffectView* blurView;
+@property UILabel* detailTitleLabel;
+@property UILabel* detailSubtitleLabel;
+@property UITextView* detailDescriptionTextView;
+@property UILabel* tableTitleLabel;
+@property UITableView* tableView;
+
 @end

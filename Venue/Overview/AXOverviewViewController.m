@@ -9,9 +9,11 @@
 #import "AXOverviewViewController.h"
 #import "AXCourseTableViewCell.h"
 #import "AXCourseViewController.h"
+#import "AXEventViewController.h"
 
 @interface AXOverviewViewController ()
-@property UITableView* tableview;
+@property UITableView* courseTableView;
+@property UITableView* eventTableView;
 @property AXContentSelectionToolbar* modeToolBar;
 @property AXContentMode contentMode;
 @end
@@ -24,9 +26,14 @@
     self = [super init];
     if(self)
     {
-        self.tableview = [[UITableView alloc] init];
-        self.tableview.delegate = self;
-        self.tableview.dataSource = self;
+        self.eventTableView = [[UITableView alloc] init];
+        self.eventTableView.delegate = self;
+        self.eventTableView.dataSource = self;
+        
+        self.courseTableView = [[UITableView alloc] init];
+        self.courseTableView.delegate = self;
+        self.courseTableView.dataSource = self;
+        self.courseTableView.hidden = YES;
         
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
         
@@ -40,7 +47,9 @@
     // Do any additional setup after loading the view.
     
     [self.view addSubview:modeToolBar];
-    [self.view addSubview:self.tableview];
+    [self.view bringSubviewToFront:modeToolBar];
+    [self.view addSubview:self.eventTableView];
+    [self.view addSubview:self.courseTableView];
 
     [modeToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
@@ -48,7 +57,15 @@
         make.left.equalTo(self.view.mas_left);
         make.height.equalTo(@44);
     }];
-    [self.tableview mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.eventTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(modeToolBar.mas_bottom);
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+    }];
+    
+    [self.courseTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(modeToolBar.mas_bottom);
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
@@ -68,7 +85,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.title = @"";
-    [self.navigationController pushViewController:[[AXCourseViewController alloc] init] animated:YES];
+    AXDetailViewController* vc;
+    if(tableView == self.eventTableView)
+    {
+        vc = [[AXEventViewController alloc] init];
+    }
+    else
+    {
+        vc = [[AXCourseViewController alloc] init];
+    }
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -88,17 +114,30 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AXCourseTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
+    AXTableViewCell* cell;
     
-    if(!cell)
+    if(tableView == self.eventTableView)
     {
-        cell = [[AXCourseTableViewCell alloc] init];
+        cell = [tableView dequeueReusableCellWithIdentifier:[AXEventTableViewCell reuseIdentifier]];
+        if(!cell)
+        {
+            cell = [[AXEventTableViewCell alloc] init];
+        }
     }
-    
-    NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
-    [object setObject:@(contentMode) forKey:@"contentMode"];
-    
-    [cell configureWithDictionary:object];
+    else
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
+        if(!cell)
+        {
+            cell = [[AXCourseTableViewCell alloc] init];
+        }
+        
+        NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
+        [object setObject:@(contentMode) forKey:@"contentMode"];
+        
+        AXCourseTableViewCell* cCell = (AXCourseTableViewCell*) cell;
+        [cCell configureWithDictionary:object];
+    }
     
     return cell;
 }
@@ -108,7 +147,14 @@
 -(void)contentModeDidChange:(AXContentMode)mode
 {
     contentMode = mode;
-    [self.tableview reloadData];
+    
+    bool events = (contentMode == AXContentModeEvents);
+    
+    [UIView transitionWithView:self.view duration:.25 options:0 animations:^{
+        self.eventTableView.hidden = !events;
+        self.courseTableView.hidden = events;
+    } completion:nil];
+    
 }
 
 @end

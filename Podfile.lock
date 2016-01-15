@@ -14,14 +14,17 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
+  - FXKeychain (1.5.3)
   - Masonry (0.6.4)
 
 DEPENDENCIES:
   - AFNetworking
+  - FXKeychain
   - Masonry
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
 
 COCOAPODS: 0.39.0

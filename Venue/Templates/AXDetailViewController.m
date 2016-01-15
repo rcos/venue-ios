@@ -10,14 +10,6 @@
 
 @interface AXDetailViewController ()
 
-@property UIImageView* imageView;
-@property UIVisualEffectView* blurView;
-@property UILabel* detailTitleLabel;
-@property UILabel* detailSubtitleLabel;
-@property UITextView* detailDescriptionTextView;
-@property UILabel* tableTitleLabel;
-@property UITableView* tableView;
-
 @end
 
 @implementation AXDetailViewController
@@ -142,10 +134,10 @@
     return 5;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView_ cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSAssert(NO, @"cellForRowAtIndexPath: needs to be overridden");
-    UITableViewCell* cell =  [tableView_ dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    UITableViewCell* cell =  [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
     
     cell.textLabel.text = @"Override cellForRowAtIndexPath";
     

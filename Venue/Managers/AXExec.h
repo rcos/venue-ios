@@ -13,4 +13,6 @@
 
 +(AppDelegate*)appDel;
 
++(NSString *) sanitizeNSString:(NSString *)string;
+
 @end
