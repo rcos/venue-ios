@@ -8,7 +8,7 @@
 
 #import "AXAPI.h"
 
-@implementation AXAPI
+@implementation AXAPI : AFHTTPSessionManager
 
 #pragma mark - Singleton
 
@@ -33,6 +33,19 @@
 {
     //Shoot our credentials to the server and acquire a new session token
     completion(1);
+}
+
+#pragma mark - Attendance
+
+-(void)verifySubmissionWithImage:(UIImage*)image completion:(void(^)(BOOL))completion
+{
+    [[AXLocationExec exec] getLocationWithCompletion:^(CLLocation* location) {
+        [self POST:@"" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            completion(1);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            completion(0);
+        }];
+    }];
 }
 
 #pragma mark - Session Manager

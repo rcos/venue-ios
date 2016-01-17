@@ -8,6 +8,8 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import "AXExec.h"
+#import "AXAPI.h"
+#import "AXLocationExec.h"
 
 @interface AXAPI : AFHTTPSessionManager
 
@@ -15,4 +17,5 @@
 
 +(void)loginWithUsername:(NSString*)username password:(NSString*)password block:(void(^)(BOOL))completion;
 
+-(void)verifySubmissionWithImage:(UIImage*)image completion:(void(^)(BOOL))completion;
 @end

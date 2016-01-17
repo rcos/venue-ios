@@ -18,6 +18,7 @@
 
 -(void)setLoggedIn
 {
+    [AXLocationExec exec];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */; };
 		0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5794401C48729300E35F4E /* AXEventViewController.m */; };
 		0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5794431C487AB400E35F4E /* AXSubmissionTableViewCell.m */; };
 		0C5794481C4962FD00E35F4E /* AXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5794471C4962FD00E35F4E /* AXLoginViewController.m */; };
@@ -29,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C1CE1071C4AE95700B95BF8 /* AXLocationExec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXLocationExec.h; sourceTree = "<group>"; };
+		0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXLocationExec.m; sourceTree = "<group>"; };
 		0C57943C1C42F8E600E35F4E /* AXDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDetailViewController.h; sourceTree = "<group>"; };
 		0C57943F1C48729300E35F4E /* AXEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXEventViewController.h; sourceTree = "<group>"; };
 		0C5794401C48729300E35F4E /* AXEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEventViewController.m; sourceTree = "<group>"; };
@@ -166,6 +169,8 @@
 				0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */,
 				0CCEDE031C3C44E8009F8C4D /* AXExec.h */,
 				0CCEDE041C3C44E8009F8C4D /* AXExec.m */,
+				0C1CE1071C4AE95700B95BF8 /* AXLocationExec.h */,
+				0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */,
 				0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */,
 				0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */,
 				0CCEDE1E1C3DB7FC009F8C4D /* UIFont+Venue.h */,
@@ -351,6 +356,7 @@
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
 				0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */,
+				0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */,
 				0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */,
 				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,
 				0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */,
