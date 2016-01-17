@@ -64,7 +64,10 @@
         if(authStat == kCLAuthorizationStatusNotDetermined)
         {
             //request ability to use location services
-            [locationManager requestWhenInUseAuthorization];
+            // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+            if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+                [self.locationManager requestWhenInUseAuthorization];
+            }
         }
         
         return authStat;

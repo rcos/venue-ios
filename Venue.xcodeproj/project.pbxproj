@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */; };
+		0C1CE10C1C4C1B5600B95BF8 /* AXAttendanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1CE10B1C4C1B5600B95BF8 /* AXAttendanceViewController.m */; };
 		0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5794401C48729300E35F4E /* AXEventViewController.m */; };
 		0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5794431C487AB400E35F4E /* AXSubmissionTableViewCell.m */; };
 		0C5794481C4962FD00E35F4E /* AXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5794471C4962FD00E35F4E /* AXLoginViewController.m */; };
@@ -32,6 +33,8 @@
 /* Begin PBXFileReference section */
 		0C1CE1071C4AE95700B95BF8 /* AXLocationExec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXLocationExec.h; sourceTree = "<group>"; };
 		0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXLocationExec.m; sourceTree = "<group>"; };
+		0C1CE10A1C4C1B5600B95BF8 /* AXAttendanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAttendanceViewController.h; sourceTree = "<group>"; };
+		0C1CE10B1C4C1B5600B95BF8 /* AXAttendanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAttendanceViewController.m; sourceTree = "<group>"; };
 		0C57943C1C42F8E600E35F4E /* AXDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDetailViewController.h; sourceTree = "<group>"; };
 		0C57943F1C48729300E35F4E /* AXEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXEventViewController.h; sourceTree = "<group>"; };
 		0C5794401C48729300E35F4E /* AXEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEventViewController.m; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 			children = (
 				0C57943F1C48729300E35F4E /* AXEventViewController.h */,
 				0C5794401C48729300E35F4E /* AXEventViewController.m */,
+				0C1CE10A1C4C1B5600B95BF8 /* AXAttendanceViewController.h */,
+				0C1CE10B1C4C1B5600B95BF8 /* AXAttendanceViewController.m */,
 			);
 			name = Event;
 			path = Course;
@@ -349,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C1CE10C1C4C1B5600B95BF8 /* AXAttendanceViewController.m in Sources */,
 				0CCEDE191C3D8C81009F8C4D /* AXTableViewCell.m in Sources */,
 				0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */,
 				0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */,

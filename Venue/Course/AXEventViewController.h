@@ -7,7 +7,11 @@
 //
 
 #import "AXDetailViewController.h"
+#import <DBCamera/DBCameraViewController.h>
+#import <DBCamera/DBCameraContainerViewController.h>
 
-@interface AXEventViewController : AXDetailViewController
+@interface AXEventViewController : AXDetailViewController <DBCameraViewControllerDelegate>
+
+-(void)checkIn;
 
 @end

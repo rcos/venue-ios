@@ -49,7 +49,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    if(false)
+    if(true)
     {
         [self setLoggedIn];
     }
