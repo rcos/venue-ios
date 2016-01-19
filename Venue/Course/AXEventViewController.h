@@ -9,6 +9,7 @@
 #import "AXDetailViewController.h"
 #import <DBCamera/DBCameraViewController.h>
 #import <DBCamera/DBCameraContainerViewController.h>
+#import <DBCamera/DBCameraView.h>
 
 @interface AXEventViewController : AXDetailViewController <DBCameraViewControllerDelegate>
 

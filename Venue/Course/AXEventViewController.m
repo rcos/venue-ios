@@ -53,8 +53,11 @@
     DBCameraViewController *cameraController = [DBCameraViewController initWithDelegate:self];
     [cameraController setUseCameraSegue:NO];
     
-    DBCameraContainerViewController *container = [[DBCameraContainerViewController alloc] initWithDelegate:self];
+    DBCameraContainerViewController *container = [[DBCameraContainerViewController alloc] initWithDelegate:self cameraSettingsBlock:^(DBCameraView *cameraView, id container) {
+        [cameraView.photoLibraryButton setHidden:YES];
+    }];
     [container setCameraViewController:cameraController];
+    
     [container setFullScreenMode];
     [container setTintColor:[UIColor venueRedColor]];
     

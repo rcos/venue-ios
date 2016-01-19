@@ -49,7 +49,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
-    if(true)
+    if([[FXKeychain defaultKeychain] objectForKey:kSessionToken])
     {
         [self setLoggedIn];
     }

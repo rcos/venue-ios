@@ -14,16 +14,18 @@
 @property UIVisualEffectView* blurView;
 @property UIView* textSurroundView;
 @property UILabel* loginLabel;
-@property UITextField* usernameTextField;
+@property UITextField* emailTextField;
 @property UITextField* passwordTextField;
 @property UIButton* loginButton;
+
+@property UIButton* registerButton;
 
 @property UIActivityIndicatorView* activityIndicatorView;
 @end
 
 @implementation AXLoginViewController
 @synthesize backgroundImageView, blurView;
-@synthesize textSurroundView, loginLabel, usernameTextField, passwordTextField, loginButton, activityIndicatorView;
+@synthesize textSurroundView, loginLabel, emailTextField, passwordTextField, loginButton, registerButton, activityIndicatorView;
 
 - (instancetype)init
 {
@@ -35,8 +37,8 @@
         
         textSurroundView = [[UIView alloc] init];
         loginLabel = [[UILabel alloc] init];
-        usernameTextField = [[UITextField alloc] init];
-        usernameTextField.delegate = self;
+        emailTextField = [[UITextField alloc] init];
+        emailTextField.delegate = self;
         passwordTextField = [[UITextField alloc] init];
         passwordTextField.delegate = self;
         
@@ -58,11 +60,11 @@
     loginLabel.font = [UIFont thinFont];
     loginLabel.textColor = [UIColor venueRedColor];
     
-    usernameTextField.placeholder = @"username";
-    usernameTextField.text = [[FXKeychain defaultKeychain] objectForKey:@"username"];
+    emailTextField.placeholder = @"username";
+    emailTextField.text = [[FXKeychain defaultKeychain] objectForKey:kAPIEmail];
 //    usernameTextField.font = ;
-    usernameTextField.layer.cornerRadius = 2;
-    usernameTextField.returnKeyType = UIReturnKeyNext;
+    emailTextField.layer.cornerRadius = 2;
+    emailTextField.returnKeyType = UIReturnKeyNext;
 //    usernameTextField.layer.borderColor = [UIColor lightGrayColor].CGColor;
 //    usernameTextField.layer.borderWidth = 1;
     
@@ -80,16 +82,25 @@
     [loginButton.titleLabel setTextColor:[UIColor whiteColor]];
     [loginButton.layer setCornerRadius:2];
     
+    registerButton = [[UIButton alloc] init];
+    [registerButton setTitle:@"  I need an account  " forState:UIControlStateNormal];
+    [registerButton.titleLabel setFont:[UIFont thinFont]];
+    [registerButton setBackgroundColor:[UIColor colorWithWhite:100/255.0 alpha:.25]];
+    [registerButton.layer setCornerRadius:4];
+    
+    [registerButton addTarget:self action:@selector(register:) forControlEvents:UIControlEventTouchUpInside];
+    
     //setup view heirarchy
     [self.view addSubview:backgroundImageView];
     [backgroundImageView addSubview:blurView];
-    [textSurroundView addSubview:usernameTextField];
+    [textSurroundView addSubview:emailTextField];
     [textSurroundView addSubview:passwordTextField];
     [textSurroundView addSubview:loginLabel];
     [self.view addSubview:loginButton];
     [self.view addSubview:textSurroundView];
     [self.view addSubview:loginButton];
     [self.view addSubview:activityIndicatorView];
+    [self.view addSubview:registerButton];
     
     //Set layout constraints
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
@@ -105,11 +116,11 @@
     [loginLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(textSurroundView.mas_left).with.offset(padding.left);
         make.right.equalTo(textSurroundView.mas_right).with.offset(padding.right);
-        make.bottom.equalTo(usernameTextField.mas_top).with.offset(padding.bottom);
+        make.bottom.equalTo(emailTextField.mas_top).with.offset(padding.bottom);
         make.top.equalTo(textSurroundView.mas_top).with.offset(padding.top);
     }];
     
-    [usernameTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [emailTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(textSurroundView.mas_left).with.offset(2*padding.left);
         make.right.equalTo(textSurroundView.mas_right).with.offset(2*padding.right);
         make.top.equalTo(loginLabel.mas_bottom).with.offset(padding.top);
@@ -119,7 +130,7 @@
     [passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(textSurroundView.mas_left).with.offset(2*padding.left);
         make.right.equalTo(textSurroundView.mas_right).with.offset(2*padding.right);
-        make.top.equalTo(usernameTextField.mas_bottom).with.offset(padding.top);
+        make.top.equalTo(emailTextField.mas_bottom).with.offset(padding.top);
         make.height.equalTo(@40);
     }];
     
@@ -137,6 +148,12 @@
         make.height.equalTo(@45);
     }];
     
+    [registerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.top.equalTo(loginButton.mas_bottom).with.offset(padding.top);
+        make.height.equalTo(@20);
+    }];
+    
     [activityIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(loginButton.mas_centerX);
         make.centerY.equalTo(loginButton.mas_centerY);
@@ -145,9 +162,9 @@
     }];
     
     //Decide first responder
-    if([usernameTextField.text isEqualToString:@""])
+    if([emailTextField.text isEqualToString:@""])
     {
-        [usernameTextField becomeFirstResponder];
+        [emailTextField becomeFirstResponder];
     }
     else [passwordTextField becomeFirstResponder];
 }
@@ -161,22 +178,33 @@
 
 - (void)loginButtonPressed:(id)sender
 {
-    NSString* username = [AXExec sanitizeNSString:usernameTextField.text];
+    NSString* email = [AXExec sanitizeNSString:emailTextField.text];
     NSString* password = [AXExec sanitizeNSString:passwordTextField.text];
-    if(username.length > 1 && password.length > 1)
+    if(email.length > 1 && password.length > 1)
     {
         [activityIndicatorView startAnimating];
         loginButton.userInteractionEnabled = NO;
-        [AXAPI loginWithUsername:username password:password block:^(BOOL succeeded){
-            [activityIndicatorView stopAnimating];
-            [[AXExec appDel] setLoggedIn];
+        [[AXAPI API] loginWithEmail:email password:password block:^(BOOL succeeded){
+            if(succeeded)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [activityIndicatorView stopAnimating];
+                    [[AXExec appDel] setLoggedIn];
+                });
+            }
         }];
     }
 }
 
+- (void)register:(id)sender
+{
+    //present loginvc with all necessary fields for registration
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.venue.com/register"]];
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField == usernameTextField)
+    if(textField == emailTextField)
     {
         [passwordTextField becomeFirstResponder];
     }
