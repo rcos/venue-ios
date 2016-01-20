@@ -60,7 +60,7 @@
     loginLabel.font = [UIFont thinFont];
     loginLabel.textColor = [UIColor venueRedColor];
     
-    emailTextField.placeholder = @"username";
+    emailTextField.placeholder = @"email";
     emailTextField.text = [[FXKeychain defaultKeychain] objectForKey:kAPIEmail];
 //    usernameTextField.font = ;
     emailTextField.layer.cornerRadius = 2;

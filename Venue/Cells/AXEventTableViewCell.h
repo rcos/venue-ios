@@ -11,4 +11,6 @@
 
 @interface AXEventTableViewCell : AXTableViewCell
 
+-(void)configureWithEvent:(NSDictionary*)event;
+
 @end

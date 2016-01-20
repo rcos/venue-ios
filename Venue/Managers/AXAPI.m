@@ -38,7 +38,7 @@
     [self GET:@"/api/courses" parameters:@{@"purpose" : @"Give me my tokens"} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         //Place the XSRF-TOKEN into the header of all our requests.
-         NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://104.131.185.159:9000"]];
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://104.131.185.159:9000"]];
         for (NSHTTPCookie *cookie in cookies)
         {
             if([cookie.name isEqualToString:@"XSRF-TOKEN"])
@@ -55,7 +55,12 @@
 
 -(void)loginWithEmail:(NSString*)email password:(NSString*)password block:(void(^)(BOOL))completion
 {
-
+    if(!email || !password)
+    {
+        completion(0);
+        return;
+    }
+    
     //Shoot our credentials to the server and acquire a new session token
     [self getTokenswithCompletion:^(BOOL success) {
         if(success)
@@ -64,6 +69,7 @@
             [self POST:@"/auth/local" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [[FXKeychain defaultKeychain] setObject:email forKey:kAPIEmail];
                 [[FXKeychain defaultKeychain] setObject:responseObject[@"token"] forKey:kSessionToken];
+                [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", responseObject[@"token"]] forHTTPHeaderField:@"Authorization"];
                 completion(1);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 completion(0);
@@ -72,12 +78,42 @@
     }];
 }
 
+-(void)logOut
+{
+    [[FXKeychain defaultKeychain] setObject:nil forKey:kSessionToken];
+    self.requestSerializer = [[AFJSONRequestSerializer alloc] init];
+}
+
+#pragma mark - Data Fetching
+
+-(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion
+{
+    [self GET:@"/api/courses" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        if(progressView) [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completion(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil);
+    }];
+}
+
+-(void)getEventsWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
+{
+    [self GET:@"/api/users/me?withEvents" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        if(progressView) [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completion(responseObject[@"events"]);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil);
+    }];
+}
+
 #pragma mark - Attendance
 
 -(void)verifySubmissionWithImage:(UIImage*)image completion:(void(^)(BOOL))completion
 {
     [[AXLocationExec exec] getLocationWithCompletion:^(CLLocation* location) {
-        [self POST:@"" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [self POST:@"/api/submissions" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             completion(1);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             completion(0);
@@ -123,11 +159,11 @@
                         downloadProgress:downloadProgress
                        completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
                            
-                           NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://104.131.185.159:9000"]];
-                           for (NSHTTPCookie *cookie in cookies)
-                           {
-                               NSLog(@"%@\n", cookie);
-                           }
+//                           NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://104.131.185.159:9000"]];
+//                           for (NSHTTPCookie *cookie in cookies)
+//                           {
+//                               NSLog(@"%@\n", cookie);
+//                           }
                            
                            if (error) {
                                //We've got a failure.  We need to check it out.
@@ -140,8 +176,8 @@
                                if(statusCode == 401)
                                {
                                    //Login check and then retry if successfully logged back in
-                                   [[AXAPI API] loginWithEmail:nil
-                                                      password:nil
+                                   [[AXAPI API] loginWithEmail:[[FXKeychain defaultKeychain] objectForKey:kAPIEmail]
+                                                      password:[[FXKeychain defaultKeychain] objectForKey:kAPIPassword]
                                                          block:^(BOOL succeeded){
                                                              if(succeeded)
                                                              {

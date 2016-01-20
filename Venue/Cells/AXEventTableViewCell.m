@@ -64,4 +64,13 @@
     return self;
 }
 
+-(void)configureWithEvent:(NSDictionary *)event
+{
+    [titleLabel setText:event[@"info"][@"title"]];
+    [subtitleLabel setText:event[@"info"][@"description"]];
+    
+    NSArray* times = event[@"info"][@"times"];
+    if(times.count > 0)[dateLabel setText:[times firstObject]];
+}
+
 @end

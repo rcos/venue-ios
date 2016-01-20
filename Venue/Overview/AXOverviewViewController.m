@@ -10,12 +10,16 @@
 #import "AXCourseTableViewCell.h"
 #import "AXCourseViewController.h"
 #import "AXEventViewController.h"
+#import "AXAPI.h"
 
 @interface AXOverviewViewController ()
 @property UITableView* courseTableView;
 @property UITableView* eventTableView;
 @property AXContentSelectionToolbar* modeToolBar;
 @property AXContentMode contentMode;
+
+@property NSArray* events;
+@property NSArray* courses;
 @end
 
 @implementation AXOverviewViewController
@@ -38,6 +42,11 @@
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
         
         contentMode = AXContentModeEvents;
+        
+        [[AXAPI API] getEventsWithProgressView:nil completion:^(NSArray * events) {
+            self.events = events;
+            [self.eventTableView reloadData];
+        }];
     }
     return self;
 }
@@ -123,6 +132,9 @@
         {
             cell = [[AXEventTableViewCell alloc] init];
         }
+        
+        AXEventTableViewCell* eCell = (AXEventTableViewCell*) cell;
+        [eCell configureWithEvent:self.events[indexPath.row]];
     }
     else
     {
@@ -148,11 +160,9 @@
 {
     contentMode = mode;
     
-    bool events = (contentMode == AXContentModeEvents);
-    
     [UIView transitionWithView:self.view duration:.25 options:0 animations:^{
-        self.eventTableView.hidden = !events;
-        self.courseTableView.hidden = events;
+        self.eventTableView.hidden = !(contentMode == AXContentModeEvents);
+        self.courseTableView.hidden = (contentMode == AXContentModeEvents);
     } completion:nil];
     
 }

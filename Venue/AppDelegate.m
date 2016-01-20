@@ -30,6 +30,8 @@
 
 -(void)setLoggedOut
 {
+    
+    [[AXAPI API] logOut];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -48,6 +50,7 @@
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
+//    [self setLoggedOut];
     
     if([[FXKeychain defaultKeychain] objectForKey:kSessionToken])
     {
