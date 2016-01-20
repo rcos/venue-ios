@@ -15,4 +15,9 @@
     return [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
 }
 
++(UIFont*)thinFontOfSize:(NSInteger)size
+{
+    return [UIFont fontWithName:@"HelveticaNeue-Thin" size:size];
+}
+
 @end

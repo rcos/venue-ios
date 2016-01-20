@@ -17,11 +17,38 @@
 @implementation AXEventViewController
 @synthesize navButton;
 
--(instancetype)init
+-(instancetype)initWithEvent:(NSDictionary*)event
 {
     self = [super init];
     if(self)
     {
+        [self.detailTitleLabel setText:event[@"info"][@"title"]];
+        [self.detailDescriptionTextView setText:event[@"info"][@"description"]];
+        
+        NSArray* times = event[@"info"][@"times"];
+        if(times.count > 0)
+        {
+            NSDictionary* time = [times firstObject];
+            NSString* start = time[@"start"];
+            NSString* end = time[@"end"];
+            
+            NSDateFormatter* df = [[NSDateFormatter alloc] init];
+            [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
+            
+            NSDate* startDate = [df dateFromString:start];
+            NSDate* endDate = [df dateFromString:end];
+            
+            [df setDateFormat:@"h:mma"];
+            NSString* startTime = [df stringFromDate:startDate];
+            NSString* endTime = [df stringFromDate:endDate];
+            
+            [self.detailSubtitleLabel setNumberOfLines:2];
+            [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@\n-%@", startTime, endTime]];
+        }
+
+        self.tableTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Photos"
+                                                                         attributes:@{
+                                                                                      NSStrokeColorAttributeName : [UIColor blackColor], NSForegroundColorAttributeName : [UIColor whiteColor], NSStrokeWidthAttributeName : @-1.0 }];
         navButton = [[UIButton alloc] init];
         [navButton setImage:[UIImage imageNamed:@"NavIcon"] forState:UIControlStateNormal];
     }

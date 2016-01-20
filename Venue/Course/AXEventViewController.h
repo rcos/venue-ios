@@ -13,6 +13,8 @@
 
 @interface AXEventViewController : AXDetailViewController <DBCameraViewControllerDelegate>
 
+-(instancetype)initWithEvent:(NSDictionary*)event;
+
 -(void)checkIn;
 
 @end

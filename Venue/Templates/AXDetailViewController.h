@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Masonry.h"
 
-@interface AXDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface AXDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property UIImageView* imageView;
 @property UIVisualEffectView* blurView;

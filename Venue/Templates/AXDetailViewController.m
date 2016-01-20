@@ -23,13 +23,29 @@
         imageView = [[UIImageView alloc] init];
         
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+        [blurView setUserInteractionEnabled:YES];
+        
+        UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] init];
+        gr.delegate = self;
+        gr.numberOfTapsRequired = 1;
+        gr.numberOfTouchesRequired = 1;
+        gr.cancelsTouchesInView = NO;
+        [blurView addGestureRecognizer:gr];
         
         detailTitleLabel = [[UILabel alloc] init];
+        [detailTitleLabel setTextColor:[UIColor whiteColor]];
+        [detailTitleLabel setNumberOfLines:0];
+        [detailTitleLabel setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisVertical];
         
         detailSubtitleLabel = [[UILabel alloc] init];
+        [detailSubtitleLabel setTextColor:[UIColor lightGrayColor]];
+        [detailSubtitleLabel setFont:[UIFont thinFontOfSize:16]];
+        [detailSubtitleLabel setTextAlignment:NSTextAlignmentRight];
+        [detailSubtitleLabel setContentCompressionResistancePriority:800 forAxis:UILayoutConstraintAxisHorizontal];
         
         detailDescriptionTextView = [[UITextView alloc] init];
         detailDescriptionTextView.backgroundColor = [UIColor clearColor];
+        [detailDescriptionTextView setTextColor:[UIColor whiteColor]];
         
         tableTitleLabel = [[UILabel alloc] init];
         tableTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Events"
@@ -109,6 +125,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UIGestureRecognizer
+
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [UIView transitionWithView:blurView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        blurView.hidden = !blurView.hidden;
+    } completion:nil];
 }
 
 #pragma mark - UITableViewDelegate

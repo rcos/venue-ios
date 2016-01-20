@@ -12,4 +12,6 @@
 
 +(UIFont*)thinFont;
 
++(UIFont*)thinFontOfSize:(NSInteger)size;
+
 @end

@@ -21,6 +21,8 @@
         netExec = [[AXAPI alloc] initWithBaseURL:[NSURL URLWithString:@"http://104.131.185.159:9000"]];
         netExec.responseSerializer = [AFJSONResponseSerializer serializer];
         netExec.responseSerializer.acceptableContentTypes = [netExec.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        
+        [netExec.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [[FXKeychain defaultKeychain] objectForKey:kSessionToken]] forHTTPHeaderField:@"Authorization"];
 //        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
 //        securityPolicy.allowInvalidCertificates = YES;
 //        netExec.securityPolicy = securityPolicy;
@@ -99,7 +101,7 @@
 
 -(void)getEventsWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
 {
-    [self GET:@"/api/users/me?withEvents" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self GET:@"/api/users/me?withEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView) [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         completion(responseObject[@"events"]);

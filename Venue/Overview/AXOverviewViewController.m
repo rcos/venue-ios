@@ -47,6 +47,10 @@
             self.events = events;
             [self.eventTableView reloadData];
         }];
+        
+        [[AXAPI API] getCoursesWithProgressView:nil completion:^(NSArray * courses) {
+            
+        }];
     }
     return self;
 }
@@ -97,7 +101,7 @@
     AXDetailViewController* vc;
     if(tableView == self.eventTableView)
     {
-        vc = [[AXEventViewController alloc] init];
+        vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
     }
     else
     {
@@ -113,7 +117,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return (tableView == self.eventTableView ? self.events.count : self.courses.count);
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -164,6 +168,7 @@
         self.eventTableView.hidden = !(contentMode == AXContentModeEvents);
         self.courseTableView.hidden = (contentMode == AXContentModeEvents);
     } completion:nil];
+    
     
 }
 
