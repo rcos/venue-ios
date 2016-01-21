@@ -8,6 +8,7 @@
 
 #import "AXAPI.h"
 #import "FXKeychain.h"
+#import "AXHTTPResponseSerializer.h"
 
 @implementation AXAPI : AFHTTPSessionManager
 
@@ -18,16 +19,32 @@
     static AXAPI* netExec = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        netExec = [[AXAPI alloc] initWithBaseURL:[NSURL URLWithString:@"http://104.131.185.159:9000"]];
-        netExec.responseSerializer = [AFJSONResponseSerializer serializer];
-        netExec.responseSerializer.acceptableContentTypes = [netExec.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        netExec = [[AXAPI alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
+        netExec.responseSerializer = [[AXHTTPResponseSerializer alloc] init];
+//        netExec.responseSerializer = [AFJSONResponseSerializer serializer];
+//        netExec.responseSerializer.acceptableContentTypes = [netExec.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
         
         [netExec.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [[FXKeychain defaultKeychain] objectForKey:kSessionToken]] forHTTPHeaderField:@"Authorization"];
+
+        [netExec.requestSerializer setValue:[[FXKeychain defaultKeychain] objectForKey:kXSRFToken] forHTTPHeaderField:@"X-XSRF-TOKEN"];
+        
 //        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
 //        securityPolicy.allowInvalidCertificates = YES;
 //        netExec.securityPolicy = securityPolicy;
     });
     return netExec;
+}
+
+#pragma mark - Init
+
+-(instancetype)initWithBaseURL:(NSURL *)url
+{
+    self = [super initWithBaseURL:url];
+    if(self)
+    {
+        [UIImageView setSharedImageDownloader:[[AFImageDownloader alloc] initWithSessionManager:self downloadPrioritization:AFImageDownloadPrioritizationFIFO maximumActiveDownloads:10 imageCache:nil]];
+    }
+    return self;
 }
 
 #pragma mark - Login
@@ -39,19 +56,20 @@
     //get tokens
     [self GET:@"/api/courses" parameters:@{@"purpose" : @"Give me my tokens"} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        //Place the XSRF-TOKEN into the header of all our requests.
-        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://104.131.185.159:9000"]];
-        for (NSHTTPCookie *cookie in cookies)
-        {
-            if([cookie.name isEqualToString:@"XSRF-TOKEN"])
-            {
-                [self.requestSerializer setValue:[cookie.value stringByRemovingPercentEncoding] forHTTPHeaderField:@"X-XSRF-TOKEN"];
-            }
-        }
+//        //Place the XSRF-TOKEN into the header of all our requests.
+//        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:baseURL]];
+//        for (NSHTTPCookie *cookie in cookies)
+//        {
+//            if([cookie.name isEqualToString:@"XSRF-TOKEN"])
+//            {
+//                [self.requestSerializer setValue:[cookie.value stringByRemovingPercentEncoding] forHTTPHeaderField:@"X-XSRF-TOKEN"];
+//                [[FXKeychain defaultKeychain] setObject:[cookie.value stringByRemovingPercentEncoding] forKey:kXSRFToken];
+//            }
+//        }
         
-        completion(1);
+        if(completion)completion(1);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completion(0);
+        if(completion)completion(0);
     }];
 }
 
@@ -59,7 +77,7 @@
 {
     if(!email || !password)
     {
-        completion(0);
+        if(completion)completion(0);
         return;
     }
     
@@ -71,10 +89,11 @@
             [self POST:@"/auth/local" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [[FXKeychain defaultKeychain] setObject:email forKey:kAPIEmail];
                 [[FXKeychain defaultKeychain] setObject:responseObject[@"token"] forKey:kSessionToken];
+                [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
                 [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", responseObject[@"token"]] forHTTPHeaderField:@"Authorization"];
-                completion(1);
+                if(completion)completion(1);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                completion(0);
+                if(completion)completion(0);
             }];
         }
     }];
@@ -83,6 +102,9 @@
 -(void)logOut
 {
     [[FXKeychain defaultKeychain] setObject:nil forKey:kSessionToken];
+    [[FXKeychain defaultKeychain] setObject:nil forKey:kUserId];
+    [[FXKeychain defaultKeychain] setObject:nil forKey:kAPIPassword];
+    
     self.requestSerializer = [[AFJSONRequestSerializer alloc] init];
 }
 
@@ -91,7 +113,12 @@
 -(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion
 {
     [self GET:@"/api/courses" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        if(progressView) [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+            });
+        }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         completion(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -102,7 +129,12 @@
 -(void)getEventsWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
 {
     [self GET:@"/api/users/me?withEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        if(progressView) [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+            });
+        }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         completion(responseObject[@"events"]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -110,12 +142,52 @@
     }];
 }
 
+-(void)getSubmissionsWithEventId:(NSString*)eventId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* submissions))completion
+{
+    [self GET:[NSString stringWithFormat:@"/api/submissions?onlySectionEvent=%@", eventId] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+            });
+        }
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completion(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil);
+    }];
+}
+
+-(void)getImageAtPath:(NSString*)path completion:(void(^)(UIImage* image))completion
+{
+    AFImageDownloader* imageDownloader = [[AFImageDownloader alloc] initWithSessionManager:self downloadPrioritization:AFImageDownloadPrioritizationFIFO maximumActiveDownloads:10 imageCache:nil];
+    
+    NSError *serializationError = nil;
+    NSMutableURLRequest* req = [self.requestSerializer requestWithMethod:@"GET" URLString:[[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString] parameters:nil error:&serializationError];
+    
+    [imageDownloader downloadImageForURLRequest:req success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
+        completion(responseObject);
+    } failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+        completion(nil);
+    }];
+}
+
 #pragma mark - Attendance
 
--(void)verifySubmissionWithImage:(UIImage*)image completion:(void(^)(BOOL))completion
+-(void)verifySubmissionForEventId:(NSString*)eventId WithImage:(UIImage*)image completion:(void(^)(BOOL))completion
 {
     [[AXLocationExec exec] getLocationWithCompletion:^(CLLocation* location) {
-        [self POST:@"/api/submissions" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary* params = @{@"coordinates" : @[@(location.coordinate.longitude), @(location.coordinate.latitude)],
+                                 @"eventId" : eventId,
+                                 @"userId" : @"me",
+                                 @"content" : @"no",
+                                 @"authors" : @[@"no"],
+                                 };
+        
+        NSData* data = UIImageJPEGRepresentation(image, 1);
+        [self POST:@"/api/submissions" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            [formData appendPartWithFileData:data name:@"files[0]" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             completion(1);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             completion(0);
@@ -206,6 +278,17 @@
                                }
                            } else {
                                if (success) {
+                                   //Place the XSRF-TOKEN into the header of all our requests.
+                                   NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:baseURL]];
+                                   for (NSHTTPCookie *cookie in cookies)
+                                   {
+                                       if([cookie.name isEqualToString:@"XSRF-TOKEN"])
+                                       {
+                                           [self.requestSerializer setValue:[cookie.value stringByRemovingPercentEncoding] forHTTPHeaderField:@"X-XSRF-TOKEN"];
+                                           [[FXKeychain defaultKeychain] setObject:[cookie.value stringByRemovingPercentEncoding] forKey:kXSRFToken];
+                                       }
+                                   }
+                                   
                                    success(dataTask, responseObject);
                                }
                            }

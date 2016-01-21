@@ -10,6 +10,7 @@
 #import <DBCamera/DBCameraViewController.h>
 #import <DBCamera/DBCameraContainerViewController.h>
 #import <DBCamera/DBCameraView.h>
+#import <MapKit/MapKit.h>
 
 @interface AXEventViewController : AXDetailViewController <DBCameraViewControllerDelegate>
 

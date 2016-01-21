@@ -15,6 +15,7 @@
 		0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96B2571C377B8B000A78FB /* AppDelegate.m */; };
 		0C96B25A1C377B8B000A78FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B2591C377B8B000A78FB /* Assets.xcassets */; };
 		0C96B25D1C377B8C000A78FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */; };
+		0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */; };
 		0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */; };
 		0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE041C3C44E8009F8C4D /* AXExec.m */; };
 		0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */; };
@@ -46,6 +47,8 @@
 		0C96B2591C377B8B000A78FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C96B25C1C377B8C000A78FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C96B25E1C377B8C000A78FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXHTTPResponseSerializer.h; sourceTree = "<group>"; };
+		0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXHTTPResponseSerializer.m; sourceTree = "<group>"; };
 		0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXOverviewViewController.h; sourceTree = "<group>"; };
 		0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXOverviewViewController.m; sourceTree = "<group>"; };
 		0CCEDE031C3C44E8009F8C4D /* AXExec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXExec.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 			children = (
 				0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */,
 				0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */,
+				0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */,
+				0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */,
 				0CCEDE031C3C44E8009F8C4D /* AXExec.h */,
 				0CCEDE041C3C44E8009F8C4D /* AXExec.m */,
 				0C1CE1071C4AE95700B95BF8 /* AXLocationExec.h */,
@@ -361,6 +366,7 @@
 				0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */,
 				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,
 				0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */,
+				0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */,
 				0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,
 				0CCEDE121C3C6929009F8C4D /* UIColor+Venue.m in Sources */,

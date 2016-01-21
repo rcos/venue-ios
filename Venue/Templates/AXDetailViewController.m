@@ -79,7 +79,7 @@
         make.top.equalTo(self.view.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_centerY).with.offset(44);
+        make.bottom.equalTo(self.view.mas_centerY);
     }];
     
     [blurView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -146,7 +146,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0;
+    return 0.00001f;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

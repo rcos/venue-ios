@@ -16,6 +16,7 @@
 @property UITableView* courseTableView;
 @property UITableView* eventTableView;
 @property AXContentSelectionToolbar* modeToolBar;
+@property UIProgressView* progressView;
 @property AXContentMode contentMode;
 
 @property NSArray* events;
@@ -23,7 +24,7 @@
 @end
 
 @implementation AXOverviewViewController
-@synthesize modeToolBar, contentMode;
+@synthesize modeToolBar, progressView, contentMode;
 
 -(instancetype)init
 {
@@ -39,11 +40,15 @@
         self.courseTableView.dataSource = self;
         self.courseTableView.hidden = YES;
         
+        progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+        progressView.backgroundColor = [UIColor lightGrayColor];
+        progressView.tintColor = [UIColor venueRedColor];
+        
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
         
         contentMode = AXContentModeEvents;
         
-        [[AXAPI API] getEventsWithProgressView:nil completion:^(NSArray * events) {
+        [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
             self.events = events;
             [self.eventTableView reloadData];
         }];
@@ -61,6 +66,7 @@
     
     [self.view addSubview:modeToolBar];
     [self.view bringSubviewToFront:modeToolBar];
+    [self.view addSubview:progressView];
     [self.view addSubview:self.eventTableView];
     [self.view addSubview:self.courseTableView];
 
@@ -69,6 +75,13 @@
         make.right.equalTo(self.view.mas_right);
         make.left.equalTo(self.view.mas_left);
         make.height.equalTo(@44);
+    }];
+    
+    [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(modeToolBar.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.equalTo(@1);
     }];
     
     [self.eventTableView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -19,18 +19,45 @@
 @implementation AXSubmissionTableViewCell
 @synthesize titleLabel, subtitleLabel, submissionImageView;
 
--(instancetype)init
+-(instancetype)initWithSubmission:(NSDictionary*)submission
 {
     self = [super init];
     if(self)
     {
+        self.userInteractionEnabled = NO;
+        
         titleLabel = [[UILabel alloc] init];
+        [titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+        [titleLabel setText:[NSString stringWithFormat:@"%@ %@",submission[@"submitter"][@"firstName"], submission[@"submitter"][@"lastName"]]];
         [self.view addSubview:titleLabel];
         
         subtitleLabel = [[UILabel alloc] init];
+        [subtitleLabel setTextColor:[UIColor grayColor]];
+        [subtitleLabel setFont:[UIFont thinFont]];
+        
+        NSDateFormatter* df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
+        
+        NSDate* startDate = [df dateFromString:submission[@"time"]];
+    
+        [df setDateFormat:@"h:mma"];
+        NSString* time = [df stringFromDate:startDate];
+        [subtitleLabel setText:time];
+
         [self.view addSubview:subtitleLabel];
         
         submissionImageView = [[UIImageView alloc] init];
+        submissionImageView.layer.cornerRadius = 4;
+        submissionImageView.clipsToBounds = YES;
+        submissionImageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+//        [[AXAPI API] getImageAtPath:[submission[@"images"] firstObject] completion:^(UIImage *image) {
+//            [submissionImageView setImage:image];
+//        }];
+        
+        [submissionImageView setImageWithURL:[NSURL URLWithString:[submission[@"images"] firstObject]
+                                                    relativeToURL:[NSURL URLWithString:baseURL]]];
+        
         [self.view addSubview:submissionImageView];
         
         UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);

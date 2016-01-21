@@ -8,7 +8,10 @@
 
 #import "AXTableViewCell.h"
 #import "Masonry.h"
+#import "AXAPI.h"
 
 @interface AXSubmissionTableViewCell : AXTableViewCell
+
+-(instancetype)initWithSubmission:(NSDictionary*)submission;
 
 @end

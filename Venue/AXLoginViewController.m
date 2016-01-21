@@ -12,6 +12,7 @@
 @interface AXLoginViewController () <UITextFieldDelegate>
 @property UIImageView* backgroundImageView;
 @property UIVisualEffectView* blurView;
+@property UILabel* titleLabel;
 @property UIView* textSurroundView;
 @property UILabel* loginLabel;
 @property UITextField* emailTextField;
@@ -25,7 +26,7 @@
 
 @implementation AXLoginViewController
 @synthesize backgroundImageView, blurView;
-@synthesize textSurroundView, loginLabel, emailTextField, passwordTextField, loginButton, registerButton, activityIndicatorView;
+@synthesize titleLabel, textSurroundView, loginLabel, emailTextField, passwordTextField, loginButton, registerButton, activityIndicatorView;
 
 - (instancetype)init
 {
@@ -35,6 +36,7 @@
         backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Firework"]];
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
         
+        titleLabel = [[UILabel alloc] init];
         textSurroundView = [[UIView alloc] init];
         loginLabel = [[UILabel alloc] init];
         emailTextField = [[UITextField alloc] init];
@@ -56,6 +58,10 @@
     [super viewDidLoad];
     
     //configure views
+    titleLabel.text = @"Venue";
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.font = [UIFont systemFontOfSize:24];
+    
     loginLabel.text = @"Enter your credentials:";
     loginLabel.font = [UIFont thinFont];
     loginLabel.textColor = [UIColor venueRedColor];
@@ -93,6 +99,7 @@
     //setup view heirarchy
     [self.view addSubview:backgroundImageView];
     [backgroundImageView addSubview:blurView];
+    [blurView addSubview:titleLabel];
     [textSurroundView addSubview:emailTextField];
     [textSurroundView addSubview:passwordTextField];
     [textSurroundView addSubview:loginLabel];
@@ -111,6 +118,12 @@
     
     [blurView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(backgroundImageView);
+    }];
+    
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.blurView.mas_centerX);
+        make.top.equalTo(self.blurView.mas_top).with.offset(2*padding.top);
+        make.bottom.equalTo(self.textSurroundView.mas_top).with.offset(padding.bottom);
     }];
     
     [loginLabel mas_makeConstraints:^(MASConstraintMaker *make) {
