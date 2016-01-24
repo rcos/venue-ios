@@ -94,8 +94,7 @@
 				0C57943F1C48729300E35F4E /* AXEventViewController.h */,
 				0C5794401C48729300E35F4E /* AXEventViewController.m */,
 			);
-			name = Event;
-			path = Course;
+			path = Event;
 			sourceTree = "<group>";
 		};
 		0C5794451C4962D800E35F4E /* Login */ = {
@@ -104,16 +103,16 @@
 				0C5794461C4962FD00E35F4E /* AXLoginViewController.h */,
 				0C5794471C4962FD00E35F4E /* AXLoginViewController.m */,
 			);
-			name = Login;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		0C96B2471C377B8B000A78FB = {
 			isa = PBXGroup;
 			children = (
-				0C96B2521C377B8B000A78FB /* Venue */,
 				6B99269703627AEB211CB9DA /* Frameworks */,
 				DFDC71E64328308EEAF48F07 /* Pods */,
 				0C96B2511C377B8B000A78FB /* Products */,
+				0C96B2521C377B8B000A78FB /* Venue */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,16 +127,16 @@
 		0C96B2521C377B8B000A78FB /* Venue */ = {
 			isa = PBXGroup;
 			children = (
+				0CCEDE161C3D8C66009F8C4D /* Cells */,
+				0CCEDE211C417F76009F8C4D /* Course */,
+				0C57943E1C48727E00E35F4E /* Event */,
+				0C5794451C4962D800E35F4E /* Login */,
+				0CCEDE061C3C44EE009F8C4D /* Managers */,
+				0CCEDE021C3B4874009F8C4D /* Overview */,
+				0C96B2531C377B8B000A78FB /* Supporting Files */,
+				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
 				0C96B2561C377B8B000A78FB /* AppDelegate.h */,
 				0C96B2571C377B8B000A78FB /* AppDelegate.m */,
-				0CCEDE061C3C44EE009F8C4D /* Managers */,
-				0C5794451C4962D800E35F4E /* Login */,
-				0C57943E1C48727E00E35F4E /* Event */,
-				0CCEDE211C417F76009F8C4D /* Course */,
-				0CCEDE021C3B4874009F8C4D /* Overview */,
-				0CCEDE161C3D8C66009F8C4D /* Cells */,
-				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
-				0C96B2531C377B8B000A78FB /* Supporting Files */,
 				0C96B2591C377B8B000A78FB /* Assets.xcassets */,
 				0C96B25E1C377B8C000A78FB /* Info.plist */,
 				0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */,
@@ -170,10 +169,10 @@
 			children = (
 				0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */,
 				0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */,
-				0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */,
-				0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */,
 				0CCEDE031C3C44E8009F8C4D /* AXExec.h */,
 				0CCEDE041C3C44E8009F8C4D /* AXExec.m */,
+				0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */,
+				0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */,
 				0C1CE1071C4AE95700B95BF8 /* AXLocationExec.h */,
 				0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */,
 				0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */,
