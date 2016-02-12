@@ -25,9 +25,7 @@
 //        netExec.responseSerializer.acceptableContentTypes = [netExec.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
         
         [netExec.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [[FXKeychain defaultKeychain] objectForKey:kSessionToken]] forHTTPHeaderField:@"Authorization"];
-
         [netExec.requestSerializer setValue:[[FXKeychain defaultKeychain] objectForKey:kXSRFToken] forHTTPHeaderField:@"X-XSRF-TOKEN"];
-        
 //        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
 //        securityPolicy.allowInvalidCertificates = YES;
 //        netExec.securityPolicy = securityPolicy;

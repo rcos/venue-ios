@@ -13,6 +13,7 @@
 @end
 
 @implementation AXDetailViewController
+
 @synthesize imageView, blurView, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel;
 
 -(instancetype)init
@@ -25,7 +26,7 @@
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
         [blurView setUserInteractionEnabled:YES];
         
-        UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] init];
+        UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped:)];
         gr.delegate = self;
         gr.numberOfTapsRequired = 1;
         gr.numberOfTouchesRequired = 1;
@@ -131,12 +132,13 @@
 
 -(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"Blur Tapped");
     [UIView transitionWithView:blurView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         blurView.hidden = !blurView.hidden;
     } completion:nil];
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegateÅ
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
