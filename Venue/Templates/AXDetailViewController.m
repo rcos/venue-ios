@@ -26,7 +26,9 @@
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
         [blurView setUserInteractionEnabled:YES];
         
-        UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped:)];
+        //UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped:)];
+        
+        UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] init];
         gr.delegate = self;
         gr.numberOfTapsRequired = 1;
         gr.numberOfTouchesRequired = 1;
@@ -138,7 +140,7 @@
     } completion:nil];
 }
 
-#pragma mark - UITableViewDelegateÅ
+#pragma mark - UITableViewDelegate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

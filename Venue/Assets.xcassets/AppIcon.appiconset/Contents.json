@@ -103,6 +103,13 @@
       "scale" : "3x"
     },
     {
+      "size" : "40x40",
+      "idiom" : "watch",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "38mm"
+    },
+    {
       "size" : "44x44",
       "idiom" : "watch",
       "filename" : "42mm Long Look.png",
@@ -131,6 +138,11 @@
       "idiom" : "mac",
       "filename" : "App Store Copy.png",
       "scale" : "1x"
+    },
+    {
+      "idiom" : "mac",
+      "size" : "512x512",
+      "scale" : "2x"
     },
     {
       "size" : "60x60",
