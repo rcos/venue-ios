@@ -1,5 +1,5 @@
 # Venue iOS
-iOS application for the Venue_x platform
+iOS application for the Venue platform
 
 For the web side of this platform, see: https://github.com/rcos/venue.
 
