@@ -54,7 +54,8 @@
         }];
         
         [[AXAPI API] getCoursesWithProgressView:nil completion:^(NSArray * courses) {
-            
+            self.courses = courses;
+            [self.courseTableView reloadData];
         }];
     }
     return self;
@@ -118,7 +119,7 @@
     }
     else
     {
-        vc = [[AXCourseViewController alloc] init];
+        vc = [[AXCourseViewController alloc] initWithCourse:self.courses[indexPath.row]];
     }
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -165,7 +166,7 @@
         [object setObject:@(contentMode) forKey:@"contentMode"];
         
         AXCourseTableViewCell* cCell = (AXCourseTableViewCell*) cell;
-        [cCell configureWithDictionary:object];
+        [cCell configureWithCourse:self.courses[indexPath.row]];
     }
     
     return cell;

@@ -13,4 +13,6 @@
 
 @interface AXCourseViewController : AXDetailViewController
 
+-(instancetype)initWithCourse:(NSDictionary*)course;
+
 @end

@@ -12,6 +12,6 @@
 
 @interface AXCourseTableViewCell : AXTableViewCell
 
--(void)configureWithDictionary:(NSDictionary*)dict;
+-(void)configureWithCourse:(NSDictionary*)course;
 
 @end

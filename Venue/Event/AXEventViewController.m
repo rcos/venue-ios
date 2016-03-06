@@ -20,13 +20,11 @@
 @property MKPointAnnotation* anno;
 @property CLLocationCoordinate2D coords;
 
-@property UIProgressView* progressView;
-@property UILabel* emptyLabel;
 
 @end
 
 @implementation AXEventViewController
-@synthesize navButton, mapView, coords, anno, eventId, progressView, emptyLabel;
+@synthesize navButton, mapView, coords, anno, eventId;
 
 -(instancetype)initWithEvent:(NSDictionary*)event
 {
@@ -46,15 +44,7 @@
         anno.coordinate = coords;
         anno.title = event[@"info"][@"title"];
         
-        progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        progressView.backgroundColor = [UIColor lightGrayColor];
-        progressView.tintColor = [UIColor venueRedColor];
-        
-        emptyLabel = [[UILabel alloc] init];
-        [emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
-        [emptyLabel setTextColor:[UIColor lightGrayColor]];
-        [emptyLabel setText:@"No submissions yet"];
-        [emptyLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.emptyLabel setText:@"No submissions yet"];
         
         [self.detailTitleLabel setText:event[@"info"][@"title"]];
         [self.detailDescriptionTextView setText:event[@"info"][@"description"]];
@@ -105,25 +95,11 @@
     [self.imageView addSubview:mapView];
     [self.imageView bringSubviewToFront:self.blurView];
     [self.imageView addSubview:navButton];
-    [self.view addSubview:progressView];
-    [self.tableView addSubview:emptyLabel];
     
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
     
     [mapView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.imageView);
-    }];
-    
-    [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableView.mas_top);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.equalTo(@1);
-    }];
-    
-    [emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.tableView.mas_centerX);
-        make.centerY.equalTo(self.tableView.mas_centerY);
     }];
     
     [navButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -137,9 +113,9 @@
 
 -(void)fetchSubmissions
 {
-    [[AXAPI API] getSubmissionsWithEventId:eventId progressView:progressView completion:^(NSArray *submissions) {
+    [[AXAPI API] getSubmissionsWithEventId:eventId progressView:self.progressView completion:^(NSArray *submissions) {
         self.submissions = submissions;
-        emptyLabel.hidden = self.submissions.count > 0;
+        self.emptyLabel.hidden = self.submissions.count > 0;
         [self.tableView reloadData];
     }];
 }
@@ -179,17 +155,6 @@
 
 #pragma mark - UITableViewDelegate
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    if(section==0)return 0.00001f;
-//    return 13.0f;
-//}
-//
-//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 0;
-//}
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -197,7 +162,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    emptyLabel.hidden = (self.submissions.count != 0);
+    self.emptyLabel.hidden = (self.submissions.count != 0);
     return self.submissions.count;
 }
 

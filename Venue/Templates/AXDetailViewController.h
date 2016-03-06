@@ -17,6 +17,8 @@
 @property UILabel* detailSubtitleLabel;
 @property UITextView* detailDescriptionTextView;
 @property UILabel* tableTitleLabel;
+@property UIProgressView* progressView;
+@property UILabel* emptyLabel;
 @property UITableView* tableView;
 
 @end

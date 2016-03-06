@@ -9,16 +9,27 @@
 #import "AXCourseViewController.h"
 @interface AXCourseViewController ()
 
+@property NSString* courseId;
+@property NSArray* events;
+
 @end
 
 @implementation AXCourseViewController
+@synthesize courseId, events;
 
--(instancetype)init
+-(instancetype)initWithCourse:(NSDictionary*)course
 {
     self = [super init];
     if(self)
     {
+        courseId = course[@"_id"];
         
+        [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]]];
+        [self.detailDescriptionTextView setText:course[@"description"]];
+        [self.detailTitleLabel setText:course[@"name"]];
+        [self.imageView setImage:[UIImage imageNamed:@"Firework"]];
+        
+        [self.emptyLabel setText:@"No events yet"];
     }
     return self;
 }
@@ -35,17 +46,6 @@
 
 #pragma mark - UITableViewDelegate
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if(section==0)return 0.00001f;
-    return 13.0f;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0;
-}
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -53,7 +53,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    self.emptyLabel.hidden = (self.events.count != 0);
+    return self.events.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

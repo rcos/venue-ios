@@ -31,22 +31,19 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         sideImageView = [[UIImageView alloc] init];
-        sideImageView.backgroundColor = [UIColor blackColor];
         [self.view addSubview:sideImageView];
         
         titleLabel = [[UILabel alloc] init];
-        titleLabel.backgroundColor = [UIColor greenColor];
         [titleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
         [self.view addSubview:titleLabel];
         
         subtitleLabel = [[UILabel alloc] init];
-        subtitleLabel.backgroundColor = [UIColor blueColor];
         [subtitleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
+        [subtitleLabel setFont:[UIFont systemFontOfSize:12]];
         subtitleLabel.numberOfLines = 0;
         [self.view addSubview:subtitleLabel];
         
         classLabel = [[UILabel alloc] init];
-        classLabel.text = @"CSCI-4269";
         classLabel.textColor = [UIColor lightGrayColor];
         classLabel.font = [UIFont thinFont];
         [classLabel setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
@@ -102,9 +99,11 @@
     return self;
 }
 
--(void)configureWithDictionary:(NSDictionary*)dict
+-(void)configureWithCourse:(NSDictionary*)course;
 {
-    [eventsLabel setHidden:([dict objectForKey:@"contentMode"]==AXContentModeEvents)];
+    titleLabel.text = course[@"name"];
+    subtitleLabel.text = course[@"description"];
+    classLabel.text = [NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]];
 }
 
 @end

@@ -14,7 +14,7 @@
 
 @implementation AXDetailViewController
 
-@synthesize imageView, blurView, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel;
+@synthesize imageView, blurView, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
 
 -(instancetype)init
 {
@@ -55,6 +55,15 @@
                                                                          attributes:@{
                                                                        NSStrokeColorAttributeName : [UIColor blackColor], NSForegroundColorAttributeName : [UIColor whiteColor], NSStrokeWidthAttributeName : @-1.0 }];
         
+        progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+        progressView.backgroundColor = [UIColor lightGrayColor];
+        progressView.tintColor = [UIColor venueRedColor];
+        
+        emptyLabel = [[UILabel alloc] init];
+        [emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
+        [emptyLabel setTextColor:[UIColor lightGrayColor]];
+        [emptyLabel setTextAlignment:NSTextAlignmentCenter];
+        
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -74,6 +83,8 @@
     [blurView addSubview:detailDescriptionTextView];
     [imageView addSubview:tableTitleLabel];
     [self.view bringSubviewToFront:tableTitleLabel];
+    [self.view addSubview:progressView];
+    [self.tableView addSubview:emptyLabel];
     [self.view addSubview:self.tableView];
     
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
@@ -115,6 +126,18 @@
         make.top.equalTo(blurView.mas_bottom);
         make.left.equalTo(tableTitleLabel.superview.mas_left).with.offset(padding.left);
         make.bottom.equalTo(tableTitleLabel.superview.mas_bottom);
+    }];
+    
+    [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tableView.mas_top);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.equalTo(@1);
+    }];
+    
+    [emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.tableView.mas_centerX);
+        make.centerY.equalTo(self.tableView.mas_centerY);
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
