@@ -52,7 +52,15 @@
         submissionImageView.contentMode = UIViewContentModeScaleAspectFill;
         
         [[AXAPI API] getImageAtPath:[submission[@"images"] firstObject] completion:^(UIImage *image) {
-            [submissionImageView setImage:image];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIView transitionWithView:submissionImageView
+                                  duration:0.2
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [submissionImageView setImage:image];
+                                } completion:nil];
+            });
+            
         }];
         
 //        [submissionImageView setImageWithURL:[NSURL URLWithString:[submission[@"images"] firstObject]
