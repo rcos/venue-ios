@@ -12,4 +12,6 @@
 
 +(UIColor*)venueRedColor;
 
++(UIColor*)randomColor;
+
 @end

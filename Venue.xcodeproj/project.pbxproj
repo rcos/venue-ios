@@ -127,13 +127,12 @@
 		0C96B2521C377B8B000A78FB /* Venue */ = {
 			isa = PBXGroup;
 			children = (
-				0CCEDE161C3D8C66009F8C4D /* Cells */,
+				0CCEDE061C3C44EE009F8C4D /* Managers */,
 				0CCEDE211C417F76009F8C4D /* Course */,
 				0C57943E1C48727E00E35F4E /* Event */,
 				0C5794451C4962D800E35F4E /* Login */,
-				0CCEDE061C3C44EE009F8C4D /* Managers */,
 				0CCEDE021C3B4874009F8C4D /* Overview */,
-				0C96B2531C377B8B000A78FB /* Supporting Files */,
+				0CCEDE161C3D8C66009F8C4D /* Cells */,
 				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
 				0C96B2561C377B8B000A78FB /* AppDelegate.h */,
 				0C96B2571C377B8B000A78FB /* AppDelegate.m */,
@@ -141,6 +140,7 @@
 				0C96B25E1C377B8C000A78FB /* Info.plist */,
 				0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */,
 				0CFBCA881C42F72100303C89 /* Venue-Prefix.pch */,
+				0C96B2531C377B8B000A78FB /* Supporting Files */,
 			);
 			path = Venue;
 			sourceTree = "<group>";

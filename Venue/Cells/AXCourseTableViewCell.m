@@ -38,15 +38,15 @@
         [self.view addSubview:titleLabel];
         
         subtitleLabel = [[UILabel alloc] init];
-        [subtitleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
+        [subtitleLabel setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
         [subtitleLabel setFont:[UIFont systemFontOfSize:12]];
         subtitleLabel.numberOfLines = 0;
         [self.view addSubview:subtitleLabel];
         
         classLabel = [[UILabel alloc] init];
         classLabel.textColor = [UIColor lightGrayColor];
-        classLabel.font = [UIFont thinFont];
-        [classLabel setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
+        classLabel.font = [UIFont thinFontOfSize:17];
+        [classLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
         [self.view addSubview:classLabel];
         
         eventsLabel = [[UILabel alloc] init];
@@ -57,7 +57,6 @@
         eventsLabel.textAlignment = NSTextAlignmentCenter;
         eventsLabel.layer.cornerRadius = 8;
         eventsLabel.clipsToBounds = YES;
-
         [self.view addSubview:eventsLabel];
         
         UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
@@ -72,29 +71,29 @@
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(sideImageView.mas_right).with.offset(padding.left);
             make.top.equalTo(self.view.mas_top).with.offset(padding.top);
-            make.right.equalTo(classLabel.mas_left).with.offset(padding.right);
-            make.bottom.equalTo(subtitleLabel.mas_top).with.offset(padding.bottom);
-        }];
-        
-        [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(sideImageView.mas_right).with.offset(padding.left);
-            make.top.equalTo(titleLabel.mas_bottom).with.offset(padding.top);
-            make.right.equalTo(classLabel.mas_left).with.offset(padding.right);
-            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
+            make.right.equalTo(subtitleLabel.mas_left).with.offset(padding.right);
+            make.bottom.equalTo(classLabel.mas_top).with.offset(padding.bottom);
         }];
         
         [classLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(sideImageView.mas_right).with.offset(padding.left);
+            make.top.equalTo(titleLabel.mas_bottom).with.offset(padding.top);
+            make.right.equalTo(subtitleLabel.mas_left).with.offset(padding.right);
+            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
+        }];
+        
+        [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(titleLabel.mas_right).with.offset(padding.left);
             make.top.equalTo(self.view.mas_top).with.offset(padding.top);
             make.right.equalTo(self.view.mas_right);
         }];
         
-        [eventsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(classLabel.mas_left);
-            make.right.equalTo(classLabel.mas_right);
-            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
-            make.height.equalTo(@16);
-        }];
+//        [eventsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(subtitleLabel.mas_left);
+//            make.right.equalTo(subtitleLabel.mas_right);
+//            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
+//            make.height.equalTo(@16);
+//        }];
     }
     return self;
 }
@@ -102,8 +101,9 @@
 -(void)configureWithCourse:(NSDictionary*)course;
 {
     titleLabel.text = course[@"name"];
-    subtitleLabel.text = course[@"description"];
+    //subtitleLabel.text = course[@"description"];
     classLabel.text = [NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]];
+    sideImageView.backgroundColor = [UIColor randomColor];
 }
 
 @end
