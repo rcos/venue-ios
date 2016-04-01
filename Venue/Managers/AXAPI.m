@@ -156,6 +156,24 @@
     }];
 }
 
+
+//TODO: THIS GIVES 500
+-(void)getMySubmissionsWithEventId:(NSString*)eventId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* submissions))completion
+{
+    [self GET:[NSString stringWithFormat:@"/api/submissions?onlyStudent=me&onlySectionEvent=%@?", eventId] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+            });
+        }
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completion(responseObject);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil);
+    }];
+}
+
 -(void)getImageAtPath:(NSString*)path completion:(void(^)(UIImage* image))completion
 {
     AFImageDownloader* imageDownloader = [[AFImageDownloader alloc] initWithSessionManager:self downloadPrioritization:AFImageDownloadPrioritizationFIFO maximumActiveDownloads:10 imageCache:nil];

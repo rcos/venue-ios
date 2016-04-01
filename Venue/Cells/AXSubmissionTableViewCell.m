@@ -51,12 +51,12 @@
         submissionImageView.clipsToBounds = YES;
         submissionImageView.contentMode = UIViewContentModeScaleAspectFill;
         
-//        [[AXAPI API] getImageAtPath:[submission[@"images"] firstObject] completion:^(UIImage *image) {
-//            [submissionImageView setImage:image];
-//        }];
+        [[AXAPI API] getImageAtPath:[submission[@"images"] firstObject] completion:^(UIImage *image) {
+            [submissionImageView setImage:image];
+        }];
         
-        [submissionImageView setImageWithURL:[NSURL URLWithString:[submission[@"images"] firstObject]
-                                                    relativeToURL:[NSURL URLWithString:baseURL]]];
+//        [submissionImageView setImageWithURL:[NSURL URLWithString:[submission[@"images"] firstObject]
+//                                                    relativeToURL:[NSURL URLWithString:baseURL]]];
         
         [self.view addSubview:submissionImageView];
         

@@ -77,6 +77,7 @@
         [navButton setImage:[UIImage imageNamed:@"NavIcon"] forState:UIControlStateNormal];
         
         [self fetchSubmissions];
+        [self checkIfSubmittedBefore];
     }
     return self;
 }
@@ -110,6 +111,20 @@
 }
 
 #pragma mark - Check In
+
+-(void)checkIfSubmittedBefore
+{
+    [[AXAPI API] getMySubmissionsWithEventId:eventId progressView:nil completion:^(NSArray *submissions) {
+        if(submissions.count == 0)
+        {
+            //No submissions from us.
+        }
+        else
+        {
+            //We've submitted before.
+        }
+    }];
+}
 
 -(void)fetchSubmissions
 {

@@ -1,24 +1,24 @@
 PODS:
-  - AFNetworking (3.0.4):
-    - AFNetworking/NSURLSession (= 3.0.4)
-    - AFNetworking/Reachability (= 3.0.4)
-    - AFNetworking/Security (= 3.0.4)
-    - AFNetworking/Serialization (= 3.0.4)
-    - AFNetworking/UIKit (= 3.0.4)
-  - AFNetworking/NSURLSession (3.0.4):
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.0.4)
-  - AFNetworking/Security (3.0.4)
-  - AFNetworking/Serialization (3.0.4)
-  - AFNetworking/UIKit (3.0.4):
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - DBCamera (2.4.1):
     - GPUImage (~> 0.1)
   - FXKeychain (1.5.3)
   - GPUImage (0.1.7)
-  - Masonry (0.6.4)
+  - Masonry (1.0.0)
 
 DEPENDENCIES:
   - AFNetworking
@@ -27,10 +27,10 @@ DEPENDENCIES:
   - Masonry
 
 SPEC CHECKSUMS:
-  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DBCamera: 7a4343a541e1264610f9f33176552b93170a843e
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
-  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
 
 COCOAPODS: 0.39.0
