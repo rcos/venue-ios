@@ -13,8 +13,7 @@
 #import "AXAPI.h"
 
 @interface AXOverviewViewController ()
-@property UITableView* courseTableView;
-@property UITableView* eventTableView;
+@property UITableView* tableView;
 @property AXContentSelectionToolbar* modeToolBar;
 @property UIProgressView* progressView;
 @property AXContentMode contentMode;
@@ -31,31 +30,28 @@
     self = [super init];
     if(self)
     {
-        self.eventTableView = [[UITableView alloc] init];
-        self.eventTableView.delegate = self;
-        self.eventTableView.dataSource = self;
         
-        self.courseTableView = [[UITableView alloc] init];
-        self.courseTableView.delegate = self;
-        self.courseTableView.dataSource = self;
-        self.courseTableView.hidden = YES;
+        self.tableView = [[UITableView alloc] init];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         progressView.backgroundColor = [UIColor lightGrayColor];
         progressView.tintColor = [UIColor venueRedColor];
         
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
-        
+    
         contentMode = AXContentModeEvents;
         
         [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
             self.events = events;
-            [self.eventTableView reloadData];
+            if(contentMode == AXContentModeEvents)[self.tableView reloadData];
         }];
         
         [[AXAPI API] getCoursesWithProgressView:nil completion:^(NSArray * courses) {
             self.courses = courses;
-            [self.courseTableView reloadData];
+            if(contentMode == AXContentModeCourses)[self.tableView reloadData];
         }];
     }
     return self;
@@ -68,8 +64,7 @@
     [self.view addSubview:modeToolBar];
     [self.view bringSubviewToFront:modeToolBar];
     [self.view addSubview:progressView];
-    [self.view addSubview:self.eventTableView];
-    [self.view addSubview:self.courseTableView];
+    [self.view addSubview:self.tableView];
 
     [modeToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_top);
@@ -85,14 +80,7 @@
         make.height.equalTo(@1);
     }];
     
-    [self.eventTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(modeToolBar.mas_bottom);
-        make.bottom.equalTo(self.view.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-    }];
-    
-    [self.courseTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(modeToolBar.mas_bottom);
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
@@ -113,7 +101,7 @@
 {
     self.title = @"";
     AXDetailViewController* vc;
-    if(tableView == self.eventTableView)
+    if(contentMode)
     {
         vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
     }
@@ -131,7 +119,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (tableView == self.eventTableView ? self.events.count : self.courses.count);
+    return (contentMode ? self.events.count : self.courses.count);
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -141,32 +129,26 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AXTableViewCell* cell;
+    AXCourseTableViewCell* cell;
     
-    if(tableView == self.eventTableView)
+    cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
+    if(!cell)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:[AXEventTableViewCell reuseIdentifier]];
-        if(!cell)
-        {
-            cell = [[AXEventTableViewCell alloc] init];
-        }
-        
-        AXEventTableViewCell* eCell = (AXEventTableViewCell*) cell;
-        [eCell configureWithEvent:self.events[indexPath.row]];
+        cell = [[AXCourseTableViewCell alloc] init];
+    }
+    
+    NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
+    [object setObject:@(contentMode) forKey:@"contentMode"];
+    
+    
+    
+    if(contentMode == AXContentModeEvents)
+    {
+        [cell configureWithEvent:self.events[indexPath.row]];
     }
     else
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
-        if(!cell)
-        {
-            cell = [[AXCourseTableViewCell alloc] init];
-        }
-        
-        NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
-        [object setObject:@(contentMode) forKey:@"contentMode"];
-        
-        AXCourseTableViewCell* cCell = (AXCourseTableViewCell*) cell;
-        [cCell configureWithCourse:self.courses[indexPath.row]];
+        [cell configureWithCourse:self.courses[indexPath.row]];
     }
     
     return cell;
@@ -177,11 +159,12 @@
 -(void)contentModeDidChange:(AXContentMode)mode
 {
     contentMode = mode;
+    [self.tableView reloadData];
     
-    [UIView transitionWithView:self.view duration:.25 options:0 animations:^{
-        self.eventTableView.hidden = !(contentMode == AXContentModeEvents);
-        self.courseTableView.hidden = (contentMode == AXContentModeEvents);
-    } completion:nil];
+//    [UIView transitionWithView:self.view duration:.25 options:0 animations:^{
+//        self.eventTableView.hidden = !(contentMode == AXContentModeEvents);
+//        self.tableView.hidden = (contentMode == AXContentModeEvents);
+//    } completion:nil];
     
     
 }

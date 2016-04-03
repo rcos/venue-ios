@@ -11,6 +11,7 @@
 @interface AXCourseTableViewCell ()
 
 @property UIImageView* sideImageView;
+@property UIView* slideView;
 @property UILabel* titleLabel;
 @property UILabel* subtitleLabel;
 @property UILabel* classLabel;
@@ -19,19 +20,26 @@
 @end
 
 @implementation AXCourseTableViewCell
-@synthesize sideImageView, titleLabel, subtitleLabel, classLabel, eventsLabel;
+@synthesize sideImageView, slideView, titleLabel, subtitleLabel, classLabel, eventsLabel;
 
 -(instancetype)init
 {
     self = [super init];
     if(self)
     {
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         sideImageView = [[UIImageView alloc] init];
         [self.view addSubview:sideImageView];
+        
+        slideView = [[UIView alloc] initWithFrame:self.view.frame];
+        slideView.alpha = .8;
+        slideView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:slideView];
+        
+        
         
         titleLabel = [[UILabel alloc] init];
         [titleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
@@ -61,25 +69,35 @@
         
         UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
         
+//        [sideImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(self.view.mas_left);
+//            make.top.equalTo(self.view.mas_top);
+//            make.bottom.equalTo(self.view.mas_bottom);
+//            make.width.equalTo(@30);
+//        }];
         [sideImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view.mas_left);
-            make.top.equalTo(self.view.mas_top);
-            make.bottom.equalTo(self.view.mas_bottom);
-            make.width.equalTo(@30);
+            make.edges.equalTo(self.view);
+        }];
+        
+        [slideView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_left).with.offset(3*padding.left);
+            make.top.equalTo(self.view.mas_top).with.offset(padding.top);
+            make.right.equalTo(self.view.mas_right);
+            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
         }];
         
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(sideImageView.mas_right).with.offset(padding.left);
-            make.top.equalTo(self.view.mas_top).with.offset(padding.top);
+            make.left.equalTo(slideView.mas_left).with.offset(padding.left);
+            //make.top.equalTo(self.view.mas_top).with.offset(padding.top);
             make.right.equalTo(subtitleLabel.mas_left).with.offset(padding.right);
-            make.bottom.equalTo(classLabel.mas_top).with.offset(padding.bottom);
+            make.bottom.equalTo(self.view.mas_centerY).with.offset(padding.bottom);
         }];
         
         [classLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(sideImageView.mas_right).with.offset(padding.left);
+            make.left.equalTo(slideView.mas_left).with.offset(padding.left);
             make.top.equalTo(titleLabel.mas_bottom).with.offset(padding.top);
             make.right.equalTo(subtitleLabel.mas_left).with.offset(padding.right);
-            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
+            //make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
         }];
         
         [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,15 +112,34 @@
 //            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
 //            make.height.equalTo(@16);
 //        }];
+        
+//        CAShapeLayer * maskLayer = [CAShapeLayer layer];
+//        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect:slideView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:(CGSize){6.0, 6.0}].CGPath;
+//        slideView.layer.mask = maskLayer;
+
     }
     return self;
 }
 
--(void)configureWithCourse:(NSDictionary*)course;
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+}
+
+-(void)configureWithCourse:(NSDictionary*)course
 {
     titleLabel.text = course[@"name"];
     //subtitleLabel.text = course[@"description"];
     classLabel.text = [NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]];
+    sideImageView.backgroundColor = [UIColor randomColor];
+}
+
+-(void)configureWithEvent:(NSDictionary*)event
+{
+    titleLabel.text = event[@"title"];
+    //subtitleLabel.text = course[@"description"];
+    
+    classLabel.text = [NSString stringWithFormat:@"%@-%@", event[@"department"], event[@"courseNumber"]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 

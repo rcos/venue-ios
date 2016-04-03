@@ -13,5 +13,6 @@
 @interface AXCourseTableViewCell : AXTableViewCell
 
 -(void)configureWithCourse:(NSDictionary*)course;
+-(void)configureWithEvent:(NSDictionary*)event;
 
 @end
