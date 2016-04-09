@@ -32,10 +32,11 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         sideImageView = [[UIImageView alloc] init];
+//        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
         [self.view addSubview:sideImageView];
         
         slideView = [[UIView alloc] initWithFrame:self.view.frame];
-        slideView.alpha = .8;
+        slideView.alpha = .9;
         slideView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:slideView];
         
