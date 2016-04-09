@@ -119,7 +119,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (contentMode ? self.events.count : self.courses.count);
+    return (contentMode ? self.courses.count : self.events.count);
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -136,10 +136,29 @@
 
 -(void)configureWithEvent:(NSDictionary*)event
 {
-    titleLabel.text = event[@"title"];
+    titleLabel.text = event[@"info"][@"title"];
     //subtitleLabel.text = course[@"description"];
-    
-    classLabel.text = [NSString stringWithFormat:@"%@-%@", event[@"department"], event[@"courseNumber"]];
+    NSArray* times = event[@"info"][@"times"];
+    if(times.count > 0)
+    {
+        NSDictionary* time = [times firstObject];
+        NSString* start = time[@"start"];
+        NSString* end = time[@"end"];
+        
+        NSDateFormatter* df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
+        
+        NSDate* startDate = [df dateFromString:start];
+        NSDate* endDate = [df dateFromString:end];
+        
+        [df setDateFormat:@"MM/dd h:mma"];
+        NSString* startTime = [df stringFromDate:startDate];
+        [df setDateFormat:@"h:mma"];
+        NSString* endTime = [df stringFromDate:endDate];
+        
+        [classLabel setText:[NSString stringWithFormat:@"%@ - %@", startTime, endTime]];
+    }
+//    classLabel.text = [NSString stringWithFormat:@"%@-%@", event[@"department"], event[@"courseNumber"]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 
