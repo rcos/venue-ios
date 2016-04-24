@@ -35,7 +35,7 @@
 //        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
         [self.view addSubview:sideImageView];
         
-        slideView = [[UIView alloc] initWithFrame:self.view.frame];
+        slideView = [[UIView alloc] init];
         slideView.alpha = .9;
         slideView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:slideView];

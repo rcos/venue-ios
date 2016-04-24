@@ -14,7 +14,7 @@
 
 @implementation AXDetailViewController
 
-@synthesize imageView, blurView, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
+@synthesize imageView, blurView, tapButton, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
 
 -(instancetype)init
 {
@@ -26,14 +26,9 @@
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
         [blurView setUserInteractionEnabled:YES];
         
-        //UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped:)];
-        
-        UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] init];
-        gr.delegate = self;
-        gr.numberOfTapsRequired = 1;
-        gr.numberOfTouchesRequired = 1;
-        gr.cancelsTouchesInView = NO;
-        [blurView addGestureRecognizer:gr];
+        tapButton = [[UIButton alloc] init];
+        [tapButton addTarget:self action:@selector(blurViewTapped) forControlEvents:UIControlEventTouchUpInside];
+        [tapButton setBackgroundColor:[UIColor clearColor]];
         
         detailTitleLabel = [[UILabel alloc] init];
         [detailTitleLabel setTextColor:[UIColor whiteColor]];
@@ -81,6 +76,7 @@
     [blurView addSubview:detailTitleLabel];
     [blurView addSubview:detailSubtitleLabel];
     [blurView addSubview:detailDescriptionTextView];
+    [blurView addSubview:tapButton];
     [imageView addSubview:tableTitleLabel];
     [self.view bringSubviewToFront:tableTitleLabel];
     [self.view addSubview:progressView];
@@ -101,6 +97,10 @@
         make.left.equalTo(blurView.superview.mas_left);
         make.right.equalTo(blurView.superview.mas_right);
         make.bottom.equalTo(blurView.superview.mas_bottom).with.offset(-44);
+    }];
+    
+    [tapButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(blurView);
     }];
     
    [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -155,7 +155,7 @@
 
 #pragma mark - UIGestureRecognizer
 
--(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+-(void)blurViewTapped
 {
     NSLog(@"Blur Tapped");
     [UIView transitionWithView:blurView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{

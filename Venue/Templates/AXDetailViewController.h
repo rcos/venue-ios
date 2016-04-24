@@ -13,6 +13,7 @@
 
 @property UIImageView* imageView;
 @property UIVisualEffectView* blurView;
+@property UIButton* tapButton;
 @property UILabel* detailTitleLabel;
 @property UILabel* detailSubtitleLabel;
 @property UITextView* detailDescriptionTextView;
