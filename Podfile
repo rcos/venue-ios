@@ -4,7 +4,6 @@
 # use_frameworks!
 
 target 'Venue' do
-pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod "Masonry"
 pod "AFNetworking"
 pod "FXKeychain"
