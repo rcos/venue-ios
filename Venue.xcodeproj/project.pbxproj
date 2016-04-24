@@ -109,10 +109,10 @@
 		0C96B2471C377B8B000A78FB = {
 			isa = PBXGroup;
 			children = (
+				0C96B2521C377B8B000A78FB /* Venue */,
 				6B99269703627AEB211CB9DA /* Frameworks */,
 				DFDC71E64328308EEAF48F07 /* Pods */,
 				0C96B2511C377B8B000A78FB /* Products */,
-				0C96B2521C377B8B000A78FB /* Venue */,
 			);
 			sourceTree = "<group>";
 		};
@@ -481,6 +481,7 @@
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CODE_SIGN_FLAGS = "-Wall -Werror";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -495,6 +496,7 @@
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CODE_SIGN_FLAGS = "-Wall -Werror";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
