@@ -14,13 +14,12 @@
 @property UIView* slideView;
 @property UILabel* titleLabel;
 @property UILabel* subtitleLabel;
-@property UILabel* classLabel;
 @property UILabel* eventsLabel;
 
 @end
 
 @implementation AXCourseTableViewCell
-@synthesize sideImageView, slideView, titleLabel, subtitleLabel, classLabel, eventsLabel;
+@synthesize sideImageView, slideView, titleLabel, subtitleLabel, eventsLabel;
 
 -(instancetype)init
 {
@@ -45,16 +44,10 @@
         [self.view addSubview:titleLabel];
         
         subtitleLabel = [[UILabel alloc] init];
-        [subtitleLabel setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
-        [subtitleLabel setFont:[UIFont systemFontOfSize:12]];
-        subtitleLabel.numberOfLines = 0;
+        subtitleLabel.textColor = [UIColor lightGrayColor];
+        subtitleLabel.font = [UIFont thinFontOfSize:17];
+        [subtitleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
         [self.view addSubview:subtitleLabel];
-        
-        classLabel = [[UILabel alloc] init];
-        classLabel.textColor = [UIColor lightGrayColor];
-        classLabel.font = [UIFont thinFontOfSize:17];
-        [classLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
-        [self.view addSubview:classLabel];
         
         eventsLabel = [[UILabel alloc] init];
         eventsLabel.font = [UIFont systemFontOfSize:10];
@@ -82,21 +75,15 @@
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(slideView.mas_left).with.offset(padding.left);
             //make.top.equalTo(self.view.mas_top).with.offset(padding.top);
-            make.right.equalTo(subtitleLabel.mas_left).with.offset(padding.right*2);
+            make.right.equalTo(self.view).with.offset(padding.right*2);
             make.bottom.equalTo(self.view.mas_centerY).with.offset(padding.bottom);
         }];
         
-        [classLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(slideView.mas_left).with.offset(padding.left);
             make.top.equalTo(titleLabel.mas_bottom).with.offset(padding.top);
-            make.right.equalTo(subtitleLabel.mas_left).with.offset(padding.right*2);
+            make.right.equalTo(titleLabel).with.offset(padding.right*2);
             //make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
-        }];
-        
-        [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(titleLabel.mas_right).with.offset(padding.left);
-            make.top.equalTo(self.view.mas_top).with.offset(padding.top);
-            make.right.equalTo(self.view.mas_right).offset(padding.right*2);
         }];
         
 //        [eventsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -120,7 +107,7 @@
 {
     titleLabel.text = course[@"name"];
     //subtitleLabel.text = course[@"description"];
-    classLabel.text = [NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]];
+    subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 
@@ -146,9 +133,9 @@
         [df setDateFormat:@"h:mma"];
         NSString* endTime = [df stringFromDate:endDate];
         
-        [classLabel setText:[NSString stringWithFormat:@"%@ - %@", startTime, endTime]];
+        [subtitleLabel setText:[NSString stringWithFormat:@"%@ - %@", startTime, endTime]];
     }
-//    classLabel.text = [NSString stringWithFormat:@"%@-%@", event[@"department"], event[@"courseNumber"]];
+//    subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", event[@"department"], event[@"courseNumber"]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 
