@@ -267,7 +267,7 @@
 				TargetAttributes = {
 					0C96B24F1C377B8B000A78FB = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 226W9978N7;
+						DevelopmentTeam = 7GFV5Z2W8L;
 					};
 				};
 			};
@@ -480,6 +480,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;
@@ -499,6 +500,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;

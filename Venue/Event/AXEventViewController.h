@@ -7,12 +7,9 @@
 //
 
 #import "AXDetailViewController.h"
-#import <DBCamera/DBCameraViewController.h>
-#import <DBCamera/DBCameraContainerViewController.h>
-#import <DBCamera/DBCameraView.h>
 #import <MapKit/MapKit.h>
 
-@interface AXEventViewController : AXDetailViewController <DBCameraViewControllerDelegate>
+@interface AXEventViewController : AXDetailViewController
 
 -(instancetype)initWithEvent:(NSDictionary*)event;
 
