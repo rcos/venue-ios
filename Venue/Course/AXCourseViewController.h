@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AXDetailViewController.h"
-#import "AXEventTableViewCell.h"
+#import "AXCourseTableViewCell.h"
 
 
 @interface AXCourseViewController : AXDetailViewController

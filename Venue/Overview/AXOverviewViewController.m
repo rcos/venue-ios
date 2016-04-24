@@ -101,7 +101,7 @@
 {
     self.title = @"";
     AXDetailViewController* vc;
-    if(contentMode)
+    if(!contentMode)
     {
         vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
     }

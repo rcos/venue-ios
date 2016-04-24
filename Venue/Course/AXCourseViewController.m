@@ -60,12 +60,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell* cell =  [tableView dequeueReusableCellWithIdentifier:[AXEventTableViewCell reuseIdentifier]];
+    AXCourseTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
     
     if(!cell)
     {
-        cell = [[AXEventTableViewCell alloc] init];
+        cell = [[AXCourseTableViewCell alloc] init];
     }
+    
+    [cell configureWithEvent:self.events[indexPath.row]];
     
     return cell;
 }
