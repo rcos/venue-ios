@@ -72,11 +72,11 @@
     self.view.backgroundColor = [UIColor venueRedColor];
     
     [self.view addSubview:imageView];
+    [self.view addSubview:tapButton];
     [imageView addSubview:blurView];
-    [blurView addSubview:detailTitleLabel];
-    [blurView addSubview:detailSubtitleLabel];
-    [blurView addSubview:detailDescriptionTextView];
-    [blurView addSubview:tapButton];
+    [blurView.contentView addSubview:detailTitleLabel];
+    [blurView.contentView addSubview:detailSubtitleLabel];
+    [blurView.contentView addSubview:detailDescriptionTextView];
     [imageView addSubview:tableTitleLabel];
     [self.view bringSubviewToFront:tableTitleLabel];
     [self.view addSubview:progressView];
@@ -100,7 +100,7 @@
     }];
     
     [tapButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(blurView);
+        make.edges.equalTo(imageView);
     }];
     
    [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

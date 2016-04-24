@@ -16,15 +16,18 @@ PODS:
     - AFNetworking/NSURLSession
   - FXKeychain (1.5.3)
   - Masonry (1.0.0)
+  - Reveal-iOS-SDK (1.6.2)
 
 DEPENDENCIES:
   - AFNetworking
   - FXKeychain
   - Masonry
+  - Reveal-iOS-SDK
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
+  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
 
 COCOAPODS: 0.39.0
