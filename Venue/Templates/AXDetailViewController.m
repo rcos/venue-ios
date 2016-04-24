@@ -14,7 +14,7 @@
 
 @implementation AXDetailViewController
 
-@synthesize imageView, blurView, tapButton, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
+@synthesize imageView, detailContainerView, blurView, tapButton, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
 
 -(instancetype)init
 {
@@ -22,6 +22,8 @@
     if(self)
     {
         imageView = [[UIImageView alloc] init];
+        
+        detailContainerView = [[UIView alloc] init];
         
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
         [blurView setUserInteractionEnabled:YES];
@@ -72,13 +74,14 @@
     self.view.backgroundColor = [UIColor venueRedColor];
     
     [self.view addSubview:imageView];
+    [self.view addSubview:detailContainerView];
     [self.view addSubview:tapButton];
-    [imageView addSubview:blurView];
-    [blurView.contentView addSubview:detailTitleLabel];
-    [blurView.contentView addSubview:detailSubtitleLabel];
-    [blurView.contentView addSubview:detailDescriptionTextView];
-    [imageView addSubview:tableTitleLabel];
-    [self.view bringSubviewToFront:tableTitleLabel];
+    [detailContainerView addSubview:blurView];
+    [detailContainerView insertSubview:detailTitleLabel aboveSubview:blurView];
+    [detailContainerView insertSubview:detailSubtitleLabel aboveSubview:blurView];
+    [detailContainerView insertSubview:detailDescriptionTextView aboveSubview:blurView];
+//    [self.view addSubview:tableTitleLabel];
+//    [self.view bringSubviewToFront:tableTitleLabel];
     [self.view addSubview:progressView];
     [self.tableView addSubview:emptyLabel];
     [self.view addSubview:self.tableView];
@@ -92,11 +95,15 @@
         make.bottom.equalTo(self.view.mas_centerY);
     }];
     
+    [detailContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(imageView);
+    }];
+    
     [blurView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(blurView.superview.mas_top);
-        make.left.equalTo(blurView.superview.mas_left);
-        make.right.equalTo(blurView.superview.mas_right);
-        make.bottom.equalTo(blurView.superview.mas_bottom).with.offset(-44);
+        make.top.equalTo(self.imageView.mas_top);
+        make.left.equalTo(self.imageView.mas_left);
+        make.right.equalTo(self.imageView.mas_right);
+        make.bottom.equalTo(self.imageView).with.offset(-44);
     }];
     
     [tapButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -104,29 +111,29 @@
     }];
     
    [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-       make.top.equalTo(detailTitleLabel.superview.mas_top).with.offset(padding.top);
-       make.left.equalTo(detailTitleLabel.superview.mas_left).with.offset(padding.left);
+       make.top.equalTo(detailContainerView.mas_top).with.offset(padding.top);
+       make.left.equalTo(detailContainerView.mas_left).with.offset(padding.left);
        make.right.equalTo(detailSubtitleLabel.mas_left).with.offset(padding.right);
    }];
     
     [detailSubtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(detailSubtitleLabel.superview.mas_top).with.offset(padding.top);
+        make.top.equalTo(detailContainerView.mas_top).with.offset(padding.top);
         make.left.equalTo(detailTitleLabel.mas_right).with.offset(padding.left);
-        make.right.equalTo(detailSubtitleLabel.superview.mas_right).with.offset(padding.right);
+        make.right.equalTo(detailContainerView.mas_right).with.offset(padding.right);
     }];
     
     [detailDescriptionTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(detailTitleLabel.mas_bottom).with.offset(padding.top);
-        make.left.equalTo(detailDescriptionTextView.superview.mas_left).with.offset(padding.left);
-        make.right.equalTo(detailDescriptionTextView.superview.mas_right).with.offset(padding.right);
-        make.bottom.equalTo(detailDescriptionTextView.superview.mas_bottom).with.offset(padding.bottom);
+        make.left.equalTo(detailContainerView.mas_left).with.offset(padding.left);
+        make.right.equalTo(detailContainerView.mas_right).with.offset(padding.right);
+        make.bottom.equalTo(detailContainerView.mas_bottom).with.offset(padding.bottom);
     }];
     
-    [tableTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(blurView.mas_bottom);
-        make.left.equalTo(tableTitleLabel.superview.mas_left).with.offset(padding.left);
-        make.bottom.equalTo(tableTitleLabel.superview.mas_bottom);
-    }];
+//    [tableTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+////        make.top.equalTo(detailContainerView.mas_bottom);
+//        make.left.equalTo(self.view.mas_left).with.offset(padding.left);
+//        make.bottom.equalTo(self.tableView.mas_top).with.offset(padding.bottom);
+//    }];
     
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.tableView.mas_top);
@@ -159,7 +166,7 @@
 {
     NSLog(@"Blur Tapped");
     [UIView transitionWithView:blurView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        blurView.hidden = !blurView.hidden;
+        detailContainerView.hidden = !detailContainerView.hidden;
     } completion:nil];
 }
 

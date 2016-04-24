@@ -12,6 +12,7 @@
 @interface AXDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property UIImageView* imageView;
+@property UIView* detailContainerView;
 @property UIVisualEffectView* blurView;
 @property UIButton* tapButton;
 @property UILabel* detailTitleLabel;

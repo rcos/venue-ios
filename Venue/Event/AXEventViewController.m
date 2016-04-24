@@ -93,9 +93,8 @@
     [mapView addAnnotation:anno];
     [mapView setRegion:MKCoordinateRegionMake(coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
     
-    [self.imageView addSubview:mapView];
-    [self.imageView bringSubviewToFront:self.blurView];
-    [self.imageView addSubview:navButton];
+    [self.view insertSubview:mapView belowSubview:self.detailContainerView];
+    [self.view insertSubview:navButton aboveSubview:mapView];
     
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
     
@@ -104,9 +103,9 @@
     }];
     
     [navButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.blurView.mas_bottom);
+//        make.top.equalTo(self.blurView.mas_bottom);
         make.right.equalTo(self.view.mas_right).with.offset(padding.right);
-        make.bottom.equalTo(self.tableView.mas_top);
+        make.bottom.equalTo(self.tableView.mas_top).with.offset(padding.bottom);
     }];
 }
 

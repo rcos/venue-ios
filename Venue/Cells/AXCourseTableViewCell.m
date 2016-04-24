@@ -32,7 +32,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         sideImageView = [[UIImageView alloc] init];
-//        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
+        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
         [self.view addSubview:sideImageView];
         
         slideView = [[UIView alloc] init];
