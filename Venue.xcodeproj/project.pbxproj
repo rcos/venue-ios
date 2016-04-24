@@ -481,9 +481,13 @@
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "-Wall -Werror";
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Werror",
+				);
 			};
 			name = Debug;
 		};
@@ -496,9 +500,13 @@
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "-Wall -Werror";
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jimboulter.Venue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Werror",
+				);
 			};
 			name = Release;
 		};
