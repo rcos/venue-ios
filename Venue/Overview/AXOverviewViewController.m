@@ -30,7 +30,6 @@
     self = [super init];
     if(self)
     {
-        
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -86,6 +85,15 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
     }];
+    
+    //Hide the shadow underneath the navigation bar
+    for (UIView *view in self.navigationController.navigationBar.subviews) {
+        for (UIView *subview in view.subviews) {
+            if ([subview isKindOfClass:[UIImageView class]]) {
+                subview.alpha = 0;
+            }
+        }
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
