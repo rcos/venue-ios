@@ -10,7 +10,7 @@
 
 @interface AXTableViewCell : UITableViewCell
 
-+(NSString*)reuseIdentifier;
++(NSString*)jim_reuseIdentifier;
 
 @property UIView* view;
 

@@ -15,6 +15,8 @@
 
 @end
 
+static const int kSegmentedControlOffset = 30;
+
 @implementation AXContentSelectionToolbar
 @synthesize segmentedControl;
 
@@ -41,8 +43,10 @@
         
         [self addSubview:segmentedControl];
         [segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.mas_centerX);
-            make.centerY.equalTo(self.mas_centerY);
+            make.centerX.equalTo(self);
+            make.centerY.equalTo(self);
+            make.left.equalTo(self).offset(kSegmentedControlOffset);
+            make.right.equalTo(self).offset(-kSegmentedControlOffset);
         }];
     }
     return self;

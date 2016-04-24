@@ -12,7 +12,7 @@
 
 -(instancetype)init
 {
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[AXTableViewCell reuseIdentifier]];
+    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[AXTableViewCell jim_reuseIdentifier]];
     if(self)
     {
         self.view = self.contentView;
@@ -20,8 +20,7 @@
     return self;
 }
 
-+(NSString*)reuseIdentifier
-{
++(NSString*)jim_reuseIdentifier {
     return NSStringFromClass([self class]);
 }
 
