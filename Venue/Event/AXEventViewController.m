@@ -10,7 +10,7 @@
 #import "AXAPI.h"
 #import "AXSubmissionTableViewCell.h"
 
-@interface AXEventViewController ()
+@interface AXEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property UIButton* navButton;
 @property NSArray* submissions;
@@ -137,35 +137,24 @@
 
 -(void)checkIn
 {
-    DBCameraViewController *cameraController = [DBCameraViewController initWithDelegate:self];
-    [cameraController setUseCameraSegue:NO];
-    
-    DBCameraContainerViewController *container = [[DBCameraContainerViewController alloc] initWithDelegate:self cameraSettingsBlock:^(DBCameraView *cameraView, id container) {
-        [cameraView.photoLibraryButton setHidden:YES];
-    }];
-    [container setCameraViewController:cameraController];
-    
-    [container setFullScreenMode];
-    [container setTintColor:[UIColor venueRedColor]];
-    
-    UINavigationController* cameraVC = [[UINavigationController alloc] initWithRootViewController:container];
-    [cameraVC setNavigationBarHidden:YES];
-    [self presentViewController:cameraVC animated:YES completion:nil];
+    UIImagePickerController *camera = [[UIImagePickerController alloc] init];
+    camera.sourceType = ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == YES) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
+    camera.delegate = self;
+    [self presentViewController:camera animated:YES completion:nil];
 }
 
-#pragma mark - DBCameraViewControllerDelegate
+#pragma mark - UIImagePickerController Delegate
 
--(void)camera:(id)cameraViewController didFinishWithImage:(UIImage *)image withMetadata:(NSDictionary *)metadata
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.05f);
+    UIImage *image = [UIImage imageWithData:imageData];
+    
     [[AXAPI API] verifySubmissionForEventId:eventId WithImage:image completion:^(BOOL success) {
-        [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
         [self fetchSubmissions];
     }];
-}
-
--(void)dismissCamera:(id)cameraViewController
-{
-    [cameraViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDelegate

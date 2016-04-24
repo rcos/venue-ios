@@ -7,6 +7,5 @@ target 'Venue' do
 pod "Masonry"
 pod "AFNetworking"
 pod "FXKeychain"
-pod "DBCamera"
 end
 
