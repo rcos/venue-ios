@@ -203,7 +203,8 @@
         NSData* data = UIImageJPEGRepresentation(image, 1);
         [self POST:@"/api/submissions" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             [formData appendPartWithFileData:data name:@"files[0]" fileName:@"img.jpg" mimeType:@"image/jpeg"];
-        } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        }
+        progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             completion(1);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             completion(0);

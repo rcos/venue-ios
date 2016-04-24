@@ -36,7 +36,6 @@
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        progressView.backgroundColor = [UIColor lightGrayColor];
         progressView.tintColor = [UIColor venueRedColor];
         
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
