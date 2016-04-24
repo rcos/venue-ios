@@ -19,24 +19,25 @@
 -(void)setLoggedIn
 {
     [AXLocationExec exec];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [self.window setRootViewController:[[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]]];
+                        [self.window setRootViewController:navigationController];
                     } completion:nil];
 
 }
 
 -(void)setLoggedOut
 {
-    
     [[AXAPI API] logOut];
+    AXLoginViewController *viewController = [[AXLoginViewController alloc] init];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [self.window setRootViewController:[[AXLoginViewController alloc] init]];
+                        [self.window setRootViewController:viewController];
                     } completion:nil];
 }
 
