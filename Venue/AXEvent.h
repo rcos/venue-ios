@@ -20,6 +20,7 @@
 @property NSString* endTime;
 @property NSString* imageUrl;
 @property CLLocationCoordinate2D coords;
+@property NSString* address;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dict;
 

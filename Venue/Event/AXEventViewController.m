@@ -52,6 +52,7 @@
                                                                                       NSStrokeColorAttributeName : [UIColor blackColor], NSForegroundColorAttributeName : [UIColor whiteColor], NSStrokeWidthAttributeName : @-1.0 }];
         navButton = [[UIButton alloc] init];
         [navButton setImage:[UIImage imageNamed:@"NavIcon"] forState:UIControlStateNormal];
+        [navButton addTarget:self action:@selector(navButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         
         [self fetchSubmissions];
         [self checkIfSubmittedBefore];
@@ -84,6 +85,14 @@
         make.right.equalTo(self.view.mas_right).with.offset(padding.right);
         make.bottom.equalTo(self.tableView.mas_top).with.offset(padding.bottom);
     }];
+}
+
+#pragma mark - Navigation
+
+- (void)navButtonPressed
+{
+    NSString* link = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&dirflg=d", [event.address stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
 }
 
 #pragma mark - Check In

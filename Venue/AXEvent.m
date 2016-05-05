@@ -40,9 +40,10 @@
         
         _imageUrl = [dict[@"imageURLs"] firstObject];
         
-        CLLocationDegrees lat = [dict[@"location"][@"geo"][@"coordinates"][1] doubleValue];
-        CLLocationDegrees lon = [dict[@"location"][@"geo"][@"coordinates"][0] doubleValue];
+        CLLocationDegrees lat = [dict[@"location"][@"geo"][@"coordinates"][0] doubleValue];
+        CLLocationDegrees lon = [dict[@"location"][@"geo"][@"coordinates"][1] doubleValue];
         _coords = CLLocationCoordinate2DMake(lat, lon);
+        _address = dict[@"location"][@"address"];
     }
     return self;
 }
