@@ -8,10 +8,11 @@
 
 #import "AXDetailViewController.h"
 #import <MapKit/MapKit.h>
+#import "AXEvent.h"
 
 @interface AXEventViewController : AXDetailViewController
 
--(instancetype)initWithEvent:(NSDictionary*)event;
+-(instancetype)initWithEvent:(AXEvent*)event;
 
 -(void)checkIn;
 

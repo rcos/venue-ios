@@ -31,7 +31,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         sideImageView = [[UIImageView alloc] init];
-        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
+//        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
         [self.view addSubview:sideImageView];
         
         slideView = [[UIView alloc] init];
@@ -103,39 +103,18 @@
     slideView.layer.cornerRadius = 6;
 }
 
--(void)configureWithCourse:(NSDictionary*)course
+-(void)configureWithCourse:(AXCourse*)course
 {
-    titleLabel.text = course[@"name"];
+    titleLabel.text = course.name;
     //subtitleLabel.text = course[@"description"];
-    subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]];
+    subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 
--(void)configureWithEvent:(NSDictionary*)event
+-(void)configureWithEvent:(AXEvent*)event
 {
-    titleLabel.text = event[@"info"][@"title"];
-    //subtitleLabel.text = course[@"description"];
-    NSArray* times = event[@"info"][@"times"];
-    if(times.count > 0)
-    {
-        NSDictionary* time = [times firstObject];
-        NSString* start = time[@"start"];
-        NSString* end = time[@"end"];
-        
-        NSDateFormatter* df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
-        
-        NSDate* startDate = [df dateFromString:start];
-        NSDate* endDate = [df dateFromString:end];
-        
-        [df setDateFormat:@"MM/dd h:mma"];
-        NSString* startTime = [df stringFromDate:startDate];
-        [df setDateFormat:@"h:mma"];
-        NSString* endTime = [df stringFromDate:endDate];
-        
-        [subtitleLabel setText:[NSString stringWithFormat:@"%@ - %@", startTime, endTime]];
-    }
-//    subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", event[@"department"], event[@"courseNumber"]];
+    titleLabel.text = event.name;
+    [subtitleLabel setText:[NSString stringWithFormat:@"%@ - %@", event.startTime, event.endTime]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 

@@ -9,6 +9,8 @@
 #import "AXTableViewCell.h"
 #import "AXContentSelectionToolbar.h"
 #import "Masonry.h"
+#import "AXEvent.h"
+#import "AXCourse.h"
 
 @interface AXCourseTableViewCell : AXTableViewCell
 

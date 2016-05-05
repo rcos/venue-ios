@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "AXDetailViewController.h"
 #import "AXCourseTableViewCell.h"
+#import "AXCourse.h"
 
 
 @interface AXCourseViewController : AXDetailViewController
 
--(instancetype)initWithCourse:(NSDictionary*)course;
+-(instancetype)initWithCourse:(AXCourse*)course;
 
 @end
+

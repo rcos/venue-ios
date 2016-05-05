@@ -106,6 +106,26 @@
     self.requestSerializer = [[AFJSONRequestSerializer alloc] init];
 }
 
+#pragma mark - Data Parsing
+
+-(NSArray*)parseEvents:(NSDictionary*)events
+{
+    NSMutableArray* eventsObj = [[NSMutableArray alloc] init];
+    for (NSDictionary* e in events) {
+        [eventsObj addObject:[[AXEvent alloc] initWithDictionary:e[@"info"]]];
+    }
+    return [eventsObj copy];
+}
+
+-(NSArray*)parseCourses:(NSDictionary*)courses
+{
+    NSMutableArray* coursesObj = [[NSMutableArray alloc] init];
+    for (NSDictionary* c in courses) {
+        [coursesObj addObject:[[AXCourse alloc] initWithDictionary:c]];
+    }
+    return [coursesObj copy];
+}
+
 #pragma mark - Data Fetching
 
 -(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion
@@ -118,7 +138,7 @@
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        completion(responseObject);
+        completion([self parseCourses:responseObject]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);
     }];
@@ -126,7 +146,7 @@
 
 -(void)getEventsWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
 {
-    [self GET:@"/api/users/me?withEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self GET:@"/api/users/me?withSectionEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -134,7 +154,8 @@
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        completion(responseObject[@"events"]);
+        
+        completion([self parseEvents:responseObject[@"sectionevents"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);
     }];

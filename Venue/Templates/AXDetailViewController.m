@@ -165,7 +165,7 @@
 -(void)blurViewTapped
 {
     NSLog(@"Blur Tapped");
-    [UIView transitionWithView:blurView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    [UIView transitionWithView:detailContainerView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         detailContainerView.hidden = !detailContainerView.hidden;
     } completion:nil];
 }

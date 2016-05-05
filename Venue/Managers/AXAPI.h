@@ -12,6 +12,8 @@
 #import "AXExec.h"
 #import "AXAPI.h"
 #import "AXLocationExec.h"
+#import "AXEvent.h"
+#import "AXCourse.h"
 
 static NSString* kAPIEmail = @"kAPIEmail";
 static NSString* kAPIPassword = @"kAPIPassword";

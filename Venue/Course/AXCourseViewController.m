@@ -8,25 +8,23 @@
 
 #import "AXCourseViewController.h"
 @interface AXCourseViewController ()
-
-@property NSString* courseId;
+@property AXCourse* course;
 @property NSArray* events;
 
 @end
 
 @implementation AXCourseViewController
-@synthesize courseId, events;
+@synthesize course, events;
 
--(instancetype)initWithCourse:(NSDictionary*)course
+-(instancetype)initWithCourse:(AXCourse*)_course
 {
     self = [super init];
     if(self)
     {
-        courseId = course[@"_id"];
-        
-        [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course[@"department"], course[@"courseNumber"]]];
-        [self.detailDescriptionTextView setText:course[@"description"]];
-        [self.detailTitleLabel setText:course[@"name"]];
+        course = _course;
+        [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber]];
+        [self.detailDescriptionTextView setText:course.courseDescription];
+        [self.detailTitleLabel setText:course.name];
         [self.imageView setImage:[UIImage imageNamed:@"Firework"]];
         
         [self.emptyLabel setText:@"No events yet"];

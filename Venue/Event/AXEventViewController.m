@@ -14,61 +14,37 @@
 
 @property UIButton* navButton;
 @property NSArray* submissions;
-@property NSString* eventId;
+@property AXEvent* event;
 
 @property MKMapView* mapView;
 @property MKPointAnnotation* anno;
-@property CLLocationCoordinate2D coords;
 
 
 @end
 
 @implementation AXEventViewController
-@synthesize navButton, mapView, coords, anno, eventId;
+@synthesize navButton, mapView, anno, event;
 
--(instancetype)initWithEvent:(NSDictionary*)event
+-(instancetype)initWithEvent:(AXEvent*)_event
 {
     self = [super init];
     if(self)
     {
         self.title = @"Venue_x";
-        eventId = event[@"_id"];
         
         mapView = [[MKMapView alloc] init];
-
-        CLLocationDegrees lat = [event[@"info"][@"location"][@"geo"][@"coordinates"][1] doubleValue];
-        CLLocationDegrees lon = [event[@"info"][@"location"][@"geo"][@"coordinates"][0] doubleValue];
-        coords = CLLocationCoordinate2DMake(lat, lon);
         
         anno = [[MKPointAnnotation alloc] init];
-        anno.coordinate = coords;
-        anno.title = event[@"info"][@"title"];
+        anno.coordinate = event.coords;
+        anno.title = event.name;
         
         [self.emptyLabel setText:@"No submissions yet"];
         
-        [self.detailTitleLabel setText:event[@"info"][@"title"]];
-        [self.detailDescriptionTextView setText:event[@"info"][@"description"]];
+        [self.detailTitleLabel setText:event.name];
+        [self.detailDescriptionTextView setText:event.description];
         
-        NSArray* times = event[@"info"][@"times"];
-        if(times.count > 0)
-        {
-            NSDictionary* time = [times firstObject];
-            NSString* start = time[@"start"];
-            NSString* end = time[@"end"];
-            
-            NSDateFormatter* df = [[NSDateFormatter alloc] init];
-            [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
-            
-            NSDate* startDate = [df dateFromString:start];
-            NSDate* endDate = [df dateFromString:end];
-            
-            [df setDateFormat:@"h:mma"];
-            NSString* startTime = [df stringFromDate:startDate];
-            NSString* endTime = [df stringFromDate:endDate];
-            
-            [self.detailSubtitleLabel setNumberOfLines:2];
-            [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@\n-%@", startTime, endTime]];
-        }
+        [self.detailSubtitleLabel setNumberOfLines:2];
+        [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@\n-%@", event.startTime, event.endTime]];
 
         self.tableTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Photos"
                                                                          attributes:@{
@@ -91,7 +67,7 @@
     
     mapView.showsUserLocation = YES;
     [mapView addAnnotation:anno];
-    [mapView setRegion:MKCoordinateRegionMake(coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
+    [mapView setRegion:MKCoordinateRegionMake(event.coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
     
     [self.view insertSubview:mapView belowSubview:self.detailContainerView];
     [self.view insertSubview:navButton aboveSubview:mapView];
@@ -113,7 +89,7 @@
 
 -(void)checkIfSubmittedBefore
 {
-    [[AXAPI API] getMySubmissionsWithEventId:eventId progressView:nil completion:^(NSArray *submissions) {
+    [[AXAPI API] getMySubmissionsWithEventId:event.eventId progressView:nil completion:^(NSArray *submissions) {
         if(submissions.count == 0)
         {
             //No submissions from us.
@@ -127,7 +103,7 @@
 
 -(void)fetchSubmissions
 {
-    [[AXAPI API] getSubmissionsWithEventId:eventId progressView:self.progressView completion:^(NSArray *submissions) {
+    [[AXAPI API] getSubmissionsWithEventId:event.eventId progressView:self.progressView completion:^(NSArray *submissions) {
         self.submissions = submissions;
         self.emptyLabel.hidden = self.submissions.count > 0;
         [self.tableView reloadData];
@@ -151,7 +127,7 @@
     NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.05f);
     UIImage *image = [UIImage imageWithData:imageData];
     
-    [[AXAPI API] verifySubmissionForEventId:eventId WithImage:image completion:^(BOOL success) {
+    [[AXAPI API] verifySubmissionForEventId:event.eventId WithImage:image completion:^(BOOL success) {
         [self fetchSubmissions];
     }];
 }
