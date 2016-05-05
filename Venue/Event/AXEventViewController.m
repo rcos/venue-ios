@@ -31,6 +31,7 @@
     if(self)
     {
         self.title = @"Venue_x";
+        event = _event;
         
         mapView = [[MKMapView alloc] init];
         
@@ -41,7 +42,7 @@
         [self.emptyLabel setText:@"No submissions yet"];
         
         [self.detailTitleLabel setText:event.name];
-        [self.detailDescriptionTextView setText:event.description];
+        [self.detailDescriptionTextView setText:event.eventDescription];
         
         [self.detailSubtitleLabel setNumberOfLines:2];
         [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@\n-%@", event.startTime, event.endTime]];
@@ -70,7 +71,7 @@
     [mapView setRegion:MKCoordinateRegionMake(event.coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
     
     [self.view insertSubview:mapView belowSubview:self.detailContainerView];
-    [self.view insertSubview:navButton aboveSubview:mapView];
+    [self.view insertSubview:navButton aboveSubview:self.tapButton];
     
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
     
