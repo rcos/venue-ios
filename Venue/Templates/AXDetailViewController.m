@@ -21,6 +21,8 @@
     self = [super init];
     if(self)
     {
+        self.title = @"Venue_x";
+        
         imageView = [[UIImageView alloc] init];
         
         detailContainerView = [[UIView alloc] init];

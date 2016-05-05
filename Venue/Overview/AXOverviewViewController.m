@@ -121,7 +121,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return (contentMode ? 100 : 120);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -166,12 +166,10 @@
 -(void)contentModeDidChange:(AXContentMode)mode
 {
     contentMode = mode;
-    [self.tableView reloadData];
     
-//    [UIView transitionWithView:self.view duration:.25 options:0 animations:^{
-//        self.eventTableView.hidden = !(contentMode == AXContentModeEvents);
-//        self.tableView.hidden = (contentMode == AXContentModeEvents);
-//    } completion:nil];
+    [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    } completion:nil];
     
     
 }
