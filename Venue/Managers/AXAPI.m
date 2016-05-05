@@ -177,11 +177,9 @@
     }];
 }
 
-
-//TODO: THIS GIVES 500
 -(void)getMySubmissionsWithEventId:(NSString*)eventId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* submissions))completion
 {
-    [self GET:[NSString stringWithFormat:@"/api/submissions?onlyStudent=me&onlySectionEvent=%@?", eventId] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self GET:[NSString stringWithFormat:@"/api/submissions?onlyStudent=me&onlySectionEvent=%@", eventId] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -218,7 +216,7 @@
                                  @"eventId" : eventId,
                                  @"userId" : @"me",
                                  @"content" : @"no",
-                                 @"authors" : @[@"no"],
+//                                 @"authors" : @[@"no"],
                                  };
         
         NSData* data = UIImageJPEGRepresentation(image, 1);

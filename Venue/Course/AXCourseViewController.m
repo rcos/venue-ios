@@ -25,7 +25,7 @@
         [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber]];
         [self.detailDescriptionTextView setText:course.courseDescription];
         [self.detailTitleLabel setText:course.name];
-        [self.imageView setImage:[UIImage imageNamed:@"Firework"]];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:course.imageUrl]];
         
         [self.emptyLabel setText:@"No events yet"];
     }

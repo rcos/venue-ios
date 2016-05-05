@@ -31,8 +31,14 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         sideImageView = [[UIImageView alloc] init];
-//        [sideImageView setImage:[UIImage imageNamed:@"Firework"]];
+        [sideImageView setContentMode:UIViewContentModeScaleAspectFill];
+        [sideImageView setClipsToBounds:YES];
         [self.view addSubview:sideImageView];
+        
+        UIView* brighter = [[UIView alloc] init];
+        brighter.alpha = .15;
+        brighter.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:brighter];
         
         slideView = [[UIView alloc] init];
         slideView.alpha = .9;
@@ -62,6 +68,10 @@
         UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
         
         [sideImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+        
+        [brighter mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
         
@@ -106,8 +116,8 @@
 -(void)configureWithCourse:(AXCourse*)course
 {
     titleLabel.text = course.name;
-    //subtitleLabel.text = course[@"description"];
     subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber];
+    [sideImageView sd_setImageWithURL: [NSURL URLWithString:course.imageUrl]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 
@@ -115,6 +125,7 @@
 {
     titleLabel.text = event.name;
     [subtitleLabel setText:[NSString stringWithFormat:@"%@ - %@", event.startTime, event.endTime]];
+    [sideImageView sd_setImageWithURL: [NSURL URLWithString:event.imageUrl]];
     sideImageView.backgroundColor = [UIColor randomColor];
 }
 
