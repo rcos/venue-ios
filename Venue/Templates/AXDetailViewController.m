@@ -21,7 +21,7 @@
     self = [super init];
     if(self)
     {
-        self.title = @"Venue_x";
+        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RPI"]];
         
         imageView = [[UIImageView alloc] init];
         

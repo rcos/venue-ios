@@ -30,6 +30,8 @@
     self = [super init];
     if(self)
     {
+        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RPI"]];
+        
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -98,8 +100,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    self.title = @"Venue_x";
 }
 
 #pragma mark - UITableView
