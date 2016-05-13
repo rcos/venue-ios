@@ -10,6 +10,7 @@
 #import "AXDetailViewController.h"
 #import "AXCourseTableViewCell.h"
 #import "AXCourse.h"
+#import "AXAPI.h"
 
 
 @interface AXCourseViewController : AXDetailViewController

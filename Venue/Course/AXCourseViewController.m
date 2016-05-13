@@ -22,12 +22,10 @@
     if(self)
     {
         course = _course;
-        [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber]];
-        [self.detailDescriptionTextView setText:course.courseDescription];
-        [self.detailTitleLabel setText:course.name];
-        [self.imageView sd_setImageWithURL:[NSURL URLWithString:course.imageUrl]];
         
-        [self.emptyLabel setText:@"No events yet"];
+        [[AXAPI API] getEventsWithProgressView:self.progressView completion:^(NSArray* _events) {
+            self.events = _events;
+        }];
     }
     return self;
 }
@@ -35,6 +33,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber]];
+    [self.detailDescriptionTextView setText:course.courseDescription];
+    [self.detailTitleLabel setText:course.name];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:course.imageUrl]];
+    
+    self.emptyLabel.hidden = true;
+    [self.emptyLabel setText:@"No events yet"];
 }
 
 - (void)didReceiveMemoryWarning {

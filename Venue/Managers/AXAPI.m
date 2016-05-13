@@ -144,6 +144,22 @@
     }];
 }
 
+-(void)getEventsWithCourseId:(NSString*)courseId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
+{
+    [self GET:@"/api/users/me?withSectionEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+            });
+        }
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        completion([self parseEvents:responseObject[@"sectionevents"]]);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil);
+    }];
+}
+
 -(void)getEventsWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
 {
     [self GET:@"/api/users/me?withSectionEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
@@ -154,7 +170,6 @@
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
         completion([self parseEvents:responseObject[@"sectionevents"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);
