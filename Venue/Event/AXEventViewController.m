@@ -134,11 +134,28 @@
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
     
-    NSData *imageData = UIImageJPEGRepresentation([info objectForKey:@"UIImagePickerControllerOriginalImage"], 0.05f);
-    UIImage *image = [UIImage imageWithData:imageData];
-    
-    [[AXAPI API] verifySubmissionForEventId:event.eventId WithImage:image completion:^(BOOL success) {
-        [self fetchSubmissions];
+    [[AXAPI API] verifySubmissionForEventId:event.eventId WithImage:[info objectForKey:@"UIImagePickerControllerOriginalImage"] completion:^(BOOL success) {
+        if(success)
+        {
+            [self fetchSubmissions];
+        }
+        else
+        {
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                           message:@"Submission Failed"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+            
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Retry" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    [self imagePickerController:picker didFinishPickingMediaWithInfo:info];
+                }];
+            
+            [alert addAction:cancelAction];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        
     }];
 }
 

@@ -130,7 +130,7 @@
 
 -(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion
 {
-    [self GET:@"/api/courses" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self GET:@"/api/courses/" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
             dispatch_async(dispatch_get_main_queue(), ^{

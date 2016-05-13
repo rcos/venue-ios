@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "Masonry.h"
 #import "AXContentSelectionToolbar.h"
+#import "AppDelegate.h"
 
 @interface AXOverviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXContentSelectionToolbarDelegate>
 

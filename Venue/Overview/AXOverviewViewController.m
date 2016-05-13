@@ -61,6 +61,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //Nav Bar Gear
+    UIButton* gear = [UIButton buttonWithType:UIButtonTypeCustom];
+    gear.bounds = CGRectMake(0, 0, 22, 22);
+    [gear setImage:[UIImage imageNamed:@"Gear"] forState:UIControlStateNormal];
+    [gear addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:gear]];
+    
     [self.view addSubview:modeToolBar];
     [self.view bringSubviewToFront:modeToolBar];
     [self.view addSubview:progressView];
@@ -100,6 +107,22 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+#pragma mark - Actions
+
+-(void)showSettings
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Log out?"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Log out" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        AppDelegate* del = [[UIApplication sharedApplication] delegate];
+        [del setLoggedOut];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - UITableView
