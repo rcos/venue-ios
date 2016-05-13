@@ -27,7 +27,7 @@
     self = [super init];
     if(self)
     {
-//        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.backgroundColor = [UIColor blackColor];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         

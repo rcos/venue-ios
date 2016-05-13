@@ -64,7 +64,6 @@
         if(authStat == kCLAuthorizationStatusNotDetermined)
         {
             //request ability to use location services
-            // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
             if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
                 [self.locationManager requestWhenInUseAuthorization];
             }
@@ -76,7 +75,7 @@
 }
 
 // This is called at starting of location services, no matter if there is actually a change in auth
-// This means this will be our starting point which says "We're ready to use location services" after init
+// Which means this will be our starting point which says "We're ready to use location services" after init
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if([CLLocationManager locationServicesEnabled] && status == kCLAuthorizationStatusAuthorizedWhenInUse)
