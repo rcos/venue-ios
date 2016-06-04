@@ -126,7 +126,9 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-            } completion:nil];
+            } completion:^(BOOL finished) {
+                [self.refreshControl endRefreshing];
+            }];
         });
     }];
 }

@@ -25,7 +25,7 @@
         
         imageView = [[UIImageView alloc] init];
         
-        detailContainerView = [[UIView alloc] init];
+        detailContainerView = [[UIScrollView alloc] init];
         
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
         [blurView setUserInteractionEnabled:YES];
@@ -68,8 +68,8 @@
         self.tableView.dataSource = self;
         
         self.refreshControl = [[UIRefreshControl alloc] init];
-        self.refreshControl.backgroundColor = [UIColor lightGrayColor];
-        self.refreshControl.tintColor = [UIColor blackColor];
+        self.refreshControl.backgroundColor = [UIColor venueRedColor];
+        self.refreshControl.tintColor = [UIColor whiteColor];
         [self.refreshControl addTarget:self
                            action:@selector(refresh)
                  forControlEvents:UIControlEventValueChanged];
@@ -149,7 +149,7 @@
 //    }];
     
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tableView.mas_top);
+        make.bottom.equalTo(self.tableView.mas_top);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.equalTo(@1);

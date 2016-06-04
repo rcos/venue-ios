@@ -8,5 +8,7 @@ pod "Masonry"
 pod "AFNetworking"
 pod "FXKeychain"
 pod "SDWebImage"
+pod "Fabric"
+pod "Crashlytics"
 end
 
