@@ -30,7 +30,7 @@
     self = [super init];
     if(self)
     {
-        self.title = @"Venue_x";
+        self.title = @"Venue";
         event = _event;
         
         mapView = [[MKMapView alloc] init];
@@ -87,6 +87,13 @@
     }];
 }
 
+#pragma mark - Action
+
+-(void)refresh
+{
+    [self fetchSubmissions];
+}
+
 #pragma mark - Navigation
 
 - (void)navButtonPressed
@@ -116,7 +123,11 @@
     [[AXAPI API] getSubmissionsWithEventId:event.eventId progressView:self.progressView completion:^(NSArray *submissions) {
         self.submissions = submissions;
         self.emptyLabel.hidden = self.submissions.count > 0;
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            } completion:nil];
+        });
     }];
 }
 

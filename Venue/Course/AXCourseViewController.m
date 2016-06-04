@@ -23,9 +23,7 @@
     {
         course = _course;
         
-        [[AXAPI API] getEventsWithProgressView:self.progressView completion:^(NSArray* _events) {
-            self.events = _events;
-        }];
+        
     }
     return self;
 }
@@ -44,9 +42,17 @@
     [self.emptyLabel setText:@"No events yet"];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Action
+
+-(void)refresh
+{
+    [[AXAPI API] getEventsWithProgressView:self.progressView completion:^(NSArray* _events) {
+        self.events = _events;
+        [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self.refreshControl endRefreshing];
+        } completion:nil];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -60,6 +66,11 @@
 {
     self.emptyLabel.hidden = (self.events.count != 0);
     return self.events.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 120;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

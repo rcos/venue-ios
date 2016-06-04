@@ -22,5 +22,6 @@
 @property UIProgressView* progressView;
 @property UILabel* emptyLabel;
 @property UITableView* tableView;
+@property UIRefreshControl* refreshControl;
 
 @end

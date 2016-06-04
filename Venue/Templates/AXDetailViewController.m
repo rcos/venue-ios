@@ -66,6 +66,17 @@
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        self.refreshControl.backgroundColor = [UIColor lightGrayColor];
+        self.refreshControl.tintColor = [UIColor blackColor];
+        [self.refreshControl addTarget:self
+                           action:@selector(refresh)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView insertSubview:self.refreshControl atIndex:0];
+        
+        [self refresh];
+
     }
     return self;
 }
@@ -160,6 +171,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Action
+
+-(void)refresh
+{
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - UIGestureRecognizer

@@ -17,6 +17,7 @@
 @property AXContentSelectionToolbar* modeToolBar;
 @property UIProgressView* progressView;
 @property AXContentMode contentMode;
+@property UIRefreshControl* refreshControl;
 
 @property NSArray* events;
 @property NSArray* courses;
@@ -44,15 +45,17 @@
     
         contentMode = AXContentModeEvents;
         
-        [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
-            self.events = events;
-            if(contentMode == AXContentModeEvents)[self.tableView reloadData];
-        }];
+        // Initialize the refresh control
         
-        [[AXAPI API] getCoursesWithProgressView:nil completion:^(NSArray * courses) {
-            self.courses = courses;
-            if(contentMode == AXContentModeCourses)[self.tableView reloadData];
-        }];
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        self.refreshControl.backgroundColor = [UIColor lightGrayColor];
+        self.refreshControl.tintColor = [UIColor blackColor];
+        [self.refreshControl addTarget:self
+                                action:@selector(refresh)
+                      forControlEvents:UIControlEventValueChanged];
+        [self.tableView insertSubview:self.refreshControl atIndex:0];
+        
+        [self refresh];
     }
     return self;
 }
@@ -110,6 +113,33 @@
 }
 
 #pragma mark - Actions
+
+-(void)refresh
+{
+    [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
+        self.events = events;
+        if(contentMode == AXContentModeEvents)
+        {
+            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            } completion:^(BOOL finished) {
+                [self.refreshControl endRefreshing];
+            }];
+        }
+    }];
+    
+    [[AXAPI API] getCoursesWithProgressView:nil completion:^(NSArray * courses) {
+        self.courses = courses;
+        if(contentMode == AXContentModeCourses)
+        {
+            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            } completion:^(BOOL finished) {
+                [self.refreshControl endRefreshing];
+            }];
+        }
+    }];
+}
 
 -(void)showSettings
 {
