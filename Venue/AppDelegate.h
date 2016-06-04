@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "AXOverviewViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

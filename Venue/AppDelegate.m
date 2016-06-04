@@ -51,6 +51,9 @@
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
+    [Fabric with:@[[Crashlytics class]]];
+
+    
 //    [self setLoggedOut];
     
     if([[FXKeychain defaultKeychain] objectForKey:kSessionToken])
