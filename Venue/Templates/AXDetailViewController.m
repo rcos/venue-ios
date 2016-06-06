@@ -25,7 +25,7 @@
         
         imageView = [[UIImageView alloc] init];
         
-        detailContainerView = [[UIScrollView alloc] init];
+        detailContainerView = [[UIView alloc] init];
         
         blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
         [blurView setUserInteractionEnabled:YES];
@@ -48,6 +48,8 @@
         detailDescriptionTextView = [[UITextView alloc] init];
         detailDescriptionTextView.backgroundColor = [UIColor clearColor];
         [detailDescriptionTextView setTextColor:[UIColor whiteColor]];
+        detailDescriptionTextView.scrollEnabled = YES;
+        detailDescriptionTextView.editable = NO;
         
         tableTitleLabel = [[UILabel alloc] init];
         tableTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Events"
@@ -86,8 +88,14 @@
 
     self.view.backgroundColor = [UIColor venueRedColor];
     
+    UIView* gestureview = [[UIView alloc] init];
+    UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped)];
+    [gestureview addGestureRecognizer:gr];
+    
     [self.view addSubview:imageView];
-    [self.view addSubview:detailContainerView];
+//    [self.view addSubview:detailContainerView];
+    [self.view addSubview:gestureview];
+    [gestureview addSubview:detailContainerView];
     [self.view addSubview:tapButton];
     [detailContainerView addSubview:blurView];
     [detailContainerView insertSubview:detailTitleLabel aboveSubview:blurView];
@@ -109,6 +117,10 @@
     }];
     
     [detailContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(imageView).insets(UIEdgeInsetsMake(0, 0, 44, 0));
+    }];
+    
+    [gestureview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(imageView);
     }];
     
@@ -119,9 +131,9 @@
         make.bottom.equalTo(self.imageView).with.offset(-44);
     }];
     
-    [tapButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(imageView);
-    }];
+//    [tapButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(imageView);
+//    }];
     
    [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
        make.top.equalTo(detailContainerView.mas_top).with.offset(padding.top);
