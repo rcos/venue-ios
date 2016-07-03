@@ -71,8 +71,8 @@
     [mapView addAnnotation:anno];
     [mapView setRegion:MKCoordinateRegionMake(event.coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
     
-    [self.view insertSubview:mapView belowSubview:self.detailContainerView];
-    [self.view insertSubview:navButton aboveSubview:self.tapButton];
+    [self.view insertSubview:mapView atIndex:0];
+    [self.view insertSubview:navButton aboveSubview:self.detailContainerView];
     
     UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
     
