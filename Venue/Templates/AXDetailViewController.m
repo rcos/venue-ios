@@ -132,10 +132,6 @@
         make.bottom.equalTo(self.imageView).with.offset(-44);
     }];
     
-//    [tapButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.edges.equalTo(imageView);
-//    }];
-    
    [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
        make.top.equalTo(detailContainerView.mas_top).with.offset(padding.top);
        make.left.equalTo(detailContainerView.mas_left).with.offset(padding.left);

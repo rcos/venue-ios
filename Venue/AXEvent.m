@@ -39,6 +39,8 @@
         }
         
         _imageUrl = [dict[@"imageURLs"] firstObject];
+//        _imageUrl = [_imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSLog(@"%@", _imageUrl);
         
         CLLocationDegrees lat = [dict[@"location"][@"geo"][@"coordinates"][0] doubleValue];
         CLLocationDegrees lon = [dict[@"location"][@"geo"][@"coordinates"][1] doubleValue];

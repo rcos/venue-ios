@@ -129,7 +129,8 @@
 {
     titleLabel.text = course.name;
     subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber];
-    [sideImageView sd_setImageWithURL: [NSURL URLWithString:course.imageUrl]];
+    [sideImageView setImageWithUnknownPath:course.imageUrl];
+//    [sideImageView sd_setImageWithURL: [NSURL URLWithString:course.imageUrl]];
 //    sideImageView.backgroundColor = [UIColor randomColor];
 }
 
@@ -137,7 +138,8 @@
 {
     titleLabel.text = event.name;
     [subtitleLabel setText:[NSString stringWithFormat:@"%@ - %@", event.startTime, event.endTime]];
-    [sideImageView sd_setImageWithURL: [NSURL URLWithString:event.imageUrl]];
+    [sideImageView setImageWithUnknownPath:event.imageUrl];
+//    [sideImageView sd_setImageWithURL: [NSURL URLWithString:event.imageUrl]];
 //    sideImageView.backgroundColor = [UIColor randomColor];
 }
 

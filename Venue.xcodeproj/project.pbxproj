@@ -29,6 +29,7 @@
 		0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */; };
 		0CCEDE271C41869D009F8C4D /* AXDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */; };
 		0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */; };
+		388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 388919701D29D3DA00487A28 /* UIImageView+Venue.m */; };
 		CBFFFE46D2F93678ADCBA5A1 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F98FCAEE2165D2C2DFEBCE4 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,8 @@
 		0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEventTableViewCell.m; sourceTree = "<group>"; };
 		0CFBCA881C42F72100303C89 /* Venue-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Venue-Prefix.pch"; sourceTree = "<group>"; };
 		1A7321405665B8BA97EC6248 /* Pods-Venue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.debug.xcconfig"; sourceTree = "<group>"; };
+		3889196F1D29D1D200487A28 /* UIImageView+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Venue.h"; sourceTree = "<group>"; };
+		388919701D29D3DA00487A28 /* UIImageView+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Venue.m"; sourceTree = "<group>"; };
 		5F98FCAEE2165D2C2DFEBCE4 /* libPods-Venue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Venue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D24AADDD30FEF4F7F645AE41 /* Pods-Venue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,6 +200,8 @@
 				0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */,
 				0CCEDE1E1C3DB7FC009F8C4D /* UIFont+Venue.h */,
 				0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */,
+				3889196F1D29D1D200487A28 /* UIImageView+Venue.h */,
+				388919701D29D3DA00487A28 /* UIImageView+Venue.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 				0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */,
 				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,
 				0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */,
+				388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */,
 				0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */,
 				0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,

@@ -172,7 +172,6 @@
     [self GET:@"/api/users/me?withSectionEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
-            NSLog(@"%f", downloadProgress.fractionCompleted);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
             });

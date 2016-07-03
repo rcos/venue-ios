@@ -12,6 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "AXEvent.h"
 #import "AXCourse.h"
+#import "UIImageView+Venue.h"
 
 
 @interface AXCourseTableViewCell : AXTableViewCell
