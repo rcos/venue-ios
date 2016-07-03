@@ -31,15 +31,20 @@
     self = [super init];
     if(self)
     {
-        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RPI"]];
+        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
         
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        self.tableView.backgroundColor = [UIColor lightGrayColor];
         
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        progressView.tintColor = [UIColor venueRedColor];
+        progressView.progressTintColor = [UIColor venueRedColor];
+        progressView.trackTintColor = [UIColor lightGrayColor];
+//        progressView.tintColor = [UIColor venueRedColor];
+        
+        
         
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
     
@@ -65,11 +70,11 @@
     // Do any additional setup after loading the view.
     
     //Nav Bar Gear
-    UIButton* gear = [UIButton buttonWithType:UIButtonTypeCustom];
-    gear.bounds = CGRectMake(0, 0, 22, 22);
-    [gear setImage:[UIImage imageNamed:@"Gear"] forState:UIControlStateNormal];
-    [gear addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
-    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:gear]];
+//    UIButton* gear = [UIButton buttonWithType:UIButtonTypeCustom];
+//    gear.bounds = CGRectMake(0, 0, 22, 22);
+//    [gear setImage:[UIImage imageNamed:@"SettingsGear"] forState:UIControlStateNormal];
+//    [gear addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+//    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:gear]];
     
     [self.view addSubview:modeToolBar];
     [self.view bringSubviewToFront:modeToolBar];
@@ -110,6 +115,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    UIBarButtonItem* gear = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Gear"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
+    gear.tintColor = [UIColor venueRedColor];
+    [[self navigationItem] setLeftBarButtonItem:gear];
 }
 
 #pragma mark - Actions
@@ -128,7 +136,7 @@
         }
     }];
     
-    [[AXAPI API] getCoursesWithProgressView:nil completion:^(NSArray * courses) {
+    [[AXAPI API] getCoursesWithProgressView:progressView completion:^(NSArray * courses) {
         self.courses = courses;
         if(contentMode == AXContentModeCourses)
         {

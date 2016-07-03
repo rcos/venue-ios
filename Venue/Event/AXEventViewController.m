@@ -64,7 +64,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem* barButton = [[UIBarButtonItem alloc] initWithTitle:@"Check In" style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
+    UIBarButtonItem* barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CheckinFull"] style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
     [self.navigationItem setRightBarButtonItem:barButton];
     
     mapView.showsUserLocation = YES;

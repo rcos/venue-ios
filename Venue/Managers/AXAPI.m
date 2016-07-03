@@ -144,9 +144,10 @@
     }];
 }
 
--(void)getEventsWithCourseId:(NSString*)courseId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
+-(void)getEventsWithSectionId:(NSString*)sectionId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
 {
-    [self GET:@"/api/users/me?withSectionEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    NSString* path = [NSString stringWithFormat:@"/api/users/me?withSectionEvents=true&onlySection=%@", sectionId];
+    [self GET:path parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -154,6 +155,12 @@
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:1 animated:YES];
+            });
+        }
         completion([self parseEvents:responseObject[@"sectionevents"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);
@@ -165,11 +172,18 @@
     [self GET:@"/api/users/me?withSectionEvents=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
+            NSLog(@"%f", downloadProgress.fractionCompleted);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if(progressView)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [progressView setProgress:1 animated:YES];
+            });
+        }
         completion([self parseEvents:responseObject[@"sectionevents"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);

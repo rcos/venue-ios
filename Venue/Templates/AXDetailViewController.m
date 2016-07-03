@@ -21,7 +21,7 @@
     self = [super init];
     if(self)
     {
-        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RPI"]];
+        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
         
         imageView = [[UIImageView alloc] init];
         
@@ -66,6 +66,7 @@
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+//        self.tableView.backgroundColor = [UIColor venueRedColor];
         
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor venueRedColor];

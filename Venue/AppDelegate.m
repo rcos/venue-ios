@@ -47,9 +47,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     [[UINavigationBar appearance] setTranslucent:NO];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor venueRedColor]];
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
+    [[UINavigationBar appearance] setTintColor:[UIColor venueRedColor]];
     
     [Fabric with:@[[Crashlytics class]]];
 

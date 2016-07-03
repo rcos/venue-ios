@@ -23,7 +23,7 @@
     {
         course = _course;
         
-        
+        [self refresh];
     }
     return self;
 }
