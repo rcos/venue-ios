@@ -71,8 +71,8 @@
 //        self.tableView.backgroundColor = [UIColor venueRedColor];
         
         self.refreshControl = [[UIRefreshControl alloc] init];
-        self.refreshControl.backgroundColor = [UIColor venueRedColor];
-        self.refreshControl.tintColor = [UIColor whiteColor];
+        self.refreshControl.backgroundColor = [UIColor whiteColor];
+        self.refreshControl.tintColor = [UIColor venueRedColor];
         [self.refreshControl addTarget:self
                            action:@selector(refresh)
                  forControlEvents:UIControlEventValueChanged];
