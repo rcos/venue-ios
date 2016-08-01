@@ -93,7 +93,11 @@
 //        
 //    }
     self.location = [locations lastObject];
-    if(executeOnNextUpdate)executeOnNextUpdate(self.location);
+    if(executeOnNextUpdate) {
+        executeOnNextUpdate(self.location);
+        executeOnNextUpdate = nil;
+    }
+    
     [locationManager startMonitoringSignificantLocationChanges];
 }
 

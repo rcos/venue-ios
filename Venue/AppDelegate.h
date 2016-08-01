@@ -18,5 +18,7 @@
 -(void)setLoggedIn;
 -(void)setLoggedOut;
 
+@property BOOL isLoggingIn;
+
 @end
 

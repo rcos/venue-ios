@@ -11,13 +11,13 @@
 #import "AXLoginViewController.h"
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
 
 -(void)setLoggedIn
 {
+    self.isLoggingIn = false;
     [AXLocationExec exec];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
     [UIView transitionWithView:self.window
@@ -31,6 +31,7 @@
 
 -(void)setLoggedOut
 {
+    self.isLoggingIn = true;
     [[AXAPI API] logOut];
     AXLoginViewController *viewController = [[AXLoginViewController alloc] init];
     [UIView transitionWithView:self.window

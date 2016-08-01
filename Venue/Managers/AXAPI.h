@@ -19,7 +19,7 @@ static NSString* kAPIEmail = @"kAPIEmail";
 static NSString* kAPIPassword = @"kAPIPassword";
 static NSString* kUserId = @"kAPIUserId";
 static NSString* kSessionToken = @"kSessionToken";
-static NSString* baseURL = @"http://104.131.185.159:9000";
+static NSString* baseURL = @"https://venue.cs.rpi.edu";
 static NSString* kXSRFToken = @"kXSRFToken";
 
 @interface AXAPI : AFHTTPSessionManager

@@ -205,6 +205,8 @@
                     [[AXExec appDel] setLoggedIn];
                 });
             }
+            [activityIndicatorView stopAnimating];
+            loginButton.userInteractionEnabled = YES;
         }];
     }
 }
@@ -212,7 +214,7 @@
 - (void)register:(id)sender
 {
     //present loginvc with all necessary fields for registration
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.venue.com/register"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://venue.cs.rpi.edu/student/signup"]];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

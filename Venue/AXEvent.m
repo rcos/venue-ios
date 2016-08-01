@@ -10,12 +10,14 @@
 
 @implementation AXEvent
 
--(instancetype)initWithDictionary:(NSDictionary*)dict
+-(instancetype)initWithDictionary:(NSDictionary*)dictionary
 {
     self = [super init];
     if(self)
     {
-        _eventId = dict[@"_id"];
+        
+        NSDictionary* dict = dictionary[@"info"];
+        _eventId = dictionary[@"_id"];
         _name = dict[@"title"];
         _eventDescription = dict[@"description"];
         
@@ -42,8 +44,8 @@
 //        _imageUrl = [_imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSLog(@"%@", _imageUrl);
         
-        CLLocationDegrees lat = [dict[@"location"][@"geo"][@"coordinates"][0] doubleValue];
-        CLLocationDegrees lon = [dict[@"location"][@"geo"][@"coordinates"][1] doubleValue];
+        CLLocationDegrees lon = [dict[@"location"][@"geo"][@"coordinates"][0] doubleValue];
+        CLLocationDegrees lat = [dict[@"location"][@"geo"][@"coordinates"][1] doubleValue];
         _coords = CLLocationCoordinate2DMake(lat, lon);
         _address = dict[@"location"][@"address"];
     }

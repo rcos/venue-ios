@@ -42,7 +42,7 @@
         [self.view addSubview:brighter];
         
         slideView = [[UIView alloc] init];
-        slideView.alpha = .9;
+        slideView.alpha = 1;
         slideView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:slideView];
         
