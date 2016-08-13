@@ -30,6 +30,8 @@ static NSString* kXSRFToken = @"kXSRFToken";
 
 -(void)loginWithEmail:(NSString*)email password:(NSString*)password block:(void(^)(BOOL))completion;
 
+-(void)loginWithCASRequest:(NSURLRequest*)request block:(void(^)(BOOL))completion;
+
 -(void)logOut;
 
 -(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion;

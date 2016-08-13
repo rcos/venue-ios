@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "AXAPI.h"
 #import "AXLoginViewController.h"
+#import "AXWebLoginViewController.h"
+#import "AXOverviewViewController.h"
 
 @interface AppDelegate ()
 @end
@@ -19,7 +21,7 @@
 {
     self.isLoggingIn = false;
     [AXLocationExec exec];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
+    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -33,7 +35,7 @@
 {
     self.isLoggingIn = true;
     [[AXAPI API] logOut];
-    AXLoginViewController *viewController = [[AXLoginViewController alloc] init];
+    AXWebLoginViewController* viewController = [[AXWebLoginViewController alloc] init];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve

@@ -11,6 +11,7 @@
 @interface UIColor(Venue)
 
 +(UIColor*)venueRedColor;
++(UIColor*)rpiRedColor;
 
 +(UIColor*)randomColor;
 

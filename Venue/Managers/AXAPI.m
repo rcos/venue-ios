@@ -71,6 +71,27 @@
     }];
 }
 
+-(void)parseLoginResponse:(id)responseObject {
+    [[FXKeychain defaultKeychain] setObject:responseObject[@"token"] forKey:kSessionToken];
+    [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
+    [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", responseObject[@"token"]] forHTTPHeaderField:@"Authorization"];
+}
+
+-(void)loginWithCASRequest:(NSURLRequest*)request block:(void(^)(BOOL))completion {
+    if(request) {
+        NSURLSessionDataTask* task = [[AXAPI API] dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+            if(!error) {
+                [[FXKeychain defaultKeychain] setObject:nil forKey:kAPIEmail];
+                [self parseLoginResponse:responseObject];
+                if(completion)completion(true);
+            } else {
+                if(completion)completion(false);
+            }
+        }];
+        [task resume];
+    }
+}
+
 -(void)loginWithEmail:(NSString*)email password:(NSString*)password block:(void(^)(BOOL))completion
 {
     if(!email || !password)
@@ -86,9 +107,7 @@
             NSDictionary* params = @{@"email":email, @"password":password};
             [self POST:@"/auth/local" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 [[FXKeychain defaultKeychain] setObject:email forKey:kAPIEmail];
-                [[FXKeychain defaultKeychain] setObject:responseObject[@"token"] forKey:kSessionToken];
-                [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
-                [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", responseObject[@"token"]] forHTTPHeaderField:@"Authorization"];
+                [self parseLoginResponse:responseObject];
                 if(completion)completion(1);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if(completion)completion(0);

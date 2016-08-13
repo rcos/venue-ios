@@ -15,6 +15,10 @@
     return [UIColor colorWithRed:0.96 green:0.16 blue:0.12 alpha:1];
 }
 
++(UIColor*)rpiRedColor {
+    return [UIColor colorWithRed:0.89 green:0.14 blue:0.11 alpha:1.00];
+}
+
 +(UIColor *)randomColor
 {
     /*
