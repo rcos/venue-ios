@@ -9,12 +9,13 @@
 #import "AXWebLoginViewController.h"
 
 @implementation AXWebLoginViewController
-@synthesize webView;
+@synthesize webView, activityView;
 
 -(instancetype)init {
     self = super.self;
     if(self) {
         webView = [[UIWebView alloc] init];
+        activityView = [[UIActivityIndicatorView alloc] init];
     }
     return self;
 }
@@ -26,12 +27,21 @@
     webView.backgroundColor = [UIColor rpiRedColor];
     webView.delegate = self;
     
+    activityView.hidesWhenStopped = true;
+    
     [self.view addSubview:webView];
     [webView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset([[UIApplication sharedApplication] statusBarFrame].size.height);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
+    }];
+    
+    [self.view addSubview:activityView];
+    [activityView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.width.equalTo(@50);
+        make.height.equalTo(@50);
     }];
     
     [self startLogin];
@@ -46,8 +56,10 @@
     
     NSLog(@"URL: %@", request.URL);
     
-    if([request.URL.absoluteString containsString:@"jsessionid="]) {
+    if([request.URL.absoluteString containsString:@"jsessionid="] || [request.URL.absoluteString containsString:@"ticket="]) {
+        [activityView startAnimating];
         [[AXAPI API] loginWithCASRequest:request block:^(BOOL success) {
+            [activityView stopAnimating];
             if(success) {
                 [[AXExec appDel] setLoggedIn];
             } else {

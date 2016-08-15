@@ -45,6 +45,19 @@
     return self;
 }
 
+-(void)clearCookies {
+    NSHTTPCookie* cookie;
+    NSHTTPCookieStorage* cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    //TODO delete cookies here 
+    NSArray* cookies = [cookieJar cookies];
+    for(cookie in cookies) {
+        if([cookie.name isEqualToString:@"connect.sid" ]) {
+            [[AXAPI API].requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", cookie.value] forHTTPHeaderField:@"Authorization"];
+            [[AXExec appDel] setLoggedIn];
+        }
+    }
+}
+
 #pragma mark - Login
 
 -(void)getTokenswithCompletion:(void(^)(BOOL))completion
@@ -81,6 +94,7 @@
     if(request) {
         NSURLSessionDataTask* task = [[AXAPI API] dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
             if(!error) {
+                
                 [[FXKeychain defaultKeychain] setObject:nil forKey:kAPIEmail];
                 [self parseLoginResponse:responseObject];
                 if(completion)completion(true);

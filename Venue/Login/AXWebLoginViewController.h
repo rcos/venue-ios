@@ -13,4 +13,5 @@
 
 @interface AXWebLoginViewController : UIViewController <UIWebViewDelegate>
 @property UIWebView* webView;
+@property UIActivityIndicatorView* activityView;
 @end
