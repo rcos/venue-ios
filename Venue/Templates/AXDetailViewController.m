@@ -87,14 +87,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor venueRedColor];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+	
     UIView* gestureview = [[UIView alloc] init];
     UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped)];
     [gestureview addGestureRecognizer:gr];
     
     [self.view addSubview:imageView];
-//    [self.view addSubview:detailContainerView];
     [self.view addSubview:gestureview];
     [gestureview addSubview:detailContainerView];
     [self.view addSubview:tapButton];
@@ -102,8 +101,6 @@
     [detailContainerView insertSubview:detailTitleLabel aboveSubview:blurView];
     [detailContainerView insertSubview:detailSubtitleLabel aboveSubview:blurView];
     [detailContainerView insertSubview:detailDescriptionTextView aboveSubview:blurView];
-//    [self.view addSubview:tableTitleLabel];
-//    [self.view bringSubviewToFront:tableTitleLabel];
     [self.view addSubview:progressView];
     [self.tableView addSubview:emptyLabel];
     [self.view addSubview:self.tableView];
@@ -150,12 +147,6 @@
         make.right.equalTo(detailContainerView.mas_right).with.offset(padding.right);
         make.bottom.equalTo(detailContainerView.mas_bottom).with.offset(padding.bottom);
     }];
-    
-//    [tableTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-////        make.top.equalTo(detailContainerView.mas_bottom);
-//        make.left.equalTo(self.view.mas_left).with.offset(padding.left);
-//        make.bottom.equalTo(self.tableView.mas_top).with.offset(padding.bottom);
-//    }];
     
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.tableView.mas_top);

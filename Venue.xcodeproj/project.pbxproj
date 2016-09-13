@@ -201,12 +201,7 @@
 				0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */,
 				0C1CE1071C4AE95700B95BF8 /* AXLocationExec.h */,
 				0C1CE1081C4AE95700B95BF8 /* AXLocationExec.m */,
-				0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */,
-				0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */,
-				0CCEDE1E1C3DB7FC009F8C4D /* UIFont+Venue.h */,
-				0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */,
-				3889196F1D29D1D200487A28 /* UIImageView+Venue.h */,
-				388919701D29D3DA00487A28 /* UIImageView+Venue.m */,
+				38ECB41D1D8844FE0068DCD0 /* Categories */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -251,6 +246,19 @@
 				D24AADDD30FEF4F7F645AE41 /* Pods-Venue.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		38ECB41D1D8844FE0068DCD0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */,
+				0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */,
+				0CCEDE1E1C3DB7FC009F8C4D /* UIFont+Venue.h */,
+				0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */,
+				3889196F1D29D1D200487A28 /* UIImageView+Venue.h */,
+				388919701D29D3DA00487A28 /* UIImageView+Venue.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		3CFD8D5AE53902086A6DA376 /* Frameworks */ = {

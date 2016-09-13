@@ -149,11 +149,6 @@
     
     //shrink image
     UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-//    CGSize newSize=CGSizeMake(200,200);
-//    UIGraphicsBeginImageContext(newSize);
-//    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-//    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
     
     NSLog(@"Start submission");
     [[AXAPI API] verifySubmissionForEventId:event.eventId WithImage:image completion:^(BOOL success) {

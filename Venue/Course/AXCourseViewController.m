@@ -36,7 +36,7 @@
     [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber]];
     [self.detailDescriptionTextView setText:course.courseDescription];
     [self.detailTitleLabel setText:course.name];
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:course.imageUrl]];
+    [self.imageView setImageWithUnknownPath:course.imageUrl];
     
     self.emptyLabel.hidden = true;
     [self.emptyLabel setText:@"No events yet"];

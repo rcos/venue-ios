@@ -16,15 +16,16 @@
 @property UITableView* tableView;
 @property AXContentSelectionToolbar* modeToolBar;
 @property UIProgressView* progressView;
-@property AXContentMode contentMode;
+@property (nonatomic) AXContentMode contentMode;
 @property UIRefreshControl* refreshControl;
+@property UILabel* emptyLabel;
 
 @property NSArray* events;
 @property NSArray* courses;
 @end
 
 @implementation AXOverviewViewController
-@synthesize modeToolBar, progressView, contentMode;
+@synthesize modeToolBar, progressView, contentMode, emptyLabel;
 
 -(instancetype)init
 {
@@ -44,12 +45,15 @@
         progressView.trackTintColor = [UIColor lightGrayColor];
 //        progressView.tintColor = [UIColor venueRedColor];
         
-        
-        
+		emptyLabel = [[UILabel alloc] init];
+		[emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
+		[emptyLabel setTextColor:[UIColor lightGrayColor]];
+		[emptyLabel setTextAlignment:NSTextAlignmentCenter];
+		
         modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
     
-        contentMode = AXContentModeEvents;
-        
+		[self setContentMode:AXContentModeEvents];
+		
         // Initialize the refresh control
         
         self.refreshControl = [[UIRefreshControl alloc] init];
@@ -79,6 +83,7 @@
     [self.view addSubview:modeToolBar];
     [self.view bringSubviewToFront:modeToolBar];
     [self.view addSubview:progressView];
+	[self.tableView addSubview:emptyLabel];
     [self.view addSubview:self.tableView];
 
     [modeToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,7 +99,12 @@
         make.right.equalTo(self.view.mas_right);
         make.height.equalTo(@1);
     }];
-    
+	
+	[emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.centerX.equalTo(self.tableView.mas_centerX);
+		make.centerY.equalTo(self.tableView.mas_centerY);
+	}];
+	
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(modeToolBar.mas_bottom);
         make.bottom.equalTo(self.view.mas_bottom);
@@ -128,6 +138,7 @@
         self.events = events;
         if(contentMode == AXContentModeEvents)
         {
+			self.emptyLabel.hidden = self.events.count > 0;
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             } completion:^(BOOL finished) {
@@ -140,6 +151,7 @@
         self.courses = courses;
         if(contentMode == AXContentModeCourses)
         {
+			self.emptyLabel.hidden = self.courses.count > 0;
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             } completion:^(BOOL finished) {
@@ -226,13 +238,28 @@
 
 -(void)contentModeDidChange:(AXContentMode)mode
 {
-    contentMode = mode;
-    
+	[self setContentMode:mode];
+	
+	emptyLabel.hidden = true;
     [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
         [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    } completion:nil];
-    
-    
+    } completion:^(BOOL finished) {
+		if (contentMode == AXContentModeEvents) {
+			self.emptyLabel.hidden = self.events.count > 0;
+		} else {
+			self.emptyLabel.hidden = self.courses.count > 0;
+		}
+	}];
+}
+
+#pragma mark - ContentMode
+
+-(void)setContentMode:(AXContentMode)mode
+{
+	contentMode = mode;
+	NSString* contentType = (contentMode == AXContentModeEvents ? @"events" : @"courses");
+	
+	[emptyLabel setText:[NSString stringWithFormat:@"No %@ yet", contentType]];
 }
 
 @end

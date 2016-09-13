@@ -98,7 +98,6 @@
             make.left.equalTo(slideView.mas_left).with.offset(padding.left);
             make.top.equalTo(titleLabel.mas_bottom).with.offset(.5*padding.top);
             make.right.equalTo(titleLabel).with.offset(padding.right*2);
-            //make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
         }];
         
         [disclosureIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -107,13 +106,6 @@
             make.height.equalTo(@20);
             make.width.equalTo(@10);
         }];
-        
-//        [eventsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(subtitleLabel.mas_left);
-//            make.right.equalTo(subtitleLabel.mas_right);
-//            make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
-//            make.height.equalTo(@16);
-//        }];
     }
     return self;
 }
@@ -130,8 +122,6 @@
     titleLabel.text = course.name;
     subtitleLabel.text = [NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber];
     [sideImageView setImageWithUnknownPath:course.imageUrl];
-//    [sideImageView sd_setImageWithURL: [NSURL URLWithString:course.imageUrl]];
-//    sideImageView.backgroundColor = [UIColor randomColor];
 }
 
 -(void)configureWithEvent:(AXEvent*)event
@@ -139,8 +129,6 @@
     titleLabel.text = event.name;
     [subtitleLabel setText:[NSString stringWithFormat:@"%@ - %@", event.startTime, event.endTime]];
     [sideImageView setImageWithUnknownPath:event.imageUrl];
-//    [sideImageView sd_setImageWithURL: [NSURL URLWithString:event.imageUrl]];
-//    sideImageView.backgroundColor = [UIColor randomColor];
 }
 
 @end
