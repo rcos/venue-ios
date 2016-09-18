@@ -62,22 +62,10 @@
 
 -(void)getTokenswithCompletion:(void(^)(BOOL))completion
 {
-    //check if we all ready have tokens and return completion(1) if we do
+    //todo: check if we all ready have tokens and return completion(1) if we do
     
     //get tokens
     [self GET:@"/api/courses" parameters:@{@"purpose" : @"Give me my tokens"} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-//        //Place the XSRF-TOKEN into the header of all our requests.
-//        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:baseURL]];
-//        for (NSHTTPCookie *cookie in cookies)
-//        {
-//            if([cookie.name isEqualToString:@"XSRF-TOKEN"])
-//            {
-//                [self.requestSerializer setValue:[cookie.value stringByRemovingPercentEncoding] forHTTPHeaderField:@"X-XSRF-TOKEN"];
-//                [[FXKeychain defaultKeychain] setObject:[cookie.value stringByRemovingPercentEncoding] forKey:kXSRFToken];
-//            }
-//        }
-        
         if(completion)completion(1);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if(completion)completion(0);
@@ -153,7 +141,7 @@
 -(NSArray*)parseCourses:(NSDictionary*)courses
 {
     NSMutableArray* coursesObj = [[NSMutableArray alloc] init];
-    for (NSDictionary* c in courses) {
+    for (NSDictionary* c in [courses allValues]) {
         [coursesObj addObject:[[AXCourse alloc] initWithDictionary:c]];
     }
     return [coursesObj copy];
@@ -163,7 +151,7 @@
 
 -(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion
 {
-    [self GET:@"/api/courses/" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self GET:@"/api/users/me?withCourses=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -171,7 +159,7 @@
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        completion([self parseCourses:responseObject]);
+        completion([self parseCourses:responseObject[@"courses"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);
     }];
@@ -179,6 +167,11 @@
 
 -(void)getEventsWithSectionId:(NSString*)sectionId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion
 {
+    if(sectionId == nil)
+    {
+        completion(nil);
+        return;
+    }
     NSString* path = [NSString stringWithFormat:@"/api/users/me?withSectionEvents=true&onlySection=%@", sectionId];
     [self GET:path parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
