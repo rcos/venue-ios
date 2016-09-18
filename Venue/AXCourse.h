@@ -10,7 +10,7 @@
 
 @interface AXCourse : NSObject
 
-@property NSNumber* courseId;
+@property NSString* courseId;
 @property NSString* name;
 @property NSString* courseDescription;
 @property NSString* department;

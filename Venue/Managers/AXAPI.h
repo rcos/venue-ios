@@ -36,6 +36,8 @@ static NSString* kXSRFToken = @"kXSRFToken";
 
 -(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion;
 
+-(void)getEventsWithSectionId:(NSString*)sectionId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion;
+
 -(void)getEventsWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray* events))completion;
 
 -(void)getSubmissionsWithEventId:(NSString*)eventId progressView:(UIProgressView*)progressView completion:(void(^)(NSArray* submissions))completion;
