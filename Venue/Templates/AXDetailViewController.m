@@ -68,6 +68,7 @@
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //        self.tableView.backgroundColor = [UIColor venueRedColor];
         
         self.refreshControl = [[UIRefreshControl alloc] init];

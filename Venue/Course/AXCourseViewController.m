@@ -7,6 +7,7 @@
 //
 
 #import "AXCourseViewController.h"
+#import "AXEventViewController.h"
 @interface AXCourseViewController ()
 @property AXCourse* course;
 @property NSArray* events;
@@ -75,6 +76,12 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 120;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AXEventViewController* vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
