@@ -172,7 +172,7 @@
         completion(nil);
         return;
     }
-    NSString* path = [NSString stringWithFormat:@"/api/users/me?withSectionEvents=true&onlySection=%@", sectionId];
+    NSString* path = [NSString stringWithFormat:@"/api/sectionevents?onlySection=%@", sectionId];
     [self GET:path parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         if(progressView)
         {
@@ -263,7 +263,7 @@
 
 #pragma mark - Attendance
 
--(void)verifySubmissionForEventId:(NSString*)eventId WithImage:(UIImage*)image completion:(void(^)(BOOL))completion
+-(void)verifySubmissionForEventId:(NSString*)eventId withImage:(UIImage*)image withProgressView:(UIProgressView*)progressView completion:(void(^)(BOOL))completion
 {
     [[AXLocationExec exec] getLocationWithCompletion:^(CLLocation* location) {
         NSDictionary* params = @{@"coordinates" : @[@(location.coordinate.longitude), @(location.coordinate.latitude)],
@@ -277,7 +277,14 @@
         [self POST:@"/api/submissions" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             [formData appendPartWithFileData:data name:@"files[0]" fileName:@"img.jpg" mimeType:@"image/jpeg"];
         }
-        progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+          progress:^(NSProgress * _Nonnull downloadProgress) {
+              if(progressView)
+              {
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
+                  });
+              }
+          } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             completion(1);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             completion(0);

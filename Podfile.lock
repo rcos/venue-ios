@@ -19,6 +19,7 @@ PODS:
   - Fabric (1.6.7)
   - FXKeychain (1.5.3)
   - Masonry (1.0.0)
+  - SCLAlertView-Objective-C (1.0.4)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - Fabric
   - FXKeychain
   - Masonry
+  - SCLAlertView-Objective-C
   - SDWebImage
 
 SPEC CHECKSUMS:
@@ -37,8 +39,9 @@ SPEC CHECKSUMS:
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
+  SCLAlertView-Objective-C: dd8a12b4068b8bae1b25c1748d7413b5abcad05b
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 
-PODFILE CHECKSUM: 6b5847620af464157224f930a697fecf2ba6b491
+PODFILE CHECKSUM: 125dd03ba75707266e4d4afb39225569d52eec72
 
 COCOAPODS: 1.0.1

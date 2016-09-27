@@ -10,5 +10,6 @@ pod "FXKeychain"
 pod "SDWebImage"
 pod "Fabric"
 pod "Crashlytics"
+pod "SCLAlertView-Objective-C"
 end
 

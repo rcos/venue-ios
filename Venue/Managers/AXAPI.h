@@ -46,5 +46,5 @@ static NSString* kXSRFToken = @"kXSRFToken";
 
 -(void)getImageAtPath:(NSString*)path completion:(void(^)(UIImage* image))completion;
 
--(void)verifySubmissionForEventId:(NSString*)eventId WithImage:(UIImage*)image completion:(void(^)(BOOL))completion;
+-(void)verifySubmissionForEventId:(NSString*)eventId withImage:(UIImage*)image withProgressView:(UIProgressView*)progressView completion:(void(^)(BOOL))completion;
 @end

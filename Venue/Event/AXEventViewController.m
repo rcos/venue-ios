@@ -9,6 +9,7 @@
 #import "AXEventViewController.h"
 #import "AXAPI.h"
 #import "AXSubmissionTableViewCell.h"
+#import "SCLAlertView.h"
 
 @interface AXEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -147,11 +148,28 @@
 {
     [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
     
+    SCLAlertView* alertView = [[SCLAlertView alloc] init];
+    UIProgressView* progress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    [alertView addCustomView:progress];
+//    [progress mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(alertView);
+//        make.right.equalTo(alertView);
+//    }];
+    
+    
+    
+//    [alertView addButton:@"Cancel" actionBlock:^{
+//        //cancel
+//    }];
+    
+    [alertView showWaiting:@"Verifying Submission" subTitle:@"We're checking your attendance, please wait." closeButtonTitle:nil duration:999];
+    
     //shrink image
     UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     
     NSLog(@"Start submission");
-    [[AXAPI API] verifySubmissionForEventId:event.eventId WithImage:image completion:^(BOOL success) {
+    [[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:progress completion:^(BOOL success) {
+//        [alertView dismissViewControllerAnimated:YES completion:nil];
         if(success)
         {
             NSLog(@"Finish successful submission");
