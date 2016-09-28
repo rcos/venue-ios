@@ -146,29 +146,21 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
-    
-    SCLAlertView* alertView = [[SCLAlertView alloc] init];
-    UIProgressView* progress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [alertView addCustomView:progress];
-//    [progress mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(alertView);
-//        make.right.equalTo(alertView);
-//    }];
-    
-    
-    
-//    [alertView addButton:@"Cancel" actionBlock:^{
-//        //cancel
-//    }];
-    
-    [alertView showWaiting:@"Verifying Submission" subTitle:@"We're checking your attendance, please wait." closeButtonTitle:nil duration:999];
-    
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+		SCLAlertViewBuilder *builder = [SCLAlertViewBuilder new];
+		SCLAlertViewShowBuilder *showBuilder = [SCLAlertViewShowBuilder new]
+		.style(Waiting)
+		.title(@"Verifying Submission")
+		.subTitle(@"We're checking your attendance, please wait.")
+		.duration(0);
+		[showBuilder showAlertView:builder.alertView onViewController:self];
+	}];
+	
     //shrink image
     UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     
     NSLog(@"Start submission");
-    [[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:progress completion:^(BOOL success) {
+    [[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success) {
 //        [alertView dismissViewControllerAnimated:YES completion:nil];
         if(success)
         {
