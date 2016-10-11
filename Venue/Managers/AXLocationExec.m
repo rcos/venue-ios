@@ -46,11 +46,15 @@
 
 -(void)getLocationWithCompletion:(void(^)(CLLocation* location))completion
 {
-    if(!self.location)executeOnNextUpdate = completion;
-    else
-    {
-        completion(self.location);
-    }
+	if([self checkAuthorization] == kCLAuthorizationStatusAuthorizedWhenInUse) {
+		[locationManager startUpdatingLocation];
+		
+		if(!self.location)executeOnNextUpdate = completion;
+		else
+		{
+			completion(self.location);
+		}
+	}
 }
 
 // Checks if we're allowed to use location services
@@ -88,23 +92,19 @@
 // If we got actual locations from the manager, they appear here
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-//    for(CLLocation* newLocation in locations)
-//    {
-//        
-//    }
     self.location = [locations lastObject];
     if(executeOnNextUpdate) {
         executeOnNextUpdate(self.location);
         executeOnNextUpdate = nil;
     }
-    
-    [locationManager startMonitoringSignificantLocationChanges];
+	
+	[locationManager stopUpdatingLocation];
 }
 
 //Handle our errors here
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    //NSLog(@"%@", error);
+    NSLog(@"%@", error);
 }
 
 @end

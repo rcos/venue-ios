@@ -146,45 +146,62 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-		SCLAlertViewBuilder *builder = [SCLAlertViewBuilder new];
-		SCLAlertViewShowBuilder *showBuilder = [SCLAlertViewShowBuilder new]
-		.style(Waiting)
-		.title(@"Verifying Submission")
-		.subTitle(@"We're checking your attendance, please wait.")
-		.duration(0);
-		[showBuilder showAlertView:builder.alertView onViewController:self];
+	[self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+		UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+		[self attemptSubmissionWithImage:image];
 	}];
+}
+
+-(void)attemptSubmissionWithImage:(UIImage*)image
+{
+	SCLAlertViewBuilder *builder = [SCLAlertViewBuilder new];
+	SCLAlertViewShowBuilder *showBuilder = [SCLAlertViewShowBuilder new]
+	.style(Waiting)
+	.title(@"Verifying Submission")
+	.subTitle(@"We're checking your attendance, please wait.")
+	.duration(0);
+	[showBuilder showAlertView:builder.alertView onViewController:self];
 	
-    //shrink image
-    UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-    
-    NSLog(@"Start submission");
-    [[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success) {
-//        [alertView dismissViewControllerAnimated:YES completion:nil];
-        if(success)
-        {
-            NSLog(@"Finish successful submission");
-            [self fetchSubmissions];
-        }
-        else
-        {
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                           message:@"Submission Failed"
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Retry" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                    [self imagePickerController:picker didFinishPickingMediaWithInfo:info];
-                }];
-            
-            [alert addAction:cancelAction];
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-        
-    }];
+	NSLog(@"Start submission");
+	[[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success) {
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[builder.alertView hideView];
+		});
+		
+		if(success)
+		{
+			NSLog(@"Finish successful submission");
+			dispatch_async(dispatch_get_main_queue(), ^{
+				SCLAlertViewBuilder *successBuilder = [SCLAlertViewBuilder new];
+				SCLAlertViewShowBuilder *successShowBuilder = [SCLAlertViewShowBuilder new]
+				.style(Success)
+				.title(@"Submission Verified");
+				successBuilder.addButtonWithActionBlock(@"Close", ^{
+					[self fetchSubmissions];
+				});
+				[successShowBuilder showAlertView:successBuilder.alertView onViewController:self];
+			});
+		}
+		else
+		{
+			SCLAlertViewBuilder *failureBuilder = [SCLAlertViewBuilder new];
+			SCLAlertViewShowBuilder *failureShowBuilder = [SCLAlertViewShowBuilder new]
+			.style(Error)
+			.title(@"Submission Failed")
+			.closeButtonTitle(@"Close");
+			failureBuilder.addButtonWithActionBlock(@"Retry", ^{
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self attemptSubmissionWithImage:image];
+				});
+			});
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[failureShowBuilder showAlertView:failureBuilder.alertView onViewController:self];
+			});
+		}
+		
+	}];
 }
 
 #pragma mark - UITableViewDelegate

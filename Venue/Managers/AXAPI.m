@@ -21,14 +21,9 @@
     dispatch_once(&onceToken, ^{
         netExec = [[AXAPI alloc] initWithBaseURL:[NSURL URLWithString:baseURL]];
         netExec.responseSerializer = [[AXHTTPResponseSerializer alloc] init];
-//        netExec.responseSerializer = [AFJSONResponseSerializer serializer];
-//        netExec.responseSerializer.acceptableContentTypes = [netExec.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
         
         [netExec.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", [[FXKeychain defaultKeychain] objectForKey:kSessionToken]] forHTTPHeaderField:@"Authorization"];
         [netExec.requestSerializer setValue:[[FXKeychain defaultKeychain] objectForKey:kXSRFToken] forHTTPHeaderField:@"X-XSRF-TOKEN"];
-//        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-//        securityPolicy.allowInvalidCertificates = YES;
-//        netExec.securityPolicy = securityPolicy;
     });
     return netExec;
 }
@@ -330,12 +325,6 @@
                           uploadProgress:uploadProgress
                         downloadProgress:downloadProgress
                        completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
-                           
-//                           NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:@"http://104.131.185.159:9000"]];
-//                           for (NSHTTPCookie *cookie in cookies)
-//                           {
-//                               NSLog(@"%@\n", cookie);
-//                           }
                            
                            if (error) {
                                //We've got a failure.  We need to check it out.
