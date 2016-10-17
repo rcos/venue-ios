@@ -168,7 +168,7 @@
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Log out" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        AppDelegate* del = [[UIApplication sharedApplication] delegate];
+        AppDelegate* del = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [del setLoggedOut];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];

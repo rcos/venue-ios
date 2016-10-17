@@ -6,6 +6,8 @@
 //  Copyright © 2016 JimBoulter. All rights reserved.
 //
 
+#import <Photos/Photos.h>
+
 #import "AXEventViewController.h"
 #import "AXAPI.h"
 #import "AXSubmissionTableViewCell.h"
@@ -139,8 +141,17 @@
     UIImagePickerController *camera = [[UIImagePickerController alloc] init];
     camera.sourceType = ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == YES) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     camera.delegate = self;
-    [self presentViewController:camera animated:YES completion:nil];
-}
+    
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusAuthorized:
+                [self presentViewController:camera animated:YES completion:nil];
+                break;
+                
+            default:
+                break;
+        }
+    }];}
 
 #pragma mark - UIImagePickerController Delegate
 
