@@ -40,21 +40,6 @@
     return self;
 }
 
-/*
--(void)clearCookies {
-    NSHTTPCookie* cookie;
-    NSHTTPCookieStorage* cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    //TODO delete cookies here 
-    NSArray* cookies = [cookieJar cookies];
-    for(cookie in cookies) {
-        if([cookie.name isEqualToString:@"connect.sid" ]) {
-            [[AXAPI API].requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", cookie.value] forHTTPHeaderField:@"Authorization"];
-            [[AXExec appDel] setLoggedIn];
-        }
-    }
-}
-*/
-
 #pragma mark - Login
 
 -(void)setAuthToken:(NSString*)token {
@@ -72,12 +57,6 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if(completion)completion(0);
     }];
-}
-
--(void)parseLoginResponse:(id)responseObject {
-    [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
-    [self setAuthToken:responseObject[@"token"]];
-    NSLog(@"Session Token: %@",[[FXKeychain defaultKeychain] objectForKey:kSessionToken]);
 }
 
 -(void)loginWithCASRequest:(NSURLRequest*)request block:(void(^)(BOOL))completion {
@@ -149,6 +128,11 @@
         [coursesObj addObject:[[AXCourse alloc] initWithDictionary:c]];
     }
     return [coursesObj copy];
+}
+
+-(void)parseLoginResponse:(id)responseObject {
+    [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
+    [self setAuthToken:responseObject[@"token"]];
 }
 
 #pragma mark - Data Fetching
