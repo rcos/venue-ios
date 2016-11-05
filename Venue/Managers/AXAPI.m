@@ -40,6 +40,7 @@
     return self;
 }
 
+/*
 -(void)clearCookies {
     NSHTTPCookie* cookie;
     NSHTTPCookieStorage* cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -52,8 +53,14 @@
         }
     }
 }
+*/
 
 #pragma mark - Login
+
+-(void)setAuthToken:(NSString*)token {
+    [[FXKeychain defaultKeychain] setObject:token forKey:kSessionToken];
+    [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", token] forHTTPHeaderField:@"Authorization"];
+}
 
 -(void)getTokenswithCompletion:(void(^)(BOOL))completion
 {
@@ -68,13 +75,15 @@
 }
 
 -(void)parseLoginResponse:(id)responseObject {
-    [[FXKeychain defaultKeychain] setObject:responseObject[@"token"] forKey:kSessionToken];
     [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
-    [self.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", responseObject[@"token"]] forHTTPHeaderField:@"Authorization"];
+    [self setAuthToken:responseObject[@"token"]];
+    NSLog(@"Session Token: %@",[[FXKeychain defaultKeychain] objectForKey:kSessionToken]);
 }
 
 -(void)loginWithCASRequest:(NSURLRequest*)request block:(void(^)(BOOL))completion {
     if(request) {
+        //TODO: Retain details for this request, to be able to make it later on
+        
         NSURLSessionDataTask* task = [[AXAPI API] dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
             if(!error) {
                 
@@ -258,7 +267,7 @@
 
 #pragma mark - Attendance
 
--(void)verifySubmissionForEventId:(NSString*)eventId withImage:(UIImage*)image withProgressView:(UIProgressView*)progressView completion:(void(^)(BOOL))completion
+-(void)verifySubmissionForEventId:(NSString*)eventId withImage:(UIImage*)image withProgressView:(UIProgressView*)progressView completion:(void(^)(BOOL, NSError*))completion
 {
     [[AXLocationExec exec] getLocationWithCompletion:^(CLLocation* location) {
         NSDictionary* params = @{@"coordinates" : @[@(location.coordinate.longitude), @(location.coordinate.latitude)],
@@ -280,9 +289,9 @@
                   });
               }
           } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            completion(1);
+            completion(1, nil);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            completion(0);
+            completion(0, error);
         }];
     }];
 }

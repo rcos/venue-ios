@@ -174,7 +174,7 @@
 	[showBuilder showAlertView:builder.alertView onViewController:self];
 	
 	NSLog(@"Start submission");
-	[[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success) {
+	[[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success, NSError* error) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[builder.alertView hideView];
@@ -200,6 +200,7 @@
 			SCLAlertViewShowBuilder *failureShowBuilder = [SCLAlertViewShowBuilder new]
 			.style(Error)
 			.title(@"Submission Failed")
+            .subTitle([error description])
 			.closeButtonTitle(@"Close");
 			failureBuilder.addButtonWithActionBlock(@"Retry", ^{
 				dispatch_async(dispatch_get_main_queue(), ^{

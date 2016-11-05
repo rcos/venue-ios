@@ -30,6 +30,8 @@ static NSString* kXSRFToken = @"kXSRFToken";
 
 -(void)loginWithEmail:(NSString*)email password:(NSString*)password block:(void(^)(BOOL))completion;
 
+-(void)setAuthToken:(NSString*)token;
+
 -(void)loginWithCASRequest:(NSURLRequest*)request block:(void(^)(BOOL))completion;
 
 -(void)logOut;
@@ -46,5 +48,5 @@ static NSString* kXSRFToken = @"kXSRFToken";
 
 -(void)getImageAtPath:(NSString*)path completion:(void(^)(UIImage* image))completion;
 
--(void)verifySubmissionForEventId:(NSString*)eventId withImage:(UIImage*)image withProgressView:(UIProgressView*)progressView completion:(void(^)(BOOL))completion;
+-(void)verifySubmissionForEventId:(NSString*)eventId withImage:(UIImage*)image withProgressView:(UIProgressView*)progressView completion:(void(^)(BOOL, NSError*))completion;
 @end

@@ -55,6 +55,7 @@
 		0C96B2591C377B8B000A78FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C96B25C1C377B8C000A78FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C96B25E1C377B8C000A78FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C991F941DCE3E9B002F3140 /* Venue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Venue.entitlements; sourceTree = "<group>"; };
 		0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXHTTPResponseSerializer.h; sourceTree = "<group>"; };
 		0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXHTTPResponseSerializer.m; sourceTree = "<group>"; };
 		0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXOverviewViewController.h; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 		0C96B2521C377B8B000A78FB /* Venue */ = {
 			isa = PBXGroup;
 			children = (
+				0C991F941DCE3E9B002F3140 /* Venue.entitlements */,
 				0C2AAFA71CDBA3F000BFD587 /* Data */,
 				0CCEDE061C3C44EE009F8C4D /* Managers */,
 				0CCEDE211C417F76009F8C4D /* Course */,
@@ -305,6 +307,11 @@
 					0C96B24F1C377B8B000A78FB = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 226W9978N7;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -536,8 +543,10 @@
 			baseConfigurationReference = 3A0C2B54B9CEFE87FA94A18C /* Pods-Venue.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Venue/Venue.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 226W9978N7;
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -558,8 +567,10 @@
 			baseConfigurationReference = 65F3EB48EA5F3AFBE6B98F16 /* Pods-Venue.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Venue/Venue.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 226W9978N7;
 				GCC_PREFIX_HEADER = "Venue-Prefix.pch";
 				INFOPLIST_FILE = Venue/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

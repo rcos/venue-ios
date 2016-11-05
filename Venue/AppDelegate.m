@@ -20,6 +20,7 @@
 -(void)setLoggedIn
 {
     self.isLoggingIn = false;
+    
     [AXLocationExec exec];
     UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
     [UIView transitionWithView:self.window
