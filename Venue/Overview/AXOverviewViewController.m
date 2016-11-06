@@ -42,7 +42,7 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.tableView.backgroundColor = [UIColor lightGrayColor];
+        //self.tableView.backgroundColor = [UIColor lightGrayColor];
         
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         progressView.progressTintColor = [UIColor venueRedColor];
