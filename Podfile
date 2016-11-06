@@ -11,5 +11,6 @@ pod "SDWebImage"
 pod "Fabric"
 pod "Crashlytics"
 pod "SCLAlertView-Objective-C"
+pod "KVOController"
 end
 

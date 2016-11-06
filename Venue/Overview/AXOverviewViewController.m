@@ -21,11 +21,15 @@
 @property UILabel* emptyLabel;
 
 @property NSArray* events;
+@property NSArray* filteredEvents;
 @property NSArray* courses;
+@property NSArray* filteredCourses;
+
+@property UISearchController* searchController;
 @end
 
 @implementation AXOverviewViewController
-@synthesize modeToolBar, progressView, contentMode, emptyLabel;
+@synthesize modeToolBar, progressView, contentMode, emptyLabel, searchController;
 
 -(instancetype)init
 {
@@ -38,12 +42,11 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        self.tableView.backgroundColor = [UIColor lightGrayColor];
+        self.tableView.backgroundColor = [UIColor lightGrayColor];
         
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
         progressView.progressTintColor = [UIColor venueRedColor];
         progressView.trackTintColor = [UIColor lightGrayColor];
-//        progressView.tintColor = [UIColor venueRedColor];
         
 		emptyLabel = [[UILabel alloc] init];
 		[emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
@@ -64,6 +67,25 @@
                       forControlEvents:UIControlEventValueChanged];
         [self.tableView insertSubview:self.refreshControl atIndex:0];
         
+        // init search controller
+        
+        searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        searchController.searchResultsUpdater = self;
+        searchController.dimsBackgroundDuringPresentation = false;
+        searchController.hidesNavigationBarDuringPresentation = false;
+        self.definesPresentationContext = false;
+        
+        self.tableView.tableHeaderView = searchController.searchBar;
+        
+        // Watch events and courses to update search on refresh of results from server
+        [self.KVOController observe:self keyPath:@"events" options:NSKeyValueObservingOptionInitial block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+            [self updateSearchResultsForSearchController:searchController];
+        }];
+        
+        [self.KVOController observe:self keyPath:@"courses" options:NSKeyValueObservingOptionInitial block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+            [self updateSearchResultsForSearchController:searchController];
+        }];
+        
         [self refresh];
     }
     return self;
@@ -71,14 +93,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //Nav Bar Gear
-//    UIButton* gear = [UIButton buttonWithType:UIButtonTypeCustom];
-//    gear.bounds = CGRectMake(0, 0, 22, 22);
-//    [gear setImage:[UIImage imageNamed:@"SettingsGear"] forState:UIControlStateNormal];
-//    [gear addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
-//    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:gear]];
     
     [self.view addSubview:modeToolBar];
     [self.view bringSubviewToFront:modeToolBar];
@@ -120,6 +134,7 @@
             }
         }
     }
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -131,6 +146,19 @@
 }
 
 #pragma mark - Actions
+
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+    if([self.searchController.searchBar.text isEqualToString:@""]) {
+        self.filteredEvents = self.events;
+        self.filteredCourses = self.courses;
+    } else {
+        self.filteredEvents = [self.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+    }
+    
+    [self.tableView reloadData];
+}
 
 -(void)refresh
 {
@@ -183,11 +211,11 @@
     AXDetailViewController* vc;
     if(!contentMode)
     {
-        vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
+        vc = [[AXEventViewController alloc] initWithEvent:self.filteredEvents[indexPath.row]];
     }
     else
     {
-        vc = [[AXCourseViewController alloc] initWithCourse:self.courses[indexPath.row]];
+        vc = [[AXCourseViewController alloc] initWithCourse:self.filteredCourses[indexPath.row]];
     }
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -199,7 +227,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (contentMode ? self.courses.count : self.events.count);
+    return (contentMode ? self.filteredCourses.count : self.filteredEvents.count);
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

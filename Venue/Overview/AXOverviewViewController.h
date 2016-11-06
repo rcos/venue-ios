@@ -11,7 +11,8 @@
 #import "Masonry.h"
 #import "AXContentSelectionToolbar.h"
 #import "AppDelegate.h"
+#import <KVOController/NSObject+FBKVOController.h>
 
-@interface AXOverviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXContentSelectionToolbarDelegate>
+@interface AXOverviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXContentSelectionToolbarDelegate, UISearchResultsUpdating>
 
 @end
