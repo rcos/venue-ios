@@ -157,7 +157,9 @@
         self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
     }
     
-    [self.tableView reloadData];
+    [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    } completion:nil];
 }
 
 -(void)refresh
