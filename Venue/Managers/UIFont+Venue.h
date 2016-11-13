@@ -14,4 +14,12 @@
 
 +(UIFont*)thinFontOfSize:(NSInteger)size;
 
++(UIFont*)boldFont;
+
++(UIFont*)boldFontOfSize:(NSInteger)size;
+
++(UIFont*)regularFont;
+
++(UIFont*)regularFontOfSize:(NSInteger)size;
+
 @end

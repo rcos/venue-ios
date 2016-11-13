@@ -73,16 +73,20 @@
         UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
         
         [sideImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.top.equalTo(self.view);
+            make.left.equalTo(self.view);
+            make.right.equalTo(self.view);
+            make.bottom.equalTo(slideView.mas_top);
+            make.height.equalTo(@100);
         }];
         
         [brighter mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+            make.edges.equalTo(sideImageView);
         }];
         
         [slideView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view.mas_left).with.offset(2*padding.left);
-            make.top.equalTo(self.view.mas_top).with.offset(padding.top);
+            make.top.equalTo(sideImageView.mas_bottom);
             make.right.equalTo(self.view).with.offset(2*padding.right);
             make.height.equalTo(self.view).with.offset(2*padding.bottom);
         }];

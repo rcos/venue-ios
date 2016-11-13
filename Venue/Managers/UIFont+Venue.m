@@ -20,4 +20,20 @@
     return [UIFont fontWithName:@"HelveticaNeue-Thin" size:size];
 }
 
++(UIFont*)boldFont {
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+}
+
++(UIFont*)boldFontOfSize:(NSInteger)size {
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
+}
+
++(UIFont*)regularFont {
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+}
+
++(UIFont*)regularFontOfSize:(NSInteger)size {
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
+}
+
 @end

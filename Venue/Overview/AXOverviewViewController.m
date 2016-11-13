@@ -241,7 +241,7 @@
 {
     AXCourseTableViewCell* cell;
     
-    cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell jim_reuseIdentifier]];
+    cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
     if(!cell)
     {
         cell = [[AXCourseTableViewCell alloc] init];

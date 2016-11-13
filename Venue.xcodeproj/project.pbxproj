@@ -17,6 +17,8 @@
 		0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96B2571C377B8B000A78FB /* AppDelegate.m */; };
 		0C96B25A1C377B8B000A78FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B2591C377B8B000A78FB /* Assets.xcassets */; };
 		0C96B25D1C377B8C000A78FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */; };
+		0C991F971DD0CFB1002F3140 /* AXLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C991F961DD0CFB1002F3140 /* AXLocationTableViewCell.m */; };
+		0C991F9C1DD0E72A002F3140 /* AXTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C991F9B1DD0E72A002F3140 /* AXTextTableViewCell.m */; };
 		0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */; };
 		0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */; };
 		0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE041C3C44E8009F8C4D /* AXExec.m */; };
@@ -56,6 +58,10 @@
 		0C96B25C1C377B8C000A78FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C96B25E1C377B8C000A78FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C991F941DCE3E9B002F3140 /* Venue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Venue.entitlements; sourceTree = "<group>"; };
+		0C991F951DD0CFB1002F3140 /* AXLocationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXLocationTableViewCell.h; sourceTree = "<group>"; };
+		0C991F961DD0CFB1002F3140 /* AXLocationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXLocationTableViewCell.m; sourceTree = "<group>"; };
+		0C991F9A1DD0E72A002F3140 /* AXTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXTextTableViewCell.h; sourceTree = "<group>"; };
+		0C991F9B1DD0E72A002F3140 /* AXTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXTextTableViewCell.m; sourceTree = "<group>"; };
 		0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXHTTPResponseSerializer.h; sourceTree = "<group>"; };
 		0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXHTTPResponseSerializer.m; sourceTree = "<group>"; };
 		0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXOverviewViewController.h; sourceTree = "<group>"; };
@@ -190,6 +196,29 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0C991F981DD0E079002F3140 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				0C991F951DD0CFB1002F3140 /* AXLocationTableViewCell.h */,
+				0C991F961DD0CFB1002F3140 /* AXLocationTableViewCell.m */,
+				0C5794421C487AB400E35F4E /* AXSubmissionTableViewCell.h */,
+				0C5794431C487AB400E35F4E /* AXSubmissionTableViewCell.m */,
+				0C991F9A1DD0E72A002F3140 /* AXTextTableViewCell.h */,
+				0C991F9B1DD0E72A002F3140 /* AXTextTableViewCell.m */,
+				0C991F991DD0E0AA002F3140 /* NotUsed */,
+			);
+			name = Event;
+			sourceTree = "<group>";
+		};
+		0C991F991DD0E0AA002F3140 /* NotUsed */ = {
+			isa = PBXGroup;
+			children = (
+				0CFBCA851C42CADB00303C89 /* AXEventTableViewCell.h */,
+				0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */,
+			);
+			name = NotUsed;
+			sourceTree = "<group>";
+		};
 		0CCEDE021C3B4874009F8C4D /* Overview */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,12 +249,9 @@
 		0CCEDE161C3D8C66009F8C4D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0C991F981DD0E079002F3140 /* Event */,
 				0CCEDE1A1C3D9F08009F8C4D /* AXCourseTableViewCell.h */,
 				0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */,
-				0CFBCA851C42CADB00303C89 /* AXEventTableViewCell.h */,
-				0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */,
-				0C5794421C487AB400E35F4E /* AXSubmissionTableViewCell.h */,
-				0C5794431C487AB400E35F4E /* AXSubmissionTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -421,12 +447,14 @@
 				0C5794481C4962FD00E35F4E /* AXLoginViewController.m in Sources */,
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
+				0C991F9C1DD0E72A002F3140 /* AXTextTableViewCell.m in Sources */,
 				0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */,
 				0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */,
 				0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */,
 				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,
 				0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */,
 				388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */,
+				0C991F971DD0CFB1002F3140 /* AXLocationTableViewCell.m in Sources */,
 				0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */,
 				0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,
