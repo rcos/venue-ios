@@ -27,7 +27,7 @@ static const int kSegmentedControlOffset = 30;
     {
         self.delegate = delegate;
         
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor primaryColor];
         
         UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.bounds];
         self.layer.masksToBounds = NO;
@@ -38,7 +38,7 @@ static const int kSegmentedControlOffset = 30;
         
         segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Events", @"Courses"]];
         segmentedControl.selectedSegmentIndex = AXContentModeEvents;
-        [segmentedControl setTintColor:[UIColor venueRedColor]];
+        [segmentedControl setTintColor:[UIColor secondaryColor]];
         [segmentedControl addTarget:self action:@selector(controlValueDidChange:) forControlEvents:UIControlEventValueChanged];
         
         [self addSubview:segmentedControl];

@@ -11,6 +11,7 @@
 #import "AXLoginViewController.h"
 #import "AXWebLoginViewController.h"
 #import "AXOverviewViewController.h"
+#import "UIFont+Venue.h"
 
 @interface AppDelegate ()
 @end
@@ -45,15 +46,21 @@
                     } completion:nil];
 }
 
+-(void)configureAppearances {
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor primaryColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor primaryColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor secondaryColor]];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [UINavigationBar appearance].titleTextAttributes = @{NSFontAttributeName:[UIFont boldFontOfSize:22]};
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor backgroundColor];
     
-    [[UINavigationBar appearance] setTranslucent:NO];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
-    [[UINavigationBar appearance] setTintColor:[UIColor venueRedColor]];
+    [self configureAppearances];
     
     [Fabric with:@[[Crashlytics class]]];
 

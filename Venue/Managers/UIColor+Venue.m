@@ -12,11 +12,19 @@
 
 +(UIColor*)venueRedColor
 {
-    return [UIColor colorWithRed:0.96 green:0.16 blue:0.12 alpha:1];
+    return COLOR_WITH_PERCENTAGES(0.96, 0.16, 0.12);
+}
+
++(UIColor *)venueBlueColor {
+    return COLOR(0, 173, 238);
+}
+
++(UIColor*)venueBlackColor {
+    return COLOR(51, 51, 51);
 }
 
 +(UIColor*)rpiRedColor {
-    return [UIColor colorWithRed:0.89 green:0.14 blue:0.11 alpha:1.00];
+    return COLOR_WITH_PERCENTAGES(0.89, 0.14, 0.11);
 }
 
 +(UIColor *)randomColor
@@ -30,6 +38,36 @@
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
++(UIColor*)shadowGrayColor {
+    return [UIColor colorWithWhite:1 alpha:.15];
+}
+
++(UIColor*)paleGrayColor {
+    return COLOR(239, 239, 244);
+}
+
+// Color variables
+
++(UIColor*)primaryColor {
+    return [self venueBlackColor];
+}
+
++(UIColor*)secondaryColor {
+    return [self whiteColor];
+}
+
++(UIColor*)accentColor {
+    return [self venueBlueColor];
+}
+
++(UIColor*)backgroundColor {
+    return  [self paleGrayColor];
+}
+
++(UIColor*)darkTextColor {
+    return [self darkGrayColor];
 }
 
 @end

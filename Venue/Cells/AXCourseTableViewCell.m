@@ -14,13 +14,12 @@
 @property UIView* slideView;
 @property UILabel* titleLabel;
 @property UILabel* subtitleLabel;
-@property UILabel* eventsLabel;
 @property UIImageView* disclosureIndicatorView;
 
 @end
 
 @implementation AXCourseTableViewCell
-@synthesize sideImageView, slideView, titleLabel, subtitleLabel, eventsLabel, disclosureIndicatorView;
+@synthesize sideImageView, slideView, titleLabel, subtitleLabel, disclosureIndicatorView;
 
 -(instancetype)init
 {
@@ -44,7 +43,13 @@
         slideView = [[UIView alloc] init];
         slideView.alpha = 1;
         slideView.backgroundColor = [UIColor whiteColor];
-        [self.view addSubview:slideView];
+        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:slideView.bounds];
+        slideView.layer.masksToBounds = NO;
+        slideView.layer.shadowColor = [[UIColor shadowGrayColor] CGColor];
+        slideView.layer.shadowOffset = CGSizeMake(0, -2);
+        slideView.layer.shadowRadius = 4;
+        slideView.layer.shadowPath = shadowPath.CGPath;
+        [self.view insertSubview:slideView aboveSubview:brighter];
         
         titleLabel = [[UILabel alloc] init];
         [titleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
@@ -52,20 +57,10 @@
         [self.view addSubview:titleLabel];
         
         subtitleLabel = [[UILabel alloc] init];
-        subtitleLabel.textColor = [UIColor darkGrayColor];
+        subtitleLabel.textColor = [UIColor darkTextColor];
         subtitleLabel.font = [UIFont thinFontOfSize:18];
         [subtitleLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
         [self.view addSubview:subtitleLabel];
-        
-        eventsLabel = [[UILabel alloc] init];
-        eventsLabel.font = [UIFont systemFontOfSize:10];
-        eventsLabel.textColor = [UIColor whiteColor];
-        eventsLabel.backgroundColor = [UIColor venueRedColor];
-        eventsLabel.text = @"2 EVENTS";
-        eventsLabel.textAlignment = NSTextAlignmentCenter;
-        eventsLabel.layer.cornerRadius = 8;
-        eventsLabel.clipsToBounds = YES;
-        [self.view addSubview:eventsLabel];
         
         disclosureIndicatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DisclosureIndicator"]];
         [self.view addSubview:disclosureIndicatorView];
@@ -77,7 +72,7 @@
             make.left.equalTo(self.view);
             make.right.equalTo(self.view);
             make.bottom.equalTo(slideView.mas_top);
-            make.height.equalTo(@100);
+            make.height.equalTo(@120);
         }];
         
         [brighter mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -85,15 +80,15 @@
         }];
         
         [slideView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view.mas_left).with.offset(2*padding.left);
+            make.left.equalTo(self.view.mas_left);
             make.top.equalTo(sideImageView.mas_bottom);
-            make.right.equalTo(self.view).with.offset(2*padding.right);
-            make.height.equalTo(self.view).with.offset(2*padding.bottom);
+            make.right.equalTo(self.view);
+            make.bottom.equalTo(self.view);
         }];
         
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(slideView.mas_left).with.offset(padding.left);
-            make.top.equalTo(self.view.mas_top).with.offset(2*padding.top);
+            make.top.equalTo(slideView).with.offset(padding.top);
             make.right.equalTo(self.disclosureIndicatorView.mas_left).with.offset(padding.right);
             make.bottom.equalTo(subtitleLabel.mas_top).with.offset(.5*padding.bottom);
         }];
@@ -102,23 +97,17 @@
             make.left.equalTo(slideView.mas_left).with.offset(padding.left);
             make.top.equalTo(titleLabel.mas_bottom).with.offset(.5*padding.top);
             make.right.equalTo(titleLabel).with.offset(padding.right*2);
+            make.bottom.equalTo(slideView).offset(padding.bottom);
         }];
         
         [disclosureIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.view).with.offset(3*padding.right);
-            make.centerY.equalTo(self.view);
+            make.right.equalTo(slideView).with.offset(2*padding.right);
+            make.centerY.equalTo(slideView);
             make.height.equalTo(@20);
             make.width.equalTo(@10);
         }];
     }
     return self;
-}
-
--(void)layoutSubviews {
-    [super layoutSubviews];
-    
-    slideView.layer.masksToBounds = NO;
-    slideView.layer.cornerRadius = 6;
 }
 
 -(void)configureWithCourse:(AXCourse*)course

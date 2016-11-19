@@ -36,16 +36,18 @@
     self = [super init];
     if(self)
     {
-        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
+        //self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
         
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        //self.tableView.backgroundColor = [UIColor lightGrayColor];
+        self.tableView.backgroundColor = [UIColor backgroundColor];
+        self.tableView.estimatedRowHeight = 180;
+        self.tableView.rowHeight = -1;
         
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        progressView.progressTintColor = [UIColor venueRedColor];
+        progressView.progressTintColor = [UIColor accentColor];
         progressView.trackTintColor = [UIColor lightGrayColor];
         
 		emptyLabel = [[UILabel alloc] init];
@@ -61,7 +63,7 @@
         
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor whiteColor];
-        self.refreshControl.tintColor = [UIColor venueRedColor];
+        self.refreshControl.tintColor = [UIColor accentColor];
         [self.refreshControl addTarget:self
                                 action:@selector(refresh)
                       forControlEvents:UIControlEventValueChanged];
@@ -72,7 +74,7 @@
         searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.dimsBackgroundDuringPresentation = false;
-        searchController.hidesNavigationBarDuringPresentation = false;
+        
         self.definesPresentationContext = false;
         
         self.tableView.tableHeaderView = searchController.searchBar;
@@ -139,9 +141,10 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.navigationItem.title = @"Venue";
     [super viewWillAppear:animated];
     UIBarButtonItem* gear = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Gear"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
-    gear.tintColor = [UIColor venueRedColor];
+    gear.tintColor = [UIColor secondaryColor];
     [[self navigationItem] setLeftBarButtonItem:gear];
 }
 
@@ -220,11 +223,6 @@
         vc = [[AXCourseViewController alloc] initWithCourse:self.filteredCourses[indexPath.row]];
     }
     [self.navigationController pushViewController:vc animated:YES];
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return (contentMode ? 100 : 120);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
