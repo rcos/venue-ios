@@ -74,6 +74,7 @@
         searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.dimsBackgroundDuringPresentation = false;
+		searchController.hidesNavigationBarDuringPresentation = false;
         searchController.searchBar.barTintColor = [UIColor primaryColor];
         
         self.definesPresentationContext = false;
