@@ -21,6 +21,7 @@
 @property NSString* imageUrl;
 @property CLLocationCoordinate2D coords;
 @property NSString* address;
+@property NSString* submissionInstructions;
 
 -(instancetype)initWithDictionary:(NSDictionary*)dict;
 

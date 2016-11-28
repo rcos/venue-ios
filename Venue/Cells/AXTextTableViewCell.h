@@ -10,4 +10,6 @@
 
 @interface AXTextTableViewCell : AXTableViewCell
 
+-(void)configureWithText:(NSString*)text divider:(BOOL)divided;
+
 @end

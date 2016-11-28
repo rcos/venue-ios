@@ -10,7 +10,7 @@
 
 @implementation AXDetailViewController
 
-@synthesize imageView, detailContainerView, blurView, tapButton, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
+@synthesize progressView, emptyLabel;
 
 -(instancetype)init
 {
@@ -18,43 +18,11 @@
     if(self)
     {
 //        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
-        
-        imageView = [[UIImageView alloc] init];
-        
-        detailContainerView = [[UIView alloc] init];
-        
-        blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
-        [blurView setUserInteractionEnabled:YES];
-        
-        tapButton = [[UIButton alloc] init];
-        [tapButton addTarget:self action:@selector(blurViewTapped) forControlEvents:UIControlEventTouchUpInside];
-        [tapButton setBackgroundColor:[UIColor clearColor]];
-        
-        detailTitleLabel = [[UILabel alloc] init];
-        [detailTitleLabel setTextColor:[UIColor whiteColor]];
-        [detailTitleLabel setNumberOfLines:0];
-        [detailTitleLabel setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisVertical];
-        
-        detailSubtitleLabel = [[UILabel alloc] init];
-        [detailSubtitleLabel setTextColor:[UIColor lightGrayColor]];
-        [detailSubtitleLabel setFont:[UIFont thinFontOfSize:16]];
-        [detailSubtitleLabel setTextAlignment:NSTextAlignmentRight];
-        [detailSubtitleLabel setContentCompressionResistancePriority:800 forAxis:UILayoutConstraintAxisHorizontal];
-        
-        detailDescriptionTextView = [[UITextView alloc] init];
-        detailDescriptionTextView.backgroundColor = [UIColor clearColor];
-        [detailDescriptionTextView setTextColor:[UIColor whiteColor]];
-        detailDescriptionTextView.scrollEnabled = YES;
-        detailDescriptionTextView.editable = NO;
-        
-        tableTitleLabel = [[UILabel alloc] init];
-        tableTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Events"
-                                                                         attributes:@{
-                                                                       NSStrokeColorAttributeName : [UIColor blackColor], NSForegroundColorAttributeName : [UIColor whiteColor], NSStrokeWidthAttributeName : @-1.0 }];
-        
+        self.view.backgroundColor = [UIColor backgroundColor];
+		
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        progressView.backgroundColor = [UIColor lightGrayColor];
-        progressView.tintColor = [UIColor venueRedColor];
+        progressView.backgroundColor = [UIColor backgroundColor];
+        progressView.tintColor = [UIColor accentColor];
         
         emptyLabel = [[UILabel alloc] init];
         [emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
@@ -65,16 +33,22 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        self.tableView.backgroundColor = [UIColor venueRedColor];
+		self.tableView.backgroundColor = [UIColor backgroundColor];
+		self.tableView.rowHeight = -1;
+		self.tableView.estimatedRowHeight = 100;
         
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor whiteColor];
-        self.refreshControl.tintColor = [UIColor venueRedColor];
+        self.refreshControl.tintColor = [UIColor accentColor];
         [self.refreshControl addTarget:self
                            action:@selector(refresh)
                  forControlEvents:UIControlEventValueChanged];
         [self.tableView insertSubview:self.refreshControl atIndex:0];
-        
+		
+		[self.view addSubview:progressView];
+		[self.tableView addSubview:emptyLabel];
+		[self.view addSubview:self.tableView];
+		
         [self refresh];
 
     }
@@ -83,131 +57,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.view.backgroundColor = [UIColor whiteColor];
 	
-    UIView* gestureview = [[UIView alloc] init];
-    UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(blurViewTapped)];
-    [gestureview addGestureRecognizer:gr];
-    
-    [self.view addSubview:imageView];
-    [self.view addSubview:gestureview];
-    [gestureview addSubview:detailContainerView];
-    [self.view addSubview:tapButton];
-    [detailContainerView addSubview:blurView];
-    [detailContainerView insertSubview:detailTitleLabel aboveSubview:blurView];
-    [detailContainerView insertSubview:detailSubtitleLabel aboveSubview:blurView];
-    [detailContainerView insertSubview:detailDescriptionTextView aboveSubview:blurView];
-    [self.view addSubview:progressView];
-    [self.tableView addSubview:emptyLabel];
-    [self.view addSubview:self.tableView];
-    
-    UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
-    
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_centerY);
-    }];
-    
-    [detailContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(imageView).insets(UIEdgeInsetsMake(0, 0, 44, 0));
-    }];
-    
-    [gestureview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(imageView);
-    }];
-    
-    [blurView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.imageView.mas_top);
-        make.left.equalTo(self.imageView.mas_left);
-        make.right.equalTo(self.imageView.mas_right);
-        make.bottom.equalTo(self.imageView).with.offset(-44);
-    }];
-    
-   [detailTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-       make.top.equalTo(detailContainerView.mas_top).with.offset(padding.top);
-       make.left.equalTo(detailContainerView.mas_left).with.offset(padding.left);
-       make.right.equalTo(detailSubtitleLabel.mas_left).with.offset(padding.right);
-   }];
-    
-    [detailSubtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(detailContainerView.mas_top).with.offset(padding.top);
-        make.left.equalTo(detailTitleLabel.mas_right).with.offset(padding.left);
-        make.right.equalTo(detailContainerView.mas_right).with.offset(padding.right);
-    }];
-    
-    [detailDescriptionTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(detailTitleLabel.mas_bottom).with.offset(padding.top);
-        make.left.equalTo(detailContainerView.mas_left).with.offset(padding.left);
-        make.right.equalTo(detailContainerView.mas_right).with.offset(padding.right);
-        make.bottom.equalTo(detailContainerView.mas_bottom).with.offset(padding.bottom);
-    }];
-    
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.tableView.mas_top);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
+		make.top.equalTo(self.view);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
         make.height.equalTo(@1);
     }];
     
     [emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.tableView.mas_centerX);
-        make.centerY.equalTo(self.tableView.mas_centerY);
+        make.centerX.equalTo(self.tableView);
+        make.centerY.equalTo(self.tableView);
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageView.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.top.equalTo(progressView.mas_bottom);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
     }];
 }
 
--(void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	
-//	[self.navigationController setNavigationBarHidden:YES animated:NO];
-//	self.navBar = [[AXNavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0)];
-//	UINavigationItem *newItem = [[UINavigationItem alloc] init];
-//	
-//	UIImage *backButtonImage = self.navigationController.navigationBar.backIndicatorImage;
-//	UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(backTapped:)];
-//	newItem.leftBarButtonItem = backBarButtonItem;
-//	
-//	[self.navBar setItems:@[newItem]];
-//	[self.view addSubview:self.navBar];
-//
-//	__weak id weakSelf = self;
-//	self.navigationController.interactivePopGestureRecognizer.delegate = weakSelf;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Action
-
-- (void)backTapped:(id)sender {
-	[self.navigationController popViewControllerAnimated:YES];
-}
 
 -(void)refresh
 {
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
-}
-
-#pragma mark - UIGestureRecognizer
-
--(void)blurViewTapped
-{
-    NSLog(@"Blur Tapped");
-    [UIView transitionWithView:detailContainerView duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        detailContainerView.hidden = !detailContainerView.hidden;
-    } completion:nil];
 }
 
 #pragma mark - UITableViewDelegate

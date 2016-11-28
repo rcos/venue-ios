@@ -11,51 +11,30 @@
 #import "AXEventViewController.h"
 #import "AXAPI.h"
 #import "AXSubmissionTableViewCell.h"
+#import "AXTextTableViewCell.h"
+#import "AXMapTableViewCell.h"
+#import "AXImageTableViewCell.h"
+#import "AXIconTableViewCell.h"
 #import "SCLAlertView.h"
+#import "NSString+Venue.h"
 
 @interface AXEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property UIButton* navButton;
 @property NSArray* submissions;
 @property AXEvent* event;
-
-@property MKMapView* mapView;
-@property MKPointAnnotation* anno;
 
 
 @end
 
 @implementation AXEventViewController
-@synthesize navButton, mapView, anno, event;
+@synthesize event;
 
 -(instancetype)initWithEvent:(AXEvent*)_event
 {
+	event = _event;
     self = [super init];
     if(self)
     {
-        event = _event;
-        
-        mapView = [[MKMapView alloc] init];
-        
-        anno = [[MKPointAnnotation alloc] init];
-        anno.coordinate = event.coords;
-        anno.title = event.name;
-        
-        [self.emptyLabel setText:@"No submissions yet"];
-        
-        [self.detailTitleLabel setText:event.name];
-        [self.detailDescriptionTextView setText:event.eventDescription];
-        
-        [self.detailSubtitleLabel setNumberOfLines:2];
-        [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@\n-%@", event.startTime, event.endTime]];
-
-        self.tableTitleLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Photos"
-                                                                         attributes:@{
-                                                                                      NSStrokeColorAttributeName : [UIColor blackColor], NSForegroundColorAttributeName : [UIColor whiteColor], NSStrokeWidthAttributeName : @-1.0 }];
-        navButton = [[UIButton alloc] init];
-        [navButton setImage:[UIImage imageNamed:@"NavIcon"] forState:UIControlStateNormal];
-        [navButton addTarget:self action:@selector(navButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        
         [self fetchSubmissions];
         [self checkIfSubmittedBefore];
     }
@@ -68,25 +47,6 @@
     
     UIBarButtonItem* barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CheckinFull"] style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
     [self.navigationItem setRightBarButtonItem:barButton];
-    
-    mapView.showsUserLocation = YES;
-    [mapView addAnnotation:anno];
-    [mapView setRegion:MKCoordinateRegionMake(event.coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
-    
-    [self.view insertSubview:mapView atIndex:0];
-    [self.view insertSubview:navButton aboveSubview:self.detailContainerView];
-    
-    UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, -10, -10);
-    
-    [mapView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.imageView);
-    }];
-    
-    [navButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.blurView.mas_bottom);
-        make.right.equalTo(self.view.mas_right).with.offset(padding.right);
-        make.bottom.equalTo(self.tableView.mas_top).with.offset(padding.bottom);
-    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -116,7 +76,6 @@
 	navBar.midLabel.text = [NSString stringWithFormat:@"%@", date];
 	
 	navBar.bottomLabel.text = [NSString stringWithFormat:@"%@ - %@", event.startTime, event.endTime];
-
 }
 
 -(void)clearNavBar {
@@ -156,10 +115,10 @@
 {
     [[AXAPI API] getSubmissionsWithEventId:event.eventId progressView:self.progressView completion:^(NSArray *submissions) {
         self.submissions = submissions;
-        self.emptyLabel.hidden = self.submissions.count > 0;
+//        self.emptyLabel.hidden = self.submissions.count > 0;
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView])] withRowAnimation:UITableViewRowAnimationFade];
             } completion:^(BOOL finished) {
                 [self.refreshControl endRefreshing];
             }];
@@ -251,31 +210,127 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.emptyLabel.hidden = (self.submissions.count != 0);
-    return self.submissions.count;
+	switch (section) {
+		// description
+		case 0:
+			return 2;
+		// location
+		case 1:
+			return 2;
+		// submit
+		case 2:
+			return 1 + event.submissionInstructions.isEmpty;
+		// submission history
+		case 3:
+			return _submissions.count;
+		default:
+			return 0;
+	}
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 300;
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	UITableViewCell* outCell;
+	AXSubmissionTableViewCell* subCell;
+	AXImageTableViewCell* imgCell;
+	AXTextTableViewCell* textCell;
+	AXMapTableViewCell* mapCell;
+	AXIconTableViewCell* iconCell;
+	
+	switch (indexPath.section) {
+		// Description
+		case 0:
+			switch (indexPath.row) {
+				case 0:
+					imgCell = [tableView dequeueReusableCellWithIdentifier:[AXImageTableViewCell reuseIdentifier]];
+					if(!imgCell) {
+						imgCell = [[AXImageTableViewCell alloc] init];
+					}
+					[imgCell configureWithImageUrl:event.imageUrl];
+					outCell = imgCell;
+					break;
+				case 1:
+					textCell = [tableView dequeueReusableCellWithIdentifier:[AXTextTableViewCell reuseIdentifier]];
+					if(!textCell) {
+						textCell = [[AXTextTableViewCell alloc] init];
+					}
+					[textCell configureWithText:event.eventDescription divider:NO];
+					outCell = textCell;
+					break;
+				default:
+					outCell = [[AXTableViewCell alloc] init];
+					break;
+			}
+			break;
+			
+		// Location
+		case 1:
+			switch (indexPath.row) {
+				case 0:
+					mapCell = [tableView dequeueReusableCellWithIdentifier:[AXMapTableViewCell reuseIdentifier]];
+					if(!mapCell) {
+						mapCell = [[AXMapTableViewCell alloc] init];
+					}
+					[mapCell configureWithEvent:event];
+					outCell = mapCell;
+					break;
+				case 1:
+					iconCell = [tableView dequeueReusableCellWithIdentifier:[AXIconTableViewCell reuseIdentifier]];
+					if(!iconCell) {
+						iconCell = [[AXIconTableViewCell alloc] init];
+					}
+					[iconCell configureWithText:event.address mode:AXAddressMode];
+					outCell = iconCell;
+					break;
+				default:
+					break;
+			}
+			break;
+			
+		// Submit
+		case 2:
+			switch (indexPath.row) {
+				case 0:
+					iconCell = [tableView dequeueReusableCellWithIdentifier:[AXIconTableViewCell reuseIdentifier]];
+					if(!iconCell) {
+						iconCell = [[AXIconTableViewCell alloc] init];
+					}
+					[iconCell configureWithText:@"Add new submission" mode:AXSubmissionMode];
+					outCell = iconCell;
+					break;
+				case 1:
+					textCell = [tableView dequeueReusableCellWithIdentifier:[AXTextTableViewCell reuseIdentifier]];
+					if(!textCell) {
+						textCell = [[AXTextTableViewCell alloc] init];
+					}
+					[textCell configureWithText:event.submissionInstructions divider:YES];
+					outCell = textCell;
+					break;
+				default:
+					break;
+			}
+			break;
+			
+		// Submissions History
+		case 3:
+			subCell = [tableView dequeueReusableCellWithIdentifier:[AXSubmissionTableViewCell reuseIdentifier]];
+			if(!subCell)
+			{
+				subCell = [[AXSubmissionTableViewCell alloc] initWithSubmission:self.submissions[indexPath.row]];
+			}
+			outCell = subCell;
+			break;
+		default:
+			outCell = [[AXTableViewCell alloc] init];
+			break;
+	}
     
-    AXSubmissionTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[AXSubmissionTableViewCell reuseIdentifier]];
-    
-    if(!cell)
-    {
-        cell = [[AXSubmissionTableViewCell alloc] initWithSubmission:self.submissions[indexPath.row]];
-    }
-    
-    return cell;
+    return outCell;
 }
 
 @end

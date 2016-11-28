@@ -25,10 +25,10 @@
 		
 		self.topLabel = [[UILabel alloc] init];
 		[self.topLabel setFont:[UIFont boldFontOfSize:18]];
+		[self.topLabel setAdjustsFontSizeToFitWidth:YES];
 		[self.topLabel setTextColor:[UIColor secondaryColor]];
 		[self.topLabel setNumberOfLines:2];
 		[self.topLabel setTextAlignment:NSTextAlignmentCenter];
-		[self.topLabel setLineBreakMode:NSLineBreakByTruncatingTail];
 		[self addSubview:self.topLabel];
 		
 		self.midLabel = [[UILabel alloc] init];

@@ -17,7 +17,7 @@
 		0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96B2571C377B8B000A78FB /* AppDelegate.m */; };
 		0C96B25A1C377B8B000A78FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B2591C377B8B000A78FB /* Assets.xcassets */; };
 		0C96B25D1C377B8C000A78FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C96B25B1C377B8C000A78FB /* LaunchScreen.storyboard */; };
-		0C991F971DD0CFB1002F3140 /* AXLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C991F961DD0CFB1002F3140 /* AXLocationTableViewCell.m */; };
+		0C991F971DD0CFB1002F3140 /* AXIconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C991F961DD0CFB1002F3140 /* AXIconTableViewCell.m */; };
 		0C991F9C1DD0E72A002F3140 /* AXTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C991F9B1DD0E72A002F3140 /* AXTextTableViewCell.m */; };
 		0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3EEE31C50A88A00A0C46A /* AXHTTPResponseSerializer.m */; };
 		0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */; };
@@ -32,6 +32,9 @@
 		0CCEDE271C41869D009F8C4D /* AXDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */; };
 		0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */; };
 		38117F321DEB731700DB4CFE /* AXNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 38117F311DEB731700DB4CFE /* AXNavigationBar.m */; };
+		386B6FC61DEBBF86001F4A52 /* AXMapTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 386B6FC51DEBBF86001F4A52 /* AXMapTableViewCell.m */; };
+		386B6FC91DEBD8F6001F4A52 /* AXImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 386B6FC81DEBD8F6001F4A52 /* AXImageTableViewCell.m */; };
+		386B6FCF1DEBE5A6001F4A52 /* NSString+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 386B6FCE1DEBE5A6001F4A52 /* NSString+Venue.m */; };
 		388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 388919701D29D3DA00487A28 /* UIImageView+Venue.m */; };
 		38F801431D567A9A005FD6B3 /* AXWebLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */; };
 		EE2BFCB2131F8DEEEC3564A9 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80712CAC25F6B09393418A5 /* libPods-Venue.a */; };
@@ -59,8 +62,8 @@
 		0C96B25C1C377B8C000A78FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C96B25E1C377B8C000A78FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C991F941DCE3E9B002F3140 /* Venue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Venue.entitlements; sourceTree = "<group>"; };
-		0C991F951DD0CFB1002F3140 /* AXLocationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXLocationTableViewCell.h; sourceTree = "<group>"; };
-		0C991F961DD0CFB1002F3140 /* AXLocationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXLocationTableViewCell.m; sourceTree = "<group>"; };
+		0C991F951DD0CFB1002F3140 /* AXIconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXIconTableViewCell.h; sourceTree = "<group>"; };
+		0C991F961DD0CFB1002F3140 /* AXIconTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXIconTableViewCell.m; sourceTree = "<group>"; };
 		0C991F9A1DD0E72A002F3140 /* AXTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXTextTableViewCell.h; sourceTree = "<group>"; };
 		0C991F9B1DD0E72A002F3140 /* AXTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXTextTableViewCell.m; sourceTree = "<group>"; };
 		0CB3EEE21C50A88A00A0C46A /* AXHTTPResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXHTTPResponseSerializer.h; sourceTree = "<group>"; };
@@ -89,6 +92,12 @@
 		0CFBCA881C42F72100303C89 /* Venue-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Venue-Prefix.pch"; sourceTree = "<group>"; };
 		38117F301DEB731700DB4CFE /* AXNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXNavigationBar.h; sourceTree = "<group>"; };
 		38117F311DEB731700DB4CFE /* AXNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXNavigationBar.m; sourceTree = "<group>"; };
+		386B6FC41DEBBF86001F4A52 /* AXMapTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXMapTableViewCell.h; sourceTree = "<group>"; };
+		386B6FC51DEBBF86001F4A52 /* AXMapTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXMapTableViewCell.m; sourceTree = "<group>"; };
+		386B6FC71DEBD8F6001F4A52 /* AXImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXImageTableViewCell.h; sourceTree = "<group>"; };
+		386B6FC81DEBD8F6001F4A52 /* AXImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXImageTableViewCell.m; sourceTree = "<group>"; };
+		386B6FCD1DEBE5A6001F4A52 /* NSString+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Venue.h"; sourceTree = "<group>"; };
+		386B6FCE1DEBE5A6001F4A52 /* NSString+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Venue.m"; sourceTree = "<group>"; };
 		3889196F1D29D1D200487A28 /* UIImageView+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Venue.h"; sourceTree = "<group>"; };
 		388919701D29D3DA00487A28 /* UIImageView+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Venue.m"; sourceTree = "<group>"; };
 		38F801411D567A9A005FD6B3 /* AXWebLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXWebLoginViewController.h; sourceTree = "<group>"; };
@@ -203,8 +212,12 @@
 		0C991F981DD0E079002F3140 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				0C991F951DD0CFB1002F3140 /* AXLocationTableViewCell.h */,
-				0C991F961DD0CFB1002F3140 /* AXLocationTableViewCell.m */,
+				386B6FC71DEBD8F6001F4A52 /* AXImageTableViewCell.h */,
+				386B6FC81DEBD8F6001F4A52 /* AXImageTableViewCell.m */,
+				386B6FC41DEBBF86001F4A52 /* AXMapTableViewCell.h */,
+				386B6FC51DEBBF86001F4A52 /* AXMapTableViewCell.m */,
+				0C991F951DD0CFB1002F3140 /* AXIconTableViewCell.h */,
+				0C991F961DD0CFB1002F3140 /* AXIconTableViewCell.m */,
 				0C5794421C487AB400E35F4E /* AXSubmissionTableViewCell.h */,
 				0C5794431C487AB400E35F4E /* AXSubmissionTableViewCell.m */,
 				0C991F9A1DD0E72A002F3140 /* AXTextTableViewCell.h */,
@@ -298,6 +311,8 @@
 				0CCEDE1F1C3DB7FC009F8C4D /* UIFont+Venue.m */,
 				3889196F1D29D1D200487A28 /* UIImageView+Venue.h */,
 				388919701D29D3DA00487A28 /* UIImageView+Venue.m */,
+				386B6FCD1DEBE5A6001F4A52 /* NSString+Venue.h */,
+				386B6FCE1DEBE5A6001F4A52 /* NSString+Venue.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -468,14 +483,17 @@
 				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,
 				0C5794441C487AB400E35F4E /* AXSubmissionTableViewCell.m in Sources */,
 				388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */,
-				0C991F971DD0CFB1002F3140 /* AXLocationTableViewCell.m in Sources */,
+				0C991F971DD0CFB1002F3140 /* AXIconTableViewCell.m in Sources */,
 				0CB3EEE41C50A88A00A0C46A /* AXHTTPResponseSerializer.m in Sources */,
+				386B6FC91DEBD8F6001F4A52 /* AXImageTableViewCell.m in Sources */,
 				0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */,
 				0C96B2551C377B8B000A78FB /* main.m in Sources */,
 				0CCEDE121C3C6929009F8C4D /* UIColor+Venue.m in Sources */,
 				0CCEDE201C3DB7FC009F8C4D /* UIFont+Venue.m in Sources */,
 				0CCEDE271C41869D009F8C4D /* AXDetailViewController.m in Sources */,
+				386B6FCF1DEBE5A6001F4A52 /* NSString+Venue.m in Sources */,
 				0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */,
+				386B6FC61DEBBF86001F4A52 /* AXMapTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

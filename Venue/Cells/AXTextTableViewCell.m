@@ -14,16 +14,14 @@
     UIView* divider;
 }
 
--(instancetype)initWithText:(NSString*)text divider:(bool)divided {
+-(instancetype)init {
     self = [super init];
     if(self) {
         label = [[UILabel alloc] init];
         label.font = [UIFont regularFont];
         label.numberOfLines = 0;
-        label.text = text;
         
         divider = [[UIView alloc] init];
-        divider.hidden = !divided;
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(15, 15, 15, 15));
@@ -37,6 +35,11 @@
         }];
     }
     return self;
+}
+
+-(void)configureWithText:(NSString*)text divider:(BOOL)divided {
+	label.text = text;
+	divider.hidden = !divided;
 }
 
 @end

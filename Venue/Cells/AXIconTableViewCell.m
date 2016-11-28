@@ -6,7 +6,7 @@
 //  Copyright © 2016 JimBoulter. All rights reserved.
 //
 
-#import "AXLocationTableViewCell.h"
+#import "AXIconTableViewCell.h"
 #import <Masonry.h>
 
 @implementation AXIconTableViewCell {
@@ -14,19 +14,11 @@
     UIImageView* icon;
 }
 
--(instancetype)initWithText:(NSString*)address mode:(AXIconMode)mode {
+-(instancetype)init {
     self = [super init];
     if(self) {
         label = [[UILabel alloc] init];
         label.font = [UIFont regularFont];
-        [label setText:address];
-        
-        icon = [[UIImageView alloc] init];
-        if(mode == AXAddressMode) {
-            [icon setImage:[UIImage imageNamed:@"NavIcon"]];
-        } else { // AXSubmissionMode
-            [icon setImage:[UIImage imageNamed:@"BoxPlus"]];
-        }
     
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(15);
@@ -42,6 +34,17 @@
         }];
     }
     return self;
+}
+
+-(void)configureWithText:(NSString *)address mode:(AXIconMode)mode {
+	[label setText:address];
+	
+	icon = [[UIImageView alloc] init];
+	if(mode == AXAddressMode) {
+		[icon setImage:[UIImage imageNamed:@"NavIcon"]];
+	} else { // AXSubmissionMode
+		[icon setImage:[UIImage imageNamed:@"BoxPlus"]];
+	}
 }
 
 @end

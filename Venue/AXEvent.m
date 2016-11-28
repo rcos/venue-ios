@@ -20,6 +20,7 @@
         _eventId = dictionary[@"_id"];
         _name = dict[@"title"];
         _eventDescription = dict[@"description"];
+		_submissionInstructions = dictionary[@"submissionInstructions"];
         
         NSArray* times = dict[@"times"];
         if(times.count > 0)

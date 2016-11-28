@@ -15,6 +15,6 @@ typedef enum : NSUInteger {
 
 @interface AXIconTableViewCell : AXTableViewCell
 
--(instancetype)initWithText:(NSString*)address mode:(AXIconMode)mode;
+-(void)configureWithText:(NSString*)address mode:(AXIconMode)mode;
 
 @end
