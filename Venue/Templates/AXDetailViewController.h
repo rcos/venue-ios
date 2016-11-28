@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Masonry.h"
+#import "AXNavigationBar.h"
 
 @interface AXDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
@@ -23,5 +24,7 @@
 @property UILabel* emptyLabel;
 @property UITableView* tableView;
 @property UIRefreshControl* refreshControl;
+
+@property AXNavigationBar* navBar;
 
 @end

@@ -143,7 +143,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.title = @"Venue";
+    self.title = @"Venue";
     [super viewWillAppear:animated];
     UIBarButtonItem* gear = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Gear"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
     gear.tintColor = [UIColor secondaryColor];

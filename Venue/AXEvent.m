@@ -34,7 +34,7 @@
             _startDate = [df dateFromString:start];
             _endDate = [df dateFromString:end];
             
-            [df setDateFormat:@"MM/dd h:mma"];
+            [df setDateFormat:@"h:mma"];
             _startTime = [df stringFromDate:_startDate];
             [df setDateFormat:@"h:mma"];
             _endTime = [df stringFromDate:_endDate];

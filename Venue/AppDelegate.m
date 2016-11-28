@@ -12,6 +12,7 @@
 #import "AXWebLoginViewController.h"
 #import "AXOverviewViewController.h"
 #import "UIFont+Venue.h"
+#import "AXNavigationBar.h"
 
 @interface AppDelegate ()
 @end
@@ -23,7 +24,9 @@
     self.isLoggingIn = false;
     
     [AXLocationExec exec];
-    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
+//    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
+	UINavigationController* navigationController = [[UINavigationController alloc] initWithNavigationBarClass:AXNavigationBar.class toolbarClass:nil];
+	[navigationController setViewControllers:@[[[AXOverviewViewController alloc] init]]];
     [UIView transitionWithView:self.window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve

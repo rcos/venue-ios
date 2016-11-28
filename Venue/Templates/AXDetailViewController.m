@@ -8,10 +8,6 @@
 
 #import "AXDetailViewController.h"
 
-@interface AXDetailViewController ()
-
-@end
-
 @implementation AXDetailViewController
 
 @synthesize imageView, detailContainerView, blurView, tapButton, detailTitleLabel, detailSubtitleLabel, detailDescriptionTextView, tableTitleLabel, progressView, emptyLabel;
@@ -169,12 +165,34 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+//	[self.navigationController setNavigationBarHidden:YES animated:NO];
+//	self.navBar = [[AXNavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0)];
+//	UINavigationItem *newItem = [[UINavigationItem alloc] init];
+//	
+//	UIImage *backButtonImage = self.navigationController.navigationBar.backIndicatorImage;
+//	UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(backTapped:)];
+//	newItem.leftBarButtonItem = backBarButtonItem;
+//	
+//	[self.navBar setItems:@[newItem]];
+//	[self.view addSubview:self.navBar];
+//
+//	__weak id weakSelf = self;
+//	self.navigationController.interactivePopGestureRecognizer.delegate = weakSelf;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Action
+
+- (void)backTapped:(id)sender {
+	[self.navigationController popViewControllerAnimated:YES];
+}
 
 -(void)refresh
 {

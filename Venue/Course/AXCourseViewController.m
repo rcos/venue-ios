@@ -8,6 +8,8 @@
 
 #import "AXCourseViewController.h"
 #import "AXEventViewController.h"
+#import "AXNavigationBar.h"
+
 @interface AXCourseViewController ()
 @property AXCourse* course;
 @property NSArray* events;
@@ -41,6 +43,11 @@
     
     self.emptyLabel.hidden = true;
     [self.emptyLabel setText:@"No events yet"];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
 }
 
 #pragma mark - Action

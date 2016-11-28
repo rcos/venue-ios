@@ -31,6 +31,7 @@
 		0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */; };
 		0CCEDE271C41869D009F8C4D /* AXDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE261C41869D009F8C4D /* AXDetailViewController.m */; };
 		0CFBCA871C42CADB00303C89 /* AXEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */; };
+		38117F321DEB731700DB4CFE /* AXNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 38117F311DEB731700DB4CFE /* AXNavigationBar.m */; };
 		388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 388919701D29D3DA00487A28 /* UIImageView+Venue.m */; };
 		38F801431D567A9A005FD6B3 /* AXWebLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */; };
 		EE2BFCB2131F8DEEEC3564A9 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80712CAC25F6B09393418A5 /* libPods-Venue.a */; };
@@ -86,6 +87,8 @@
 		0CFBCA851C42CADB00303C89 /* AXEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXEventTableViewCell.h; sourceTree = "<group>"; };
 		0CFBCA861C42CADB00303C89 /* AXEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEventTableViewCell.m; sourceTree = "<group>"; };
 		0CFBCA881C42F72100303C89 /* Venue-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Venue-Prefix.pch"; sourceTree = "<group>"; };
+		38117F301DEB731700DB4CFE /* AXNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXNavigationBar.h; sourceTree = "<group>"; };
+		38117F311DEB731700DB4CFE /* AXNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXNavigationBar.m; sourceTree = "<group>"; };
 		3889196F1D29D1D200487A28 /* UIImageView+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Venue.h"; sourceTree = "<group>"; };
 		388919701D29D3DA00487A28 /* UIImageView+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Venue.m"; sourceTree = "<group>"; };
 		38F801411D567A9A005FD6B3 /* AXWebLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXWebLoginViewController.h; sourceTree = "<group>"; };
@@ -176,6 +179,7 @@
 				0C5794451C4962D800E35F4E /* Login */,
 				0CCEDE021C3B4874009F8C4D /* Overview */,
 				0CCEDE161C3D8C66009F8C4D /* Cells */,
+				38117F2F1DEB72DD00DB4CFE /* Navigation */,
 				0CCEDE1D1C3D9F17009F8C4D /* Templates */,
 				0C96B2561C377B8B000A78FB /* AppDelegate.h */,
 				0C96B2571C377B8B000A78FB /* AppDelegate.m */,
@@ -274,6 +278,15 @@
 				0CCEDE231C417FFA009F8C4D /* AXCourseViewController.m */,
 			);
 			path = Course;
+			sourceTree = "<group>";
+		};
+		38117F2F1DEB72DD00DB4CFE /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				38117F301DEB731700DB4CFE /* AXNavigationBar.h */,
+				38117F311DEB731700DB4CFE /* AXNavigationBar.m */,
+			);
+			name = Navigation;
 			sourceTree = "<group>";
 		};
 		38ECB41D1D8844FE0068DCD0 /* Categories */ = {
@@ -438,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38117F321DEB731700DB4CFE /* AXNavigationBar.m in Sources */,
 				0CCEDE191C3D8C81009F8C4D /* AXTableViewCell.m in Sources */,
 				0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */,
 				0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */,

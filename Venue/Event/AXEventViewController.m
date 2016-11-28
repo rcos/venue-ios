@@ -90,11 +90,43 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[self loadNavBar];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	[self clearNavBar];
+}
+
 #pragma mark - Action
 
 -(void)refresh
 {
     [self fetchSubmissions];
+}
+
+-(void)loadNavBar {
+	AXNavigationBar* navBar = (AXNavigationBar*)self.navigationController.navigationBar;
+	navBar.topLabel.text = event.name;
+	
+	NSDateFormatter* df = [[NSDateFormatter alloc] init];
+	[df setDateStyle:NSDateFormatterMediumStyle];
+	NSString* date = [df stringFromDate:event.startDate];
+	navBar.midLabel.text = [NSString stringWithFormat:@"%@", date];
+	
+	navBar.bottomLabel.text = [NSString stringWithFormat:@"%@\n-%@", event.startTime, event.endTime];
+
+}
+
+-(void)clearNavBar {
+	AXNavigationBar* navBar = (AXNavigationBar*)self.navigationController.navigationBar;
+	navBar.topLabel.text = nil;
+	
+	navBar.midLabel.text = nil;
+	
+	navBar.bottomLabel.text = nil;
 }
 
 #pragma mark - Navigation
