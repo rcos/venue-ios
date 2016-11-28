@@ -24,21 +24,22 @@
 		[self setBarStyle:UIBarStyleBlack];
 		
 		self.topLabel = [[UILabel alloc] init];
-		[self.topLabel setFont:[UIFont boldFont]];
+		[self.topLabel setFont:[UIFont boldFontOfSize:18]];
 		[self.topLabel setTextColor:[UIColor secondaryColor]];
 		[self.topLabel setNumberOfLines:2];
 		[self.topLabel setTextAlignment:NSTextAlignmentCenter];
+		[self.topLabel setLineBreakMode:NSLineBreakByTruncatingTail];
 		[self addSubview:self.topLabel];
 		
 		self.midLabel = [[UILabel alloc] init];
-		[self.midLabel setFont:[UIFont boldFont]];
+		[self.midLabel setFont:[UIFont boldFontOfSize:14]];
 		[self.midLabel setTextColor:[UIColor secondaryColor]];
 		[self.midLabel setNumberOfLines:1];
 		[self.midLabel setTextAlignment:NSTextAlignmentCenter];
 		[self addSubview:self.midLabel];
 		
 		self.bottomLabel = [[UILabel alloc] init];
-		[self.bottomLabel setFont:[UIFont boldFont]];
+		[self.bottomLabel setFont:[UIFont boldFontOfSize:14]];
 		[self.bottomLabel setTextColor:[UIColor secondaryColor]];
 		[self.bottomLabel setNumberOfLines:1];
 		[self.bottomLabel setTextAlignment:NSTextAlignmentCenter];
@@ -50,12 +51,18 @@
 		
 		[stackView mas_makeConstraints:^(MASConstraintMaker *make) {
 			make.top.equalTo(self).offset(10);
-			make.bottom.equalTo(self).offset(10);
-			make.left.equalTo(self).offset(10);
-			make.right.equalTo(self).offset(10);
+			make.bottom.equalTo(self).offset(-10);
+			make.left.equalTo(self).offset(30);
+			make.right.equalTo(self).offset(-30);
 		}];
 	}
 	return self;
+}
+
+-(CGSize)sizeThatFits:(CGSize)size {
+	CGSize s = [super sizeThatFits:size];
+	s.height = 113;
+	return s;
 }
 
 /*

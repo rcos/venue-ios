@@ -17,7 +17,7 @@
     self = [super init];
     if(self)
     {
-        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
+//        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
         
         imageView = [[UIImageView alloc] init];
         

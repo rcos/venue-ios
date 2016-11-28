@@ -33,7 +33,6 @@
     self = [super init];
     if(self)
     {
-        self.title = @"Venue";
         event = _event;
         
         mapView = [[MKMapView alloc] init];
@@ -116,7 +115,7 @@
 	NSString* date = [df stringFromDate:event.startDate];
 	navBar.midLabel.text = [NSString stringWithFormat:@"%@", date];
 	
-	navBar.bottomLabel.text = [NSString stringWithFormat:@"%@\n-%@", event.startTime, event.endTime];
+	navBar.bottomLabel.text = [NSString stringWithFormat:@"%@ - %@", event.startTime, event.endTime];
 
 }
 
