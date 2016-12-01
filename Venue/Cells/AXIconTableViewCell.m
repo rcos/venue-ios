@@ -18,19 +18,27 @@
     self = [super init];
     if(self) {
         label = [[UILabel alloc] init];
-        label.font = [UIFont regularFont];
+        label.font = [UIFont boldFont];
+		label.numberOfLines = 0;
+		[self.view addSubview:label];
+		
+		icon = [[UIImageView alloc] init];
+		[self.view addSubview:icon];
     
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(15);
-            make.right.equalTo(icon.mas_left).offset(10);
+            make.right.equalTo(icon.mas_left).offset(-10);
             make.top.equalTo(self.view).offset(15);
-            make.bottom.equalTo(self.view).offset(15);
+            make.bottom.equalTo(self.view).offset(-15);
         }];
         
         [icon mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.view).offset(15);
-            make.top.equalTo(self.view).offset(15);
-            make.bottom.equalTo(self.view).offset(15);
+            make.right.equalTo(self.view).offset(-15);
+			make.centerY.equalTo(self.view);
+			make.height.equalTo(@25);
+			make.width.equalTo(@25);
+			make.top.greaterThanOrEqualTo(self.view).offset(15);
+			make.bottom.lessThanOrEqualTo(self.view).offset(-15);
         }];
     }
     return self;
@@ -39,7 +47,6 @@
 -(void)configureWithText:(NSString *)address mode:(AXIconMode)mode {
 	[label setText:address];
 	
-	icon = [[UIImageView alloc] init];
 	if(mode == AXAddressMode) {
 		[icon setImage:[UIImage imageNamed:@"NavIcon"]];
 	} else { // AXSubmissionMode

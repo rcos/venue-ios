@@ -9,7 +9,7 @@
 #import "AXTableViewCell.h"
 #import "AXEvent.h"
 
-@interface AXMapTableViewCell : AXTableViewCell
+@interface AXMapTableViewCell : AXTableViewCell <MKMapViewDelegate>
 
 -(void)configureWithEvent:(AXEvent*)event;
 

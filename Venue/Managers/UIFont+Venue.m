@@ -29,11 +29,11 @@
 }
 
 +(UIFont*)regularFont {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+    return [UIFont fontWithName:@"HelveticaNeue" size:14];
 }
 
 +(UIFont*)regularFontOfSize:(NSInteger)size {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
+    return [UIFont fontWithName:@"HelveticaNeue" size:size];
 }
 
 @end

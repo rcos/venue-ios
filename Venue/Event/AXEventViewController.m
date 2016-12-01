@@ -35,8 +35,7 @@
     self = [super init];
     if(self)
     {
-        [self fetchSubmissions];
-        [self checkIfSubmittedBefore];
+//        [self checkIfSubmittedBefore];
     }
     return self;
 }
@@ -118,7 +117,7 @@
 //        self.emptyLabel.hidden = self.submissions.count > 0;
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView])] withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
             } completion:^(BOOL finished) {
                 [self.refreshControl endRefreshing];
             }];
@@ -190,7 +189,7 @@
 			SCLAlertViewShowBuilder *failureShowBuilder = [SCLAlertViewShowBuilder new]
 			.style(Error)
 			.title(@"Submission Failed")
-            .subTitle([error description])
+			//.subTitle([error description])
 			.closeButtonTitle(@"Close");
 			failureBuilder.addButtonWithActionBlock(@"Retry", ^{
 				dispatch_async(dispatch_get_main_queue(), ^{
@@ -224,12 +223,82 @@
 			return 2;
 		// submit
 		case 2:
-			return 1 + event.submissionInstructions.isEmpty;
+			return 1 + !event.submissionInstructions.isEmpty;
 		// submission history
 		case 3:
 			return _submissions.count;
 		default:
 			return 0;
+	}
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	switch (section) {
+			// description
+		case 0:
+			return nil;
+			// location
+		case 1:
+			return @"Location";
+			// submit
+		case 2:
+			return @"Submission";
+			// submission history
+		case 3:
+			return @"History";
+		default:
+			return nil;
+	}
+
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if(section == 0) {
+		return nil;
+	}
+	UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+	UILabel* label = [[UILabel alloc] init];
+	
+	[label setFont:[UIFont boldFontOfSize:12]];
+	[label setTextColor:[UIColor darkTextColor]];
+	
+	switch (section) {
+		case 1:
+			[label setText:@"LOCATION"];
+			break;
+			// submit
+		case 2:
+			[label setText:@"SUBMISSION"];
+			break;
+			// submission history
+		case 3:
+			[label setText:@"HISTORY"];
+			break;
+		default:
+			break;
+	}
+	
+	[view addSubview:label];
+	[label mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.edges.equalTo(view).insets(UIEdgeInsetsMake(0, 20, 0, 20));
+	}];
+	
+	return view;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	if(section == 0) {
+		return [super tableView:tableView heightForHeaderInSection:section];
+	} else {
+		return 50;
+	}
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if(indexPath.section == 1 && indexPath.row == 1) {
+		[self navButtonPressed];
+	} else if(indexPath.section == 2 && indexPath.row == 0) {
+		[self checkIn];
 	}
 }
 

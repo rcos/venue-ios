@@ -18,38 +18,15 @@
     if(self)
     {
 //        self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
-        self.view.backgroundColor = [UIColor backgroundColor];
 		
         progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        progressView.backgroundColor = [UIColor backgroundColor];
-        progressView.tintColor = [UIColor accentColor];
         
         emptyLabel = [[UILabel alloc] init];
-        [emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
-        [emptyLabel setTextColor:[UIColor lightGrayColor]];
-        [emptyLabel setTextAlignment:NSTextAlignmentCenter];
-        
-        self.tableView = [[UITableView alloc] init];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		self.tableView.backgroundColor = [UIColor backgroundColor];
-		self.tableView.rowHeight = -1;
-		self.tableView.estimatedRowHeight = 100;
-        
+		
+		
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectNull style:UITableViewStyleGrouped];
+		
         self.refreshControl = [[UIRefreshControl alloc] init];
-        self.refreshControl.backgroundColor = [UIColor whiteColor];
-        self.refreshControl.tintColor = [UIColor accentColor];
-        [self.refreshControl addTarget:self
-                           action:@selector(refresh)
-                 forControlEvents:UIControlEventValueChanged];
-        [self.tableView insertSubview:self.refreshControl atIndex:0];
-		
-		[self.view addSubview:progressView];
-		[self.tableView addSubview:emptyLabel];
-		[self.view addSubview:self.tableView];
-		
-        [self refresh];
 
     }
     return self;
@@ -57,6 +34,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	progressView.backgroundColor = [UIColor primaryColor];
+	progressView.tintColor = [UIColor accentColor];
+	
+	[emptyLabel setFont:[UIFont italicSystemFontOfSize:17]];
+	[emptyLabel setTextColor:[UIColor lightGrayColor]];
+	[emptyLabel setTextAlignment:NSTextAlignmentCenter];
+	
+	self.view.backgroundColor = [UIColor backgroundColor];
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	self.tableView.backgroundColor = [UIColor backgroundColor];
+	self.tableView.rowHeight = -1;
+	self.tableView.estimatedRowHeight = 100;
+	
+	self.refreshControl.backgroundColor = [UIColor whiteColor];
+	self.refreshControl.tintColor = [UIColor accentColor];
+	[self.refreshControl addTarget:self
+							action:@selector(refresh)
+				  forControlEvents:UIControlEventValueChanged];
+	
+	[self.view addSubview:progressView];
+	[self.tableView insertSubview:self.refreshControl atIndex:0];
+	[self.tableView addSubview:emptyLabel];
+	[self.view addSubview:self.tableView];
 	
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.top.equalTo(self.view);
@@ -76,6 +79,16 @@
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
     }];
+	
+	[self refresh];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+	if (indexPath) {
+		[self.tableView deselectRowAtIndexPath:indexPath animated:animated];
+	}
 }
 
 #pragma mark - Action

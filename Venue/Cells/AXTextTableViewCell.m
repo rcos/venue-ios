@@ -20,8 +20,11 @@
         label = [[UILabel alloc] init];
         label.font = [UIFont regularFont];
         label.numberOfLines = 0;
+		[self.view addSubview:label];
         
         divider = [[UIView alloc] init];
+		[divider setBackgroundColor:[UIColor backgroundColor]];
+		[self.view addSubview:divider];
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(15, 15, 15, 15));
@@ -30,7 +33,7 @@
         [divider mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
             make.left.equalTo(self.view).offset(30);
-            make.right.equalTo(self.view).offset(30);
+            make.right.equalTo(self.view).offset(-30);
             make.height.equalTo(@1);
         }];
     }

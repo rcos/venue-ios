@@ -76,10 +76,16 @@
         searchController.dimsBackgroundDuringPresentation = false;
 		searchController.hidesNavigationBarDuringPresentation = false;
         searchController.searchBar.barTintColor = [UIColor primaryColor];
+		
+		// Hack to keep search bar from moving
+		UIView* container = [[UIView alloc] initWithFrame:searchController.searchBar.frame];
+		[container addSubview:searchController.searchBar];
+		[container setClipsToBounds:YES];
+		
         
         self.definesPresentationContext = false;
         
-        self.tableView.tableHeaderView = searchController.searchBar;
+        self.tableView.tableHeaderView = container;
         
         // Watch events and courses to update search on refresh of results from server
         [self.KVOController observe:self keyPath:@"events" options:NSKeyValueObservingOptionInitial block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {

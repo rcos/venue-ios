@@ -87,6 +87,7 @@
             make.top.equalTo(titleLabel.mas_bottom).with.offset(padding.top);
             make.right.equalTo(self.view.mas_right).with.offset(padding.right);
             make.bottom.equalTo(self.view.mas_bottom).with.offset(padding.bottom);
+			make.height.equalTo(@150);
         }];
     }
     return self;

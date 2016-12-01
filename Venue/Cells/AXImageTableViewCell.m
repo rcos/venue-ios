@@ -22,11 +22,17 @@
 {
 	self = [super init];
 	if (self) {
+		
 		imageView = [[UIImageView alloc] init];
 		[self addSubview:imageView];
 		
+		[self.view mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.height.equalTo(@150);
+		}];
+		
 		[imageView mas_makeConstraints:^(MASConstraintMaker *make) {
 			make.edges.equalTo(self.view);
+			make.height.equalTo(@150);
 		}];
 	}
 	return self;
