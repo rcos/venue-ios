@@ -364,6 +364,7 @@
 				default:
 					break;
 			}
+            [outCell setSelectionStyle:UITableViewCellSelectionStyleNone];
 			break;
 			
 		// Submit
