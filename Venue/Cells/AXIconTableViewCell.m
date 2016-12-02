@@ -20,19 +20,20 @@
         icon  = [[UIImageView alloc] init];
         
         label.font          = [UIFont mediumFont];
-        label.numberOfLines = 0;
         label.textColor     = [UIColor blackColor];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
         
         [self.view addSubviews:@[label, icon]];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view).offset(15);
+            make.left.equalTo(self.view).offset(20);
             make.right.equalTo(icon.mas_left).offset(-10);
             make.top.equalTo(self.view).offset(15);
             make.bottom.equalTo(self.view).offset(-15);
         }];
         
         [icon mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.view).offset(-15);
+            make.right.equalTo(self.view).offset(-20);
 			make.centerY.equalTo(self.view);
 			make.height.equalTo(@25);
 			make.width.equalTo(@25);

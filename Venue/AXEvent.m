@@ -15,7 +15,6 @@
     self = [super init];
     if(self)
     {
-        
         NSDictionary* dict = dictionary[@"info"];
         _eventId = dictionary[@"_id"];
         _name = dict[@"title"];

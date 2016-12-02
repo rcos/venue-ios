@@ -264,15 +264,20 @@
 	
 	switch (section) {
 		case 1:
-			[label setText:@"LOCATION"];
+			[label setText:@"location".uppercaseString];
 			break;
 			// submit
 		case 2:
-			[label setText:@"SUBMISSION"];
+			[label setText:@"submission".uppercaseString];
 			break;
 			// submission history
-		case 3:
-			[label setText:@"HISTORY"];
+        case 3:
+            if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
+                [label setText:@"no history".uppercaseString];
+            }
+            else {
+                [label setText:@"history".uppercaseString];
+            }
 			break;
 		default:
 			break;
@@ -295,7 +300,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if(indexPath.section == 1 && indexPath.row == 1) {
+	if(indexPath.section == 1) {
 		[self navButtonPressed];
 	} else if(indexPath.section == 2 && indexPath.row == 0) {
 		[self checkIn];

@@ -8,7 +8,7 @@
 
 #import "AXMapTableViewCell.h"
 #import <MapKit/MapKit.h>
-#import <Masonry.h>
+
 @interface AXMapTableViewCell () {
 	MKMapView* mapView;
 	MKPointAnnotation* annotation;
