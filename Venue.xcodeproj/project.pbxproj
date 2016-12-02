@@ -36,6 +36,7 @@
 		386B6FC91DEBD8F6001F4A52 /* AXImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 386B6FC81DEBD8F6001F4A52 /* AXImageTableViewCell.m */; };
 		386B6FCF1DEBE5A6001F4A52 /* NSString+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 386B6FCE1DEBE5A6001F4A52 /* NSString+Venue.m */; };
 		388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 388919701D29D3DA00487A28 /* UIImageView+Venue.m */; };
+		38CF9BB11DF12380006FE982 /* AXHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CF9BB01DF12380006FE982 /* AXHeaderFooterView.m */; };
 		38F801431D567A9A005FD6B3 /* AXWebLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */; };
 		EE2BFCB2131F8DEEEC3564A9 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80712CAC25F6B09393418A5 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
@@ -100,6 +101,8 @@
 		386B6FCE1DEBE5A6001F4A52 /* NSString+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Venue.m"; sourceTree = "<group>"; };
 		3889196F1D29D1D200487A28 /* UIImageView+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Venue.h"; sourceTree = "<group>"; };
 		388919701D29D3DA00487A28 /* UIImageView+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Venue.m"; sourceTree = "<group>"; };
+		38CF9BAF1DF12380006FE982 /* AXHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXHeaderFooterView.h; sourceTree = "<group>"; };
+		38CF9BB01DF12380006FE982 /* AXHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXHeaderFooterView.m; sourceTree = "<group>"; };
 		38F801411D567A9A005FD6B3 /* AXWebLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXWebLoginViewController.h; sourceTree = "<group>"; };
 		38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXWebLoginViewController.m; sourceTree = "<group>"; };
 		3A0C2B54B9CEFE87FA94A18C /* Pods-Venue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.debug.xcconfig"; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				0C991F981DD0E079002F3140 /* Event */,
 				0CCEDE1A1C3D9F08009F8C4D /* AXCourseTableViewCell.h */,
 				0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */,
+				38CF9BAF1DF12380006FE982 /* AXHeaderFooterView.h */,
+				38CF9BB01DF12380006FE982 /* AXHeaderFooterView.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 				386B6FCF1DEBE5A6001F4A52 /* NSString+Venue.m in Sources */,
 				0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */,
 				386B6FC61DEBBF86001F4A52 /* AXMapTableViewCell.m in Sources */,
+				38CF9BB11DF12380006FE982 /* AXHeaderFooterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

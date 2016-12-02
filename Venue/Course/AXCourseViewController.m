@@ -9,6 +9,8 @@
 #import "AXCourseViewController.h"
 #import "AXEventViewController.h"
 #import "AXNavigationBar.h"
+#import "AXImageTableViewCell.h"
+#import "AXTextTableViewCell.h"
 
 @interface AXCourseViewController ()
 @property AXCourse* course;
@@ -93,17 +95,47 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	AXImageTableViewCell* imgCell;
+	AXTextTableViewCell* textCell;
+	AXCourseTableViewCell* eventCell;
+	UITableViewCell* outCell;
+	
+	switch (indexPath.section) {
+	// Description
+		case 0:
+			switch (indexPath.row) {
+				case 0:
+					imgCell = [tableView dequeueReusableCellWithIdentifier:[AXImageTableViewCell reuseIdentifier]];
+					if(!imgCell) {
+						imgCell = [[AXImageTableViewCell alloc] init];
+					}
+					[imgCell configureWithImageUrl:course.imageUrl];
+					outCell = imgCell;
+					break;
+				case 1:
+					textCell = [tableView dequeueReusableCellWithIdentifier:[AXTextTableViewCell reuseIdentifier]];
+					if(!textCell) {
+						textCell = [[AXTextTableViewCell alloc] init];
+					}
+					[textCell configureWithText:course.courseDescription divider:NO];
+					outCell = textCell;
+					break;
+			}
+			break;
+		case 1:
+			eventCell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
+			
+			if(!eventCell)
+			{
+				eventCell = [[AXCourseTableViewCell alloc] init];
+			}
+			
+			[eventCell configureWithEvent:self.events[indexPath.row]];
+			outCell = eventCell;
+			break;
+	}
     
-    AXCourseTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
-    
-    if(!cell)
-    {
-        cell = [[AXCourseTableViewCell alloc] init];
-    }
-    
-    [cell configureWithEvent:self.events[indexPath.row]];
-    
-    return cell;
+    return outCell;
 }
 
 @end

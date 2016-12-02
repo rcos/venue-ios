@@ -17,6 +17,7 @@
 #import "AXIconTableViewCell.h"
 #import "SCLAlertView.h"
 #import "NSString+Venue.h"
+#import "AXHeaderFooterView.h"
 
 @interface AXEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -256,32 +257,23 @@
 	if(section == 0) {
 		return nil;
 	}
-	UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
-	UILabel* label = [[UILabel alloc] init];
-	
-	[label setFont:[UIFont boldFontOfSize:12]];
-	[label setTextColor:[UIColor darkTextColor]];
+	AXHeaderFooterView* view = [[AXHeaderFooterView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
 	
 	switch (section) {
 		case 1:
-			[label setText:@"LOCATION"];
+			[view setTitle:@"location".uppercaseString];
 			break;
 			// submit
 		case 2:
-			[label setText:@"SUBMISSION"];
+			[view setTitle:@"location".uppercaseString];
 			break;
 			// submission history
 		case 3:
-			[label setText:@"HISTORY"];
+			[view setTitle:@"history".uppercaseString];
 			break;
 		default:
 			break;
 	}
-	
-	[view addSubview:label];
-	[label mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.edges.equalTo(view).insets(UIEdgeInsetsMake(0, 20, 0, 20));
-	}];
 	
 	return view;
 }
