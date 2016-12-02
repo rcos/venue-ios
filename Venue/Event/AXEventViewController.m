@@ -265,11 +265,16 @@
 			break;
 			// submit
 		case 2:
-			[view setTitle:@"location".uppercaseString];
+			[view setTitle:@"submission".uppercaseString];
 			break;
 			// submission history
 		case 3:
-			[view setTitle:@"history".uppercaseString];
+            if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
+                [view setTitle:@"no history".uppercaseString];
+            }
+            else {
+                [view setTitle:@"history".uppercaseString];
+			}
 			break;
 		default:
 			break;
@@ -287,7 +292,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if(indexPath.section == 1 && indexPath.row == 1) {
+	if(indexPath.section == 1) {
 		[self navButtonPressed];
 	} else if(indexPath.section == 2 && indexPath.row == 0) {
 		[self checkIn];
@@ -351,6 +356,7 @@
 				default:
 					break;
 			}
+            [outCell setSelectionStyle:UITableViewCellSelectionStyleNone];
 			break;
 			
 		// Submit

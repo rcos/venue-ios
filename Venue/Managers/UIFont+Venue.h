@@ -18,6 +18,10 @@
 
 +(UIFont*)boldFontOfSize:(NSInteger)size;
 
++(UIFont*)mediumFont;
+
++(UIFont*)mediumFontOfSize:(NSInteger)size;
+
 +(UIFont*)regularFont;
 
 +(UIFont*)regularFontOfSize:(NSInteger)size;
