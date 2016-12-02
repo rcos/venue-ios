@@ -24,6 +24,8 @@
 	if (self) {
 		
 		imageView = [[UIImageView alloc] init];
+		imageView.layer.masksToBounds = YES;
+		[imageView setContentMode:UIViewContentModeScaleAspectFill];
 		[self addSubview:imageView];
 		
 		[self.view mas_makeConstraints:^(MASConstraintMaker *make) {

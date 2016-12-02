@@ -283,14 +283,6 @@
 	return view;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	if(section == 0) {
-		return [super tableView:tableView heightForHeaderInSection:section];
-	} else {
-		return 50;
-	}
-}
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if(indexPath.section == 1) {
 		[self navButtonPressed];

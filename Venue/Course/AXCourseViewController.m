@@ -11,6 +11,7 @@
 #import "AXNavigationBar.h"
 #import "AXImageTableViewCell.h"
 #import "AXTextTableViewCell.h"
+#import "AXHeaderFooterView.h"
 
 @interface AXCourseViewController ()
 @property AXCourse* course;
@@ -23,33 +24,13 @@
 
 -(instancetype)initWithCourse:(AXCourse*)_course
 {
+	course = _course;
     self = [super init];
     if(self)
     {
-        course = _course;
-        
         [self refresh];
     }
     return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    
-    [self.detailSubtitleLabel setText:[NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber]];
-    [self.detailDescriptionTextView setText:course.courseDescription];
-    [self.detailTitleLabel setText:course.name];
-    [self.imageView setImageWithUnknownPath:course.imageUrl];
-    
-    self.emptyLabel.hidden = true;
-    [self.emptyLabel setText:@"No events yet"];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	
 }
 
 #pragma mark - Action
@@ -60,7 +41,7 @@
         self.events = _events;
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
             } completion:^(BOOL finished) {
                 [self.refreshControl endRefreshing];
             }];
@@ -73,24 +54,45 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.emptyLabel.hidden = (self.events.count != 0);
-    return self.events.count;
+	switch (section) {
+		case 0:
+			return 2;
+		case 1:
+			return self.events.count;
+	}
+	return 0;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 120;
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if(section == 0) {
+		return nil;
+	}
+	AXHeaderFooterView* view = [[AXHeaderFooterView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+	
+	switch (section) {
+		case 1:
+			if([self tableView:tableView numberOfRowsInSection:2] > 0) {
+				[view setTitle:@"events".uppercaseString];
+			} else {
+				[view setTitle:@"no events yet".uppercaseString];
+			}
+			break;
+	}
+	
+	return view;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AXEventViewController* vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
-    [self.navigationController pushViewController:vc animated:YES];
+	if(indexPath.section == 1) {
+		AXEventViewController* vc = [[AXEventViewController alloc] initWithEvent:self.events[indexPath.row]];
+		[self.navigationController pushViewController:vc animated:YES];
+	}
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
