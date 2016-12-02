@@ -11,7 +11,7 @@
 #import <Masonry.h>
 @interface AXMapTableViewCell () {
 	MKMapView* mapView;
-	MKPointAnnotation* anno;
+	MKPointAnnotation* annotation;
 }
 @end
 
@@ -21,15 +21,15 @@
 {
 	self = [super init];
 	if (self) {
-		mapView = [[MKMapView alloc] init];
+        mapView    = [[MKMapView alloc] init];
+        annotation = [[MKPointAnnotation alloc] init];
+        
+        [mapView setUserInteractionEnabled:NO];
+        [mapView setShowsUserLocation:YES];
+        [mapView addAnnotation:annotation];
 		[mapView setDelegate:self];
+        
 		[self.view addSubview:mapView];
-		
-		anno = [[MKPointAnnotation alloc] init];
-		
-		mapView.showsUserLocation = YES;
-		[mapView addAnnotation:anno];
-		
 		[mapView mas_makeConstraints:^(MASConstraintMaker *make) {
 			make.edges.equalTo(self.view);
 			make.height.equalTo(@150);
@@ -39,23 +39,23 @@
 }
 
 -(void)configureWithEvent:(AXEvent*)event {
-	anno.coordinate = event.coords;
-	anno.title = event.name;
+    annotation.coordinate = event.coords;
+    annotation.title      = event.name;
 	
 	[mapView setRegion:MKCoordinateRegionMake(event.coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
 }
 
--(MKAnnotationView *)mapView:(MKMapView *)_mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-	if([annotation isKindOfClass:MKUserLocation.class]) {
+-(MKAnnotationView *)mapView:(MKMapView *)_mapView viewForAnnotation:(id<MKAnnotation>)localAnnotation {
+	if([localAnnotation isKindOfClass:MKUserLocation.class]) {
 		return nil;
 	}
 	
 	MKAnnotationView* annotationView = [_mapView dequeueReusableAnnotationViewWithIdentifier:@"annoview"];
 	if(annotationView == nil) {
-		annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annoview"];
+		annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:localAnnotation reuseIdentifier:@"annoview"];
 		annotationView.canShowCallout = false;
 	} else {
-		annotationView.annotation = annotation;
+		annotationView.annotation = localAnnotation;
 	}
 	
 	return annotationView;
