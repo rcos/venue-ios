@@ -12,10 +12,14 @@
 
 - (void) setImageWithUnknownPath:(NSString*)path
 {
+	if(path == nil) {
+		return;
+	}
+	
     if([path hasPrefix:@"http"])
     {
         [self sd_setImageWithURL: [NSURL URLWithString:path]];
-    }
+	}
     else
     {
         NSString* imageUrl = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];

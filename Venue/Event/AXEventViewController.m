@@ -17,6 +17,7 @@
 #import "AXIconTableViewCell.h"
 #import "SCLAlertView.h"
 #import "NSString+Venue.h"
+#import "AXHeaderFooterView.h"
 
 @interface AXEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -225,47 +226,30 @@
 	if(section == 0) {
 		return nil;
 	}
-	UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
-	UILabel* label = [[UILabel alloc] init];
-	
-	[label setFont:[UIFont boldFontOfSize:12]];
-	[label setTextColor:[UIColor darkTextColor]];
+	AXHeaderFooterView* view = [[AXHeaderFooterView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
 	
 	switch (section) {
 		case 1:
-			[label setText:@"location".uppercaseString];
+			[view setTitle:@"location".uppercaseString];
 			break;
 			// submit
 		case 2:
-			[label setText:@"submission".uppercaseString];
+			[view setTitle:@"submission".uppercaseString];
 			break;
 			// submission history
-        case 3:
+		case 3:
             if ([self tableView:tableView numberOfRowsInSection:section] == 0) {
-                [label setText:@"no history".uppercaseString];
+                [view setTitle:@"no history".uppercaseString];
             }
             else {
-                [label setText:@"history".uppercaseString];
-            }
+                [view setTitle:@"history".uppercaseString];
+			}
 			break;
 		default:
 			break;
 	}
 	
-	[view addSubview:label];
-	[label mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.edges.equalTo(view).insets(UIEdgeInsetsMake(0, 20, 0, 20));
-	}];
-	
 	return view;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	if(section == 0) {
-		return [super tableView:tableView heightForHeaderInSection:section];
-	} else {
-		return 50;
-	}
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
