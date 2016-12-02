@@ -17,20 +17,17 @@
 -(instancetype)init {
     self = [super init];
     if(self) {
-        label = [[UILabel alloc] init];
-        label.font = [UIFont regularFont];
-        label.numberOfLines = 0;
-		[self.view addSubview:label];
-        
+        label   = [[UILabel alloc] init];
         divider = [[UIView alloc] init];
+        
+        label.font          = [UIFont regularFont];
+        label.numberOfLines = 0;
 		[divider setBackgroundColor:[UIColor backgroundColor]];
-		[self.view addSubview:divider];
         
-        
+        [self.view addSubviews:@[label, divider]];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(15, 15, 15, 15));
+            make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(20, 20, 20, 20));
         }];
-        
         [divider mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
             make.left.equalTo(self.view).offset(30);
