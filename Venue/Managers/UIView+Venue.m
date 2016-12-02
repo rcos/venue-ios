@@ -17,3 +17,13 @@
 }
 
 @end
+
+@implementation UIStackView (Venue)
+
+- (void)addArrangedSubviews:(NSArray <UIView *> *)views {
+    for (UIView *view in views) {
+        [self addArrangedSubview:view];
+    }
+}
+
+@end

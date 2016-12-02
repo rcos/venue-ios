@@ -6,13 +6,11 @@
 //  Copyright © 2016 JimBoulter. All rights reserved.
 //
 
-#import "AXTableViewCell.h"
-#import "AXContentSelectionToolbar.h"
-#import "Masonry.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "AXEvent.h"
+
+#import "AXTableViewCell.h"
 #import "AXCourse.h"
-#import "UIImageView+Venue.h"
+#import "AXEvent.h"
 
 
 @interface AXCourseTableViewCell : AXTableViewCell

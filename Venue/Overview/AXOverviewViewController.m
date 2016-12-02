@@ -14,7 +14,6 @@
 
 @interface AXOverviewViewController ()
 @property UITableView* tableView;
-@property AXContentSelectionToolbar* modeToolBar;
 @property UIProgressView* progressView;
 @property (nonatomic) AXContentMode contentMode;
 @property UIRefreshControl* refreshControl;
@@ -29,13 +28,12 @@
 @end
 
 @implementation AXOverviewViewController
-@synthesize modeToolBar, progressView, contentMode, emptyLabel, searchController;
+@synthesize progressView, contentMode, emptyLabel, searchController;
 
 -(instancetype)init
 {
     self = [super init];
-    if(self)
-    {
+    if(self) {
         //self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
         
         self.tableView = [[UITableView alloc] init];
@@ -55,8 +53,6 @@
 		[emptyLabel setTextColor:[UIColor lightGrayColor]];
 		[emptyLabel setTextAlignment:NSTextAlignmentCenter];
 		
-        modeToolBar = [[AXContentSelectionToolbar alloc] initWithDelegate:self];
-    
 		[self setContentMode:AXContentModeEvents];
 		
         // Initialize the refresh control
@@ -104,21 +100,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:modeToolBar];
-    [self.view bringSubviewToFront:modeToolBar];
     [self.view addSubview:progressView];
 	[self.tableView addSubview:emptyLabel];
     [self.view addSubview:self.tableView];
 
-    [modeToolBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top);
-        make.right.equalTo(self.view.mas_right);
-        make.left.equalTo(self.view.mas_left);
-        make.height.equalTo(@44);
-    }];
-    
     [progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(modeToolBar.mas_bottom);
+        make.top.equalTo(self.view);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.equalTo(@1);
@@ -130,7 +117,7 @@
 	}];
 	
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(modeToolBar.mas_bottom);
+        make.top.equalTo(progressView.mas_bottom);
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
@@ -149,11 +136,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.title = @"Venue";
     [super viewWillAppear:animated];
     UIBarButtonItem* gear = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Gear"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
     gear.tintColor = [UIColor secondaryColor];
     [[self navigationItem] setLeftBarButtonItem:gear];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [(AXNavigationBar *)self.navigationController.navigationBar setCustomDelegate:self];
 }
 
 #pragma mark - Actions
@@ -270,7 +261,7 @@
     return cell;
 }
 
-#pragma mark - AXContentSelectionToolbarDelegate
+#pragma mark - AXNavigationBarDelegate
 
 -(void)contentModeDidChange:(AXContentMode)mode
 {

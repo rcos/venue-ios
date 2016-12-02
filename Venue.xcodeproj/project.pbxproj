@@ -23,7 +23,6 @@
 		0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */; };
 		0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE041C3C44E8009F8C4D /* AXExec.m */; };
 		0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */; };
-		0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */; };
 		0CCEDE121C3C6929009F8C4D /* UIColor+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */; };
 		0CCEDE191C3D8C81009F8C4D /* AXTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE181C3D8C81009F8C4D /* AXTableViewCell.m */; };
 		0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */; };
@@ -75,8 +74,6 @@
 		0CCEDE041C3C44E8009F8C4D /* AXExec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXExec.m; sourceTree = "<group>"; };
 		0CCEDE0A1C3C4678009F8C4D /* AXAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAPI.h; sourceTree = "<group>"; };
 		0CCEDE0B1C3C4678009F8C4D /* AXAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAPI.m; sourceTree = "<group>"; };
-		0CCEDE0D1C3C6771009F8C4D /* AXContentSelectionToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXContentSelectionToolbar.h; sourceTree = "<group>"; };
-		0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXContentSelectionToolbar.m; sourceTree = "<group>"; };
 		0CCEDE101C3C6929009F8C4D /* UIColor+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Venue.h"; sourceTree = "<group>"; };
 		0CCEDE111C3C6929009F8C4D /* UIColor+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Venue.m"; sourceTree = "<group>"; };
 		0CCEDE171C3D8C80009F8C4D /* AXTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXTableViewCell.h; sourceTree = "<group>"; };
@@ -243,8 +240,6 @@
 		0CCEDE021C3B4874009F8C4D /* Overview */ = {
 			isa = PBXGroup;
 			children = (
-				0CCEDE0D1C3C6771009F8C4D /* AXContentSelectionToolbar.h */,
-				0CCEDE0E1C3C6771009F8C4D /* AXContentSelectionToolbar.m */,
 				0CCEDDFF1C3B4838009F8C4D /* AXOverviewViewController.h */,
 				0CCEDE001C3B4838009F8C4D /* AXOverviewViewController.m */,
 			);
@@ -483,7 +478,6 @@
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
 				0C991F9C1DD0E72A002F3140 /* AXTextTableViewCell.m in Sources */,
-				0CCEDE0F1C3C6771009F8C4D /* AXContentSelectionToolbar.m in Sources */,
 				0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */,
 				0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */,
 				0CCEDE241C417FFA009F8C4D /* AXCourseViewController.m in Sources */,

@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, AXContentMode){
+    AXContentModeEvents,
+    AXContentModeCourses,
+};
+
+@protocol AXNavigationBarDelegate <NSObject>
+-(void)contentModeDidChange:(AXContentMode)mode;
+@end
+
 @interface AXNavigationBar : UINavigationBar
+@property (strong, nonatomic) id<AXNavigationBarDelegate> customDelegate;
 @property (strong, nonatomic) UILabel* topLabel;
 @property (strong, nonatomic) UILabel* midLabel;
 @property (strong, nonatomic) UILabel* bottomLabel;

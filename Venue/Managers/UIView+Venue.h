@@ -13,3 +13,9 @@
 - (void)addSubviews:(NSArray <UIView *> *)views;
 
 @end
+
+@interface UIStackView (Venue)
+
+- (void)addArrangedSubviews:(NSArray <UIView *> *)views;
+
+@end

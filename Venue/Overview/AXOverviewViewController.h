@@ -8,11 +8,11 @@
 //  Displays courses and events
 
 #import <UIKit/UIKit.h>
-#import "Masonry.h"
-#import "AXContentSelectionToolbar.h"
-#import "AppDelegate.h"
 #import <KVOController/NSObject+FBKVOController.h>
 
-@interface AXOverviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXContentSelectionToolbarDelegate, UISearchResultsUpdating>
+#import "AppDelegate.h"
+#import "AXNavigationBar.h"
+
+@interface AXOverviewViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AXNavigationBarDelegate, UISearchResultsUpdating>
 
 @end
