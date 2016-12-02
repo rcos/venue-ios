@@ -119,24 +119,6 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
     }];
-    
-    //Hide the shadow underneath the navigation bar
-    for (UIView *view in self.navigationController.navigationBar.subviews) {
-        for (UIView *subview in view.subviews) {
-            if ([subview isKindOfClass:[UIImageView class]]) {
-                subview.alpha = 0;
-            }
-        }
-    }
-    
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    UIBarButtonItem* gear = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Gear"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
-    gear.tintColor = [UIColor secondaryColor];
-    [[self navigationItem] setLeftBarButtonItem:gear];
 }
 
 #pragma mark - Actions
@@ -183,20 +165,6 @@
             }];
         }
     }];
-}
-
--(void)showSettings
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Log out?"
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"Log out" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        AppDelegate* del = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [del setLoggedOut];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - UITableView

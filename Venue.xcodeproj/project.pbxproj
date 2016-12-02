@@ -40,6 +40,8 @@
 		8499B8D91DF12F24006A4CDF /* AXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8D81DF12F24006A4CDF /* AXNavigationController.m */; };
 		8499B8DF1DF13F2F006A4CDF /* AXLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8DE1DF13F2F006A4CDF /* AXLayoutController.m */; };
 		8499B8E21DF14220006A4CDF /* AXAppCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8E11DF14220006A4CDF /* AXAppCoordinator.m */; };
+		8499B8E51DF1F43E006A4CDF /* AXOverViewNavigationBarPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8E41DF1F43E006A4CDF /* AXOverViewNavigationBarPage.m */; };
+		8499B8E81DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8E71DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.m */; };
 		EE2BFCB2131F8DEEEC3564A9 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80712CAC25F6B09393418A5 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +115,10 @@
 		8499B8DE1DF13F2F006A4CDF /* AXLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXLayoutController.m; sourceTree = "<group>"; };
 		8499B8E01DF14220006A4CDF /* AXAppCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAppCoordinator.h; sourceTree = "<group>"; };
 		8499B8E11DF14220006A4CDF /* AXAppCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAppCoordinator.m; sourceTree = "<group>"; };
+		8499B8E31DF1F43E006A4CDF /* AXOverViewNavigationBarPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXOverViewNavigationBarPage.h; sourceTree = "<group>"; };
+		8499B8E41DF1F43E006A4CDF /* AXOverViewNavigationBarPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXOverViewNavigationBarPage.m; sourceTree = "<group>"; };
+		8499B8E61DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXDetailViewNavigationBarPage.h; sourceTree = "<group>"; };
+		8499B8E71DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXDetailViewNavigationBarPage.m; sourceTree = "<group>"; };
 		B80712CAC25F6B09393418A5 /* libPods-Venue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Venue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -305,6 +311,10 @@
 			children = (
 				38117F301DEB731700DB4CFE /* AXNavigationBar.h */,
 				38117F311DEB731700DB4CFE /* AXNavigationBar.m */,
+				8499B8E31DF1F43E006A4CDF /* AXOverViewNavigationBarPage.h */,
+				8499B8E41DF1F43E006A4CDF /* AXOverViewNavigationBarPage.m */,
+				8499B8E61DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.h */,
+				8499B8E71DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.m */,
 				8499B8D71DF12F24006A4CDF /* AXNavigationController.h */,
 				8499B8D81DF12F24006A4CDF /* AXNavigationController.m */,
 				8499B8DD1DF13F2F006A4CDF /* AXLayoutController.h */,
@@ -492,7 +502,9 @@
 				0C5794481C4962FD00E35F4E /* AXLoginViewController.m in Sources */,
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,
 				8499B8D91DF12F24006A4CDF /* AXNavigationController.m in Sources */,
+				8499B8E51DF1F43E006A4CDF /* AXOverViewNavigationBarPage.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
+				8499B8E81DF1FB93006A4CDF /* AXDetailViewNavigationBarPage.m in Sources */,
 				8499B8E21DF14220006A4CDF /* AXAppCoordinator.m in Sources */,
 				0C991F9C1DD0E72A002F3140 /* AXTextTableViewCell.m in Sources */,
 				0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */,

@@ -19,4 +19,6 @@
 
 - (void)navigateToEvent:(AXEvent *)event;
 
+- (void)navigateToSettings;
+
 @end

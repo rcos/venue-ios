@@ -58,4 +58,18 @@
     [layoutController pushViewController:viewController];
 }
 
+- (void)navigateToSettings {
+    NSLog(@"Navigate to Settings");
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Log out?"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"Log out" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        AppDelegate* del = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [del setLoggedOut];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];
+    [layoutController presentViewController:alert animated:YES completion:nil];
+}
+
 @end
