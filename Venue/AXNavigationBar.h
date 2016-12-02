@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AXNavigationController.h"
 
 typedef NS_ENUM(NSInteger, AXContentMode){
     AXContentModeEvents,
@@ -17,9 +18,10 @@ typedef NS_ENUM(NSInteger, AXContentMode){
 -(void)contentModeDidChange:(AXContentMode)mode;
 @end
 
-@interface AXNavigationBar : UINavigationBar
-@property (strong, nonatomic) id<AXNavigationBarDelegate> customDelegate;
-@property (strong, nonatomic) UILabel* topLabel;
-@property (strong, nonatomic) UILabel* midLabel;
-@property (strong, nonatomic) UILabel* bottomLabel;
+@class AXEvent, AXCourse;
+@interface AXNavigationBar : UIView <AXNavigationControllerDelegate>
+@property (strong, nonatomic) id<AXNavigationBarDelegate> delegate;
+@property (strong, nonatomic, readonly) UIButton *backButton;
+- (void)setEvent:(AXEvent *)event;
+- (void)setCourse:(AXCourse *)course;
 @end

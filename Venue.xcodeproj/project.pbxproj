@@ -37,6 +37,9 @@
 		388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 388919701D29D3DA00487A28 /* UIImageView+Venue.m */; };
 		38F801431D567A9A005FD6B3 /* AXWebLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */; };
 		8499B8D61DF10BCB006A4CDF /* UIView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8D51DF10BCB006A4CDF /* UIView+Venue.m */; };
+		8499B8D91DF12F24006A4CDF /* AXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8D81DF12F24006A4CDF /* AXNavigationController.m */; };
+		8499B8DF1DF13F2F006A4CDF /* AXLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8DE1DF13F2F006A4CDF /* AXLayoutController.m */; };
+		8499B8E21DF14220006A4CDF /* AXAppCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8E11DF14220006A4CDF /* AXAppCoordinator.m */; };
 		EE2BFCB2131F8DEEEC3564A9 /* libPods-Venue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80712CAC25F6B09393418A5 /* libPods-Venue.a */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +107,12 @@
 		65F3EB48EA5F3AFBE6B98F16 /* Pods-Venue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.release.xcconfig"; sourceTree = "<group>"; };
 		8499B8D41DF10BCB006A4CDF /* UIView+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Venue.h"; sourceTree = "<group>"; };
 		8499B8D51DF10BCB006A4CDF /* UIView+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Venue.m"; sourceTree = "<group>"; };
+		8499B8D71DF12F24006A4CDF /* AXNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXNavigationController.h; sourceTree = "<group>"; };
+		8499B8D81DF12F24006A4CDF /* AXNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXNavigationController.m; sourceTree = "<group>"; };
+		8499B8DD1DF13F2F006A4CDF /* AXLayoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXLayoutController.h; sourceTree = "<group>"; };
+		8499B8DE1DF13F2F006A4CDF /* AXLayoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXLayoutController.m; sourceTree = "<group>"; };
+		8499B8E01DF14220006A4CDF /* AXAppCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXAppCoordinator.h; sourceTree = "<group>"; };
+		8499B8E11DF14220006A4CDF /* AXAppCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXAppCoordinator.m; sourceTree = "<group>"; };
 		B80712CAC25F6B09393418A5 /* libPods-Venue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Venue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -296,6 +305,12 @@
 			children = (
 				38117F301DEB731700DB4CFE /* AXNavigationBar.h */,
 				38117F311DEB731700DB4CFE /* AXNavigationBar.m */,
+				8499B8D71DF12F24006A4CDF /* AXNavigationController.h */,
+				8499B8D81DF12F24006A4CDF /* AXNavigationController.m */,
+				8499B8DD1DF13F2F006A4CDF /* AXLayoutController.h */,
+				8499B8DE1DF13F2F006A4CDF /* AXLayoutController.m */,
+				8499B8E01DF14220006A4CDF /* AXAppCoordinator.h */,
+				8499B8E11DF14220006A4CDF /* AXAppCoordinator.m */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -476,7 +491,9 @@
 				0C2AAFAA1CDBA41700BFD587 /* AXEvent.m in Sources */,
 				0C5794481C4962FD00E35F4E /* AXLoginViewController.m in Sources */,
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,
+				8499B8D91DF12F24006A4CDF /* AXNavigationController.m in Sources */,
 				0CCEDE051C3C44E8009F8C4D /* AXExec.m in Sources */,
+				8499B8E21DF14220006A4CDF /* AXAppCoordinator.m in Sources */,
 				0C991F9C1DD0E72A002F3140 /* AXTextTableViewCell.m in Sources */,
 				0C1CE1091C4AE95700B95BF8 /* AXLocationExec.m in Sources */,
 				0C5794411C48729300E35F4E /* AXEventViewController.m in Sources */,
@@ -495,6 +512,7 @@
 				386B6FCF1DEBE5A6001F4A52 /* NSString+Venue.m in Sources */,
 				0CCEDE011C3B4838009F8C4D /* AXOverviewViewController.m in Sources */,
 				386B6FC61DEBBF86001F4A52 /* AXMapTableViewCell.m in Sources */,
+				8499B8DF1DF13F2F006A4CDF /* AXLayoutController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

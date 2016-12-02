@@ -19,4 +19,7 @@
 #import "UIImageView+Venue.h"
 #import "NSString+Venue.h"
 
+//Variables
+static float const standardAnimationDuration = 0.3;
+
 #endif /* Venue_Prefix_pch */

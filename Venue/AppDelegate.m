@@ -13,6 +13,7 @@
 #import "AXOverviewViewController.h"
 #import "UIFont+Venue.h"
 #import "AXNavigationBar.h"
+#import "AXAppCoordinator.h"
 
 @interface AppDelegate ()
 @end
@@ -25,15 +26,7 @@
     
     [AXLocationExec exec];
 //    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:[[AXOverviewViewController alloc] init]];
-	UINavigationController* navigationController = [[UINavigationController alloc] initWithNavigationBarClass:AXNavigationBar.class toolbarClass:nil];
-	
-	[navigationController setViewControllers:@[[[AXOverviewViewController alloc] init]]];
-    [UIView transitionWithView:self.window
-                      duration:.25
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        [self.window setRootViewController:navigationController];
-                    } completion:nil];
+    [[AXAppCoordinator sharedInstance] setNewWindow:self.window];
 
 }
 

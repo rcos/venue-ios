@@ -8,8 +8,7 @@
 
 #import "AXOverviewViewController.h"
 #import "AXCourseTableViewCell.h"
-#import "AXCourseViewController.h"
-#import "AXEventViewController.h"
+#import "AXAppCoordinator.h"
 #import "AXAPI.h"
 
 @interface AXOverviewViewController ()
@@ -34,8 +33,6 @@
 {
     self = [super init];
     if(self) {
-        //self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RedRPI"]];
-        
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -142,11 +139,6 @@
     [[self navigationItem] setLeftBarButtonItem:gear];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [(AXNavigationBar *)self.navigationController.navigationBar setCustomDelegate:self];
-}
-
 #pragma mark - Actions
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -209,19 +201,13 @@
 
 #pragma mark - UITableView
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.title = @"";
-    AXDetailViewController* vc;
-    if(!contentMode)
-    {
-        vc = [[AXEventViewController alloc] initWithEvent:self.filteredEvents[indexPath.row]];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(!contentMode) {
+        [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.row]];
     }
-    else
-    {
-        vc = [[AXCourseViewController alloc] initWithCourse:self.filteredCourses[indexPath.row]];
+    else {
+        [[AXAppCoordinator sharedInstance] navigateToCourse:self.filteredCourses[indexPath.row]];
     }
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
