@@ -23,18 +23,20 @@
 	self = [super init];
 	if (self) {
 		
+		UIView* container = [[UIView alloc] init];
+		
 		imageView = [[UIImageView alloc] init];
 		imageView.layer.masksToBounds = YES;
 		[imageView setContentMode:UIViewContentModeScaleAspectFill];
-		[self addSubview:imageView];
 		
-		[self.view mas_makeConstraints:^(MASConstraintMaker *make) {
-			make.height.equalTo(@150);
-		}];
-		
-		[imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+		[self.view addSubview:container];
+		[container addSubview:imageView];
+		[container mas_makeConstraints:^(MASConstraintMaker *make) {
 			make.edges.equalTo(self.view);
 			make.height.equalTo(@150);
+		}];
+		[imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.edges.equalTo(container);
 		}];
 	}
 	return self;
