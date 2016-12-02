@@ -10,6 +10,7 @@
 
 @interface AXCourse : NSObject
 
+@property (nonatomic, readonly) NSArray *sections;
 @property NSString* courseId;
 @property NSString* name;
 @property NSString* courseDescription;

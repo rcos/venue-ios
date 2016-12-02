@@ -147,6 +147,7 @@
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"Course Response object: %@", responseObject);
         completion([self parseCourses:responseObject[@"courses"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);

@@ -66,7 +66,16 @@
 }
 
 - (void)setCourse:(AXCourse *)course {
+    top.text    = course.name;
+    middle.text = [NSString stringWithFormat:@"%@-%@", course.department, course.courseNumber];
     
+    //TODO: Make this real
+    if (course.sections.count) {
+        bottom.text = [NSString stringWithFormat:@"Section %li", [course.sections.firstObject integerValue]];
+    }
+    else {
+        bottom.text = @"";
+    }
 }
 
 @end
