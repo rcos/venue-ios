@@ -7,8 +7,6 @@
 //
 
 #import "AXIconTableViewCell.h"
-#import "UIView+Venue.h"
-#import <Masonry.h>
 
 @implementation AXIconTableViewCell {
     UILabel* label;
