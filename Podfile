@@ -12,5 +12,6 @@ pod "Fabric"
 pod "Crashlytics"
 pod "SCLAlertView-Objective-C"
 pod "KVOController"
+pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 end
 
