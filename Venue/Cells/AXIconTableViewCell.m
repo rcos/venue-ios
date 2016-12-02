@@ -7,6 +7,7 @@
 //
 
 #import "AXIconTableViewCell.h"
+#import "UIView+Venue.h"
 #import <Masonry.h>
 
 @implementation AXIconTableViewCell {
@@ -18,13 +19,13 @@
     self = [super init];
     if(self) {
         label = [[UILabel alloc] init];
-        label.font = [UIFont boldFont];
-		label.numberOfLines = 0;
-		[self.view addSubview:label];
-		
-		icon = [[UIImageView alloc] init];
-		[self.view addSubview:icon];
-    
+        icon  = [[UIImageView alloc] init];
+        
+        label.font          = [UIFont mediumFont];
+        label.numberOfLines = 0;
+        label.textColor     = [UIColor blackColor];
+        
+        [self.view addSubviews:@[label, icon]];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(15);
             make.right.equalTo(icon.mas_left).offset(-10);

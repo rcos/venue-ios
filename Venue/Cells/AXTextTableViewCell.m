@@ -26,6 +26,7 @@
 		[divider setBackgroundColor:[UIColor backgroundColor]];
 		[self.view addSubview:divider];
         
+        
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(15, 15, 15, 15));
         }];
