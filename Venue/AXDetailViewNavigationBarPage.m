@@ -71,7 +71,8 @@
     
     //TODO: Make this real
     if (course.sections.count) {
-        bottom.text = [NSString stringWithFormat:@"Section %li", [course.sections.firstObject integerValue]];
+		long first = [course.sections.firstObject integerValue];
+        bottom.text = [NSString stringWithFormat:@"Section %li", first];
     }
     else {
         bottom.text = @"";
