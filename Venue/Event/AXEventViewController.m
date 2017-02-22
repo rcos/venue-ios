@@ -80,11 +80,11 @@
     }];
 }
 
--(void)fetchSubmissions
-{
+- (void)fetchSubmissions {
     [[AXAPI API] getSubmissionsWithEventId:event.eventId progressView:self.progressView completion:^(NSArray *submissions) {
         self.submissions = submissions;
 //        self.emptyLabel.hidden = self.submissions.count > 0;
+		
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
@@ -95,8 +95,7 @@
     }];
 }
 
--(void)checkIn
-{
+- (void)checkIn {
     UIImagePickerController *camera = [[UIImagePickerController alloc] init];
     camera.sourceType = ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == YES) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     camera.delegate = self;
@@ -106,24 +105,34 @@
             case PHAuthorizationStatusAuthorized:
                 [self presentViewController:camera animated:YES completion:nil];
                 break;
-                
             default:
+				[self presentErrorDialogue];
                 break;
         }
-    }];}
+    }];
+}
+
+- (void)presentErrorDialogue {
+	UIAlertController *altc = [[UIAlertController alloc] init];
+	[altc setTitle:@"Unauthorized :("];
+	[altc setMessage:@"I'm unauthorized to access your photo or camera. Please change this in Settings."];
+	[altc addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		[altc dismissViewControllerAnimated:YES completion:NULL];
+	}]];
+	
+	[self presentViewController:altc animated:YES completion:NULL];
+}
 
 #pragma mark - UIImagePickerController Delegate
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	[self.presentedViewController dismissViewControllerAnimated:YES completion:^{
 		UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 		[self attemptSubmissionWithImage:image];
 	}];
 }
 
--(void)attemptSubmissionWithImage:(UIImage*)image
-{
+-(void)attemptSubmissionWithImage:(UIImage *)image {
 	SCLAlertViewBuilder *builder = [SCLAlertViewBuilder new];
 	SCLAlertViewShowBuilder *showBuilder = [SCLAlertViewShowBuilder new]
 	.style(Waiting)
