@@ -61,24 +61,22 @@
                                 action:@selector(refresh)
                       forControlEvents:UIControlEventValueChanged];
         [self.tableView insertSubview:self.refreshControl atIndex:0];
-        
-        // init search controller
-        
+//        
+//        // init search controller
+//        
         searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
-        searchController.dimsBackgroundDuringPresentation = false;
-		searchController.hidesNavigationBarDuringPresentation = false;
+//        searchController.dimsBackgroundDuringPresentation = false;
+//		searchController.hidesNavigationBarDuringPresentation = false;
         searchController.searchBar.barTintColor = [UIColor primaryColor];
+		searchController.definesPresentationContext = YES;
 		
-		// Hack to keep search bar from moving
-		UIView* container = [[UIView alloc] initWithFrame:searchController.searchBar.frame];
-		[container addSubview:searchController.searchBar];
-		[container setClipsToBounds:YES];
+		self.tableView.tableHeaderView = self.searchController.searchBar;
 		
+		self.extendedLayoutIncludesOpaqueBars = YES;
+        self.definesPresentationContext = YES;
         
-        self.definesPresentationContext = false;
-        
-        self.tableView.tableHeaderView = container;
+//        self.tableView.tableHeaderView = container;
         
         // Watch events and courses to update search on refresh of results from server
         [self.KVOController observe:self keyPath:@"events" options:NSKeyValueObservingOptionInitial block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
@@ -138,8 +136,7 @@
     } completion:nil];
 }
 
--(void)refresh
-{
+- (void)refresh {
     [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
         self.events = events;
         if(contentMode == AXContentModeEvents)
@@ -178,37 +175,29 @@
     }
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (contentMode ? self.filteredCourses.count : self.filteredEvents.count);
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AXCourseTableViewCell* cell;
     
     cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
-    if(!cell)
-    {
+    if (!cell) {
         cell = [[AXCourseTableViewCell alloc] init];
     }
     
     NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
     [object setObject:@(contentMode) forKey:@"contentMode"];
     
-    
-    
-    if(contentMode == AXContentModeEvents)
-    {
+    if (contentMode == AXContentModeEvents) {
         [cell configureWithEvent:self.events[indexPath.row]];
     }
-    else
-    {
+    else {
         [cell configureWithCourse:self.courses[indexPath.row]];
     }
     
@@ -217,8 +206,7 @@
 
 #pragma mark - AXNavigationBarDelegate
 
--(void)contentModeDidChange:(AXContentMode)mode
-{
+-(void)contentModeDidChange:(AXContentMode)mode {
 	[self setContentMode:mode];
 	
 	emptyLabel.hidden = true;
@@ -235,8 +223,7 @@
 
 #pragma mark - ContentMode
 
--(void)setContentMode:(AXContentMode)mode
-{
+-(void)setContentMode:(AXContentMode)mode {
 	contentMode = mode;
 	NSString* contentType = (contentMode == AXContentModeEvents ? @"events" : @"courses");
 	

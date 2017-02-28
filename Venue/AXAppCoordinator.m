@@ -37,7 +37,7 @@
 - (void)setNewWindow:(UIWindow *)window {
     AXOverviewViewController *viewController = [[AXOverviewViewController alloc] init];
     [layoutController setRootViewController:viewController];
-    
+	
     [UIView transitionWithView:window
                       duration:.25
                        options:UIViewAnimationOptionTransitionCrossDissolve
