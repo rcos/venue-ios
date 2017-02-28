@@ -19,6 +19,8 @@
 #import "UIImageView+Venue.h"
 #import "NSString+Venue.h"
 
+#import "Venue.h"
+
 //Variables
 static float const standardAnimationDuration = 0.3;
 

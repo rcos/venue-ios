@@ -82,8 +82,7 @@
 }
 
 // If we got actual locations from the manager, they appear here
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.location = [locations lastObject];
     if(executeOnNextUpdate) {
         executeOnNextUpdate(self.location);
@@ -94,9 +93,8 @@
 }
 
 //Handle our errors here
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"Location error: %@", error);
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    AXLog(@"Location error: %@", error);
 }
 
 @end

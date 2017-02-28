@@ -12,27 +12,25 @@
 #import "AXAPI.h"
 
 @interface AXOverviewViewController ()
-@property UITableView* tableView;
-@property UIProgressView* progressView;
-@property (nonatomic) AXContentMode contentMode;
-@property UIRefreshControl* refreshControl;
-@property UILabel* emptyLabel;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, assign) AXContentMode contentMode;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UILabel *emptyLabel;
 
-@property NSArray* events;
-@property NSArray* filteredEvents;
-@property NSArray* courses;
-@property NSArray* filteredCourses;
+@property (nonatomic, strong) NSArray *events;
+@property (nonatomic, strong) NSArray *filteredEvents;
+@property (nonatomic, strong) NSArray *courses;
+@property (nonatomic, strong) NSArray *filteredCourses;
 
-@property UISearchController* searchController;
+@property (nonatomic, strong) UISearchController *searchController;
 @end
 
 @implementation AXOverviewViewController
 @synthesize progressView, contentMode, emptyLabel, searchController;
 
--(instancetype)init
-{
-    self = [super init];
-    if(self) {
+- (instancetype)init {
+	if ((self = [super init])) {
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -51,23 +49,18 @@
 		[emptyLabel setTextAlignment:NSTextAlignmentCenter];
 		
 		[self setContentMode:AXContentModeEvents];
-		
-        // Initialize the refresh control
+
         
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor whiteColor];
         self.refreshControl.tintColor = [UIColor accentColor];
-        [self.refreshControl addTarget:self
-                                action:@selector(refresh)
-                      forControlEvents:UIControlEventValueChanged];
+        [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
         [self.tableView insertSubview:self.refreshControl atIndex:0];
-//        
-//        // init search controller
-//        
+
         searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
-//        searchController.dimsBackgroundDuringPresentation = false;
-//		searchController.hidesNavigationBarDuringPresentation = false;
+        searchController.dimsBackgroundDuringPresentation = false;
+		searchController.hidesNavigationBarDuringPresentation = false;
         searchController.searchBar.barTintColor = [UIColor primaryColor];
 		searchController.definesPresentationContext = YES;
 		
@@ -75,8 +68,6 @@
 		
 		self.extendedLayoutIncludesOpaqueBars = YES;
         self.definesPresentationContext = YES;
-        
-//        self.tableView.tableHeaderView = container;
         
         // Watch events and courses to update search on refresh of results from server
         [self.KVOController observe:self keyPath:@"events" options:NSKeyValueObservingOptionInitial block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
@@ -121,12 +112,13 @@
 
 #pragma mark - Actions
 
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     
-    if([self.searchController.searchBar.text isEqualToString:@""]) {
+    if ([self.searchController.searchBar.text isEqualToString:@""]) {
         self.filteredEvents = self.events;
         self.filteredCourses = self.courses;
-    } else {
+    }
+	else {
         self.filteredEvents = [self.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
         self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
     }
@@ -139,8 +131,7 @@
 - (void)refresh {
     [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
         self.events = events;
-        if(contentMode == AXContentModeEvents)
-        {
+        if (contentMode == AXContentModeEvents) {
 			self.emptyLabel.hidden = self.events.count > 0;
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -152,8 +143,7 @@
     
     [[AXAPI API] getCoursesWithProgressView:progressView completion:^(NSArray * courses) {
         self.courses = courses;
-        if(contentMode == AXContentModeCourses)
-        {
+        if (contentMode == AXContentModeCourses) {
 			self.emptyLabel.hidden = self.courses.count > 0;
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -166,7 +156,7 @@
 
 #pragma mark - UITableView
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(!contentMode) {
         [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.row]];
     }

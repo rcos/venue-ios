@@ -40,7 +40,7 @@
         [title mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).offset(15);
             make.right.equalTo(self).offset(-15);
-            make.top.equalTo(self).offset(20);
+            make.top.equalTo(self).offset(30);
             make.height.equalTo(@25);
         }];
         [settings mas_makeConstraints:^(MASConstraintMaker *make) {

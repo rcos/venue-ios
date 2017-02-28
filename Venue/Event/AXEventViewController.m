@@ -24,20 +24,17 @@
 @property NSArray* submissions;
 @property AXEvent* event;
 
-
 @end
 
 @implementation AXEventViewController
 @synthesize event;
 
--(instancetype)initWithEvent:(AXEvent*)_event
-{
-	event = _event;
-    self = [super init];
-    if(self)
-    {
-//        [self checkIfSubmittedBefore];
-    }
+- (instancetype)initWithEvent:(AXEvent *)_event {
+	if ((self = [super init])) {
+		event = _event;
+		//        [self checkIfSubmittedBefore];
+	}
+
     return self;
 }
 
@@ -51,30 +48,25 @@
 
 #pragma mark - Action
 
--(void)refresh
-{
+- (void)refresh {
     [self fetchSubmissions];
 }
 
 #pragma mark - Navigation
 
-- (void)navButtonPressed
-{
+- (void)navButtonPressed {
     NSString* link = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&dirflg=d", [event.address stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
 }
 
 #pragma mark - Check In
 
--(void)checkIfSubmittedBefore
-{
+- (void)checkIfSubmittedBefore {
     [[AXAPI API] getMySubmissionsWithEventId:event.eventId progressView:nil completion:^(NSArray *submissions) {
-        if(submissions.count == 0)
-        {
+        if (submissions.count == 0) {
             //No submissions from us.
         }
-        else
-        {
+        else {
             //We've submitted before.
         }
     }];
@@ -141,16 +133,15 @@
 	.duration(0);
 	[showBuilder showAlertView:builder.alertView onViewController:self];
 	
-	NSLog(@"Start submission");
+	AXLog(@"Start submission");
 	[[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success, NSError* error) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[builder.alertView hideView];
 		});
 		
-		if(success)
-		{
-			NSLog(@"Finish successful submission");
+		if(success) {
+			AXLog(@"Finish successful submission");
 			dispatch_async(dispatch_get_main_queue(), ^{
 				SCLAlertViewBuilder *successBuilder = [SCLAlertViewBuilder new];
 				SCLAlertViewShowBuilder *successShowBuilder = [SCLAlertViewShowBuilder new]
@@ -186,13 +177,11 @@
 
 #pragma mark - UITableViewDelegate
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
 		// description
 		case 0:

@@ -130,24 +130,22 @@
     return [coursesObj copy];
 }
 
--(void)parseLoginResponse:(id)responseObject {
+- (void)parseLoginResponse:(id)responseObject {
     [[FXKeychain defaultKeychain] setObject:responseObject[@"profile"][@"_id"] forKey:kUserId];
     [self setAuthToken:responseObject[@"token"]];
 }
 
 #pragma mark - Data Fetching
 
--(void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray*))completion
-{
+- (void)getCoursesWithProgressView:(UIProgressView*)progressView completion:(void(^)(NSArray *))completion {
     [self GET:@"/api/users/me?withCourses=true" parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        if(progressView)
-        {
+        if (progressView) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
             });
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"Course Response object: %@", responseObject);
+        AXLog(@"Course Response object: %@", responseObject);
         completion([self parseCourses:responseObject[@"courses"]]);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion(nil);
@@ -262,7 +260,7 @@
                                  };
         
         NSData* data = UIImageJPEGRepresentation(image, .5);
-        NSLog(@"submission network request start");
+        AXLog(@"submission network request start");
         [self POST:@"/api/submissions" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             [formData appendPartWithFileData:data name:@"files[0]" fileName:@"img.jpg" mimeType:@"image/jpeg"];
         }
@@ -316,7 +314,7 @@
     }
 	
 	__block NSURLSessionDataTask *dataTask = nil;
-	NSLog(@"create new data task");
+	AXLog(@"create new data task");
 	
 	void (^handler)(NSURLResponse *, id, NSError *e) = ^(NSURLResponse *response, id responseObject, NSError *error) {
 		if (error) {
@@ -327,22 +325,22 @@
 			NSInteger statusCode = (NSInteger) httpResponse.statusCode;
 			
 			
-			NSLog(@"Data task failure: %@", request.URL);
+			AXLog(@"Data task failure: %@", request.URL);
 			//401 == unauthorized request, the session probably expired
 			if (statusCode == 401) {
-				NSLog(@"401, relogin");
+				AXLog(@"401, relogin");
 				//Login check and then retry if successfully logged back in
 				[[AXAPI API] loginWithEmail:[[FXKeychain defaultKeychain] objectForKey:kAPIEmail]
 								   password:[[FXKeychain defaultKeychain] objectForKey:kAPIPassword]
 									  block:^(BOOL succeeded){
 										  if (succeeded) {
-											  NSLog(@"Relog success");
+											  AXLog(@"Relog success");
 											  //We logged back in and everything is fine, lets try that request again!
 											  NSURLSessionDataTask* dt = [self dataTaskWithHTTPMethod:method URLString:URLString parameters:parameters uploadProgress:uploadProgress downloadProgress:downloadProgress success:success failure:failure];
 											  [dt resume];
 										  }
 										  else {
-											  NSLog(@"Relog fail");
+											  AXLog(@"Relog fail");
 											  //We couldn't log back in with the credentials we have.  Log us out.
 											  if (failure) {
 												  failure(dataTask, error);
@@ -361,7 +359,7 @@
 			}
 		}
 		else {
-			NSLog(@"Data Task success %@", request.URL);
+			AXLog(@"Data Task success %@", request.URL);
 			if (success) {
 				// Place the XSRF-TOKEN into the header of all our requests.
 				NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:baseURL]];
