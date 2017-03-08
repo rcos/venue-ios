@@ -119,23 +119,28 @@
         self.filteredCourses = self.courses;
     }
 	else {
-		NSMutableArray *mult = [[NSMutableArray alloc] init];
+		NSMutableArray *nEvents = [[NSMutableArray alloc] init];
 		
+		for (NSArray *ar in self.events) {
+			
+			NSArray *filteredEvents = [ar filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+			
+			if ([filteredEvents count] > 0) {
+				[nEvents addObject:filteredEvents];
+			}
+			
+		}
 		
-		self.filteredEvents = mult;
+		self.filteredEvents = nEvents;
 		
-	}
-//	else {
-//        self.filteredEvents = [self.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
-//        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
-//    }
+        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+    }
 	
-//    [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-//        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-//    } completion:nil];
+	[_tableView reloadData];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	if (contentMode == AXContentModeCourses) return 0;
 	if ([self.events count] > 0)
 		return 32.0f;
 	else
@@ -143,7 +148,10 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	if ([self.events count] > 0) {
+	if (contentMode == AXContentModeCourses) return nil;
+	
+	
+	if ([self.filteredEvents count] > 0) {
 		AXEventHeaderView *header = [[AXEventHeaderView alloc] init];
 	
 		AXEvent *evt = self.filteredEvents[section][0];
@@ -155,9 +163,7 @@
 		NSString *ret = [fmt stringFromDate:dayDate];
 		
 		[header setDateString:ret];
-		
-//		[header setDateString:];
-	
+
 		return header;
 	}
 	else {
@@ -165,7 +171,7 @@
 	}
 }
 
-NSDate *dayDateForDate(NSDate *given) {
+NSDate *dayOfDate(NSDate *given) {
 	return [[NSCalendar currentCalendar] startOfDayForDate:given];
 }
 
@@ -183,8 +189,8 @@ NSDate *dayDateForDate(NSDate *given) {
 		for (int i = 0; i < [compose count]; i++) {
 			NSMutableArray *array = compose[i];
 			
-			NSDate *radix = dayDateForDate([array[0] startDate]);
-			NSDate *date = dayDateForDate([ev startDate]);
+			NSDate *radix = dayOfDate([array[0] startDate]);
+			NSDate *date = dayOfDate([ev startDate]);
 			
 			if ([date compare:radix] < 0) {
 				insertArray = [[NSMutableArray alloc] init];
@@ -219,13 +225,9 @@ NSDate *dayDateForDate(NSDate *given) {
         if (contentMode == AXContentModeEvents) {
 			self.emptyLabel.hidden = self.events.count > 0;
 			
-//            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-//                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-//            } completion:^(BOOL finished) {
-//                [self.refreshControl endRefreshing];
-//            }];
-			
 			[_tableView reloadData];
+			
+			[self.refreshControl endRefreshing];
         }
     }];
     
@@ -233,11 +235,10 @@ NSDate *dayDateForDate(NSDate *given) {
         self.courses = courses;
         if (contentMode == AXContentModeCourses) {
 			self.emptyLabel.hidden = self.courses.count > 0;
-//            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-//                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-//            } completion:^(BOOL finished) {
-//                [self.refreshControl endRefreshing];
-//            }];
+			
+			[_tableView reloadData];
+			
+			[self.refreshControl endRefreshing];
         }
     }];
 }
@@ -246,7 +247,7 @@ NSDate *dayDateForDate(NSDate *given) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(!contentMode) {
-        [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.row]];
+        [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.section][indexPath.row]];
     }
     else {
         [[AXAppCoordinator sharedInstance] navigateToCourse:self.filteredCourses[indexPath.row]];
@@ -258,7 +259,7 @@ NSDate *dayDateForDate(NSDate *given) {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return self.events.count;
+	return (contentMode ? 1 :  self.filteredEvents.count);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -290,8 +291,10 @@ NSDate *dayDateForDate(NSDate *given) {
 	[self setContentMode:mode];
 	
 	emptyLabel.hidden = true;
+	
     [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+		[_tableView reloadData];
+//        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     } completion:^(BOOL finished) {
 		if (contentMode == AXContentModeEvents) {
 			self.emptyLabel.hidden = self.events.count > 0;
