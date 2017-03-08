@@ -10,6 +10,7 @@
 #import "AXCourseTableViewCell.h"
 #import "AXAppCoordinator.h"
 #import "AXAPI.h"
+#import "AXEventHeaderView.h"
 
 @interface AXOverviewViewController ()
 @property (nonatomic, strong) UITableView *tableView;
@@ -113,31 +114,118 @@
 #pragma mark - Actions
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
     if ([self.searchController.searchBar.text isEqualToString:@""]) {
         self.filteredEvents = self.events;
         self.filteredCourses = self.courses;
     }
 	else {
-        self.filteredEvents = [self.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
-        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
-    }
-    
-    [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    } completion:nil];
+		NSMutableArray *mult = [[NSMutableArray alloc] init];
+		
+		
+		self.filteredEvents = mult;
+		
+	}
+//	else {
+//        self.filteredEvents = [self.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+//        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+//    }
+	
+//    [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+//        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//    } completion:nil];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	if ([self.events count] > 0)
+		return 32.0f;
+	else
+		return 0.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if ([self.events count] > 0) {
+		AXEventHeaderView *header = [[AXEventHeaderView alloc] init];
+	
+		AXEvent *evt = self.filteredEvents[section][0];
+		
+		NSDate *dayDate = [[NSCalendar currentCalendar] startOfDayForDate:evt.startDate];
+		
+		NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+		[fmt setDateFormat:@"EEEE, MMMM dd, yyyy"];
+		NSString *ret = [fmt stringFromDate:dayDate];
+		
+		[header setDateString:ret];
+		
+//		[header setDateString:];
+	
+		return header;
+	}
+	else {
+		return nil;
+	}
+}
+
+NSDate *dayDateForDate(NSDate *given) {
+	return [[NSCalendar currentCalendar] startOfDayForDate:given];
+}
+
+- (void)sortEvents:(NSArray *)events {
+	
+	NSMutableArray *compose = [[NSMutableArray alloc] init];
+	
+	// this may look confusing, but that's ok. that's what comments are for.
+	// this is just an insertion sort based on the date, and tries to put
+	// events that are on the same day into buckets.
+	
+	for (AXEvent *ev in events) {
+		NSMutableArray *insertArray = nil;
+		
+		for (int i = 0; i < [compose count]; i++) {
+			NSMutableArray *array = compose[i];
+			
+			NSDate *radix = dayDateForDate([array[0] startDate]);
+			NSDate *date = dayDateForDate([ev startDate]);
+			
+			if ([date compare:radix] < 0) {
+				insertArray = [[NSMutableArray alloc] init];
+				[compose insertObject:insertArray atIndex:i];
+				
+				break;
+			}
+			else if ([date compare:radix] > 0) {
+				continue;
+			}
+			else {
+				insertArray = array;
+				break;
+			}
+		}
+		
+		if (!insertArray) {
+			insertArray = [[NSMutableArray alloc] init];
+			[compose addObject:insertArray];
+		}
+		
+		[insertArray addObject:ev];
+	}
+	
+	self.filteredEvents = compose;
+	self.events = compose;
 }
 
 - (void)refresh {
-    [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
-        self.events = events;
+    [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray *events) {
+		[self sortEvents:events];
         if (contentMode == AXContentModeEvents) {
 			self.emptyLabel.hidden = self.events.count > 0;
-            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-            } completion:^(BOOL finished) {
-                [self.refreshControl endRefreshing];
-            }];
+			
+//            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+//                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//            } completion:^(BOOL finished) {
+//                [self.refreshControl endRefreshing];
+//            }];
+			
+			[_tableView reloadData];
         }
     }];
     
@@ -145,11 +233,11 @@
         self.courses = courses;
         if (contentMode == AXContentModeCourses) {
 			self.emptyLabel.hidden = self.courses.count > 0;
-            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-            } completion:^(BOOL finished) {
-                [self.refreshControl endRefreshing];
-            }];
+//            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
+//                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+//            } completion:^(BOOL finished) {
+//                [self.refreshControl endRefreshing];
+//            }];
         }
     }];
 }
@@ -166,11 +254,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (contentMode ? self.filteredCourses.count : self.filteredEvents.count);
+    return (contentMode ? self.filteredCourses.count : [self.filteredEvents[section] count]);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+	return self.events.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -185,7 +273,9 @@
     [object setObject:@(contentMode) forKey:@"contentMode"];
     
     if (contentMode == AXContentModeEvents) {
-        [cell configureWithEvent:self.events[indexPath.row]];
+		NSArray *evts = self.filteredEvents[indexPath.section];
+		
+        [cell configureWithEvent:evts[indexPath.row]];
     }
     else {
         [cell configureWithCourse:self.courses[indexPath.row]];
@@ -196,7 +286,7 @@
 
 #pragma mark - AXNavigationBarDelegate
 
--(void)contentModeDidChange:(AXContentMode)mode {
+- (void)contentModeDidChange:(AXContentMode)mode {
 	[self setContentMode:mode];
 	
 	emptyLabel.hidden = true;
@@ -213,9 +303,9 @@
 
 #pragma mark - ContentMode
 
--(void)setContentMode:(AXContentMode)mode {
+- (void)setContentMode:(AXContentMode)mode {
 	contentMode = mode;
-	NSString* contentType = (contentMode == AXContentModeEvents ? @"events" : @"courses");
+	NSString *contentType = (contentMode == AXContentModeEvents ? @"events" : @"courses");
 	
 	[emptyLabel setText:[NSString stringWithFormat:@"No %@ yet", contentType]];
 }

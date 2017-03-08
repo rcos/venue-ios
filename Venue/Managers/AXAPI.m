@@ -14,8 +14,7 @@
 
 #pragma mark - Singleton
 
-+(AXAPI*) API
-{
++ (AXAPI *)API {
     static AXAPI* netExec = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

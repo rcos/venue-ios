@@ -10,8 +10,8 @@
 
 @interface AXTableViewCell : UITableViewCell
 
-+(NSString*)reuseIdentifier;
++ (NSString *)reuseIdentifier;
 
-@property UIView* view;
+@property UIView *view;
 
 @end

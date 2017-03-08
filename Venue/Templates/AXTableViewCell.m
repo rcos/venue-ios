@@ -10,17 +10,14 @@
 
 @implementation AXTableViewCell
 
--(instancetype)init
-{
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[AXTableViewCell reuseIdentifier]];
-    if(self)
-    {
+- (instancetype)init {
+	if ((self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[AXTableViewCell reuseIdentifier]])) {
         self.view = self.contentView;
     }
     return self;
 }
 
-+(NSString*)reuseIdentifier {
++ (NSString *)reuseIdentifier {
     return NSStringFromClass([self class]);
 }
 
