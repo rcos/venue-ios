@@ -37,6 +37,8 @@
 		388919711D29D3DA00487A28 /* UIImageView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 388919701D29D3DA00487A28 /* UIImageView+Venue.m */; };
 		38CF9BB11DF12380006FE982 /* AXHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CF9BB01DF12380006FE982 /* AXHeaderFooterView.m */; };
 		38F801431D567A9A005FD6B3 /* AXWebLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */; };
+		50A8E0201E657BEB00FE69BC /* AXUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A8E01F1E657BEB00FE69BC /* AXUtilities.m */; };
+		50A9C9651E6F52F900BAE280 /* AXEventHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A9C9641E6F52F900BAE280 /* AXEventHeaderView.m */; };
 		8499B8D61DF10BCB006A4CDF /* UIView+Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8D51DF10BCB006A4CDF /* UIView+Venue.m */; };
 		8499B8D91DF12F24006A4CDF /* AXNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8D81DF12F24006A4CDF /* AXNavigationController.m */; };
 		8499B8DF1DF13F2F006A4CDF /* AXLayoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8499B8DE1DF13F2F006A4CDF /* AXLayoutController.m */; };
@@ -109,6 +111,10 @@
 		38F801411D567A9A005FD6B3 /* AXWebLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXWebLoginViewController.h; sourceTree = "<group>"; };
 		38F801421D567A9A005FD6B3 /* AXWebLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXWebLoginViewController.m; sourceTree = "<group>"; };
 		3A0C2B54B9CEFE87FA94A18C /* Pods-Venue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.debug.xcconfig"; sourceTree = "<group>"; };
+		50A8E01F1E657BEB00FE69BC /* AXUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXUtilities.m; sourceTree = "<group>"; };
+		50A8E0211E657BF800FE69BC /* Venue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Venue.h; sourceTree = "<group>"; };
+		50A9C9631E6F52F900BAE280 /* AXEventHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AXEventHeaderView.h; sourceTree = "<group>"; };
+		50A9C9641E6F52F900BAE280 /* AXEventHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AXEventHeaderView.m; sourceTree = "<group>"; };
 		65F3EB48EA5F3AFBE6B98F16 /* Pods-Venue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Venue.release.xcconfig"; path = "Pods/Target Support Files/Pods-Venue/Pods-Venue.release.xcconfig"; sourceTree = "<group>"; };
 		8499B8D41DF10BCB006A4CDF /* UIView+Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Venue.h"; sourceTree = "<group>"; };
 		8499B8D51DF10BCB006A4CDF /* UIView+Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Venue.m"; sourceTree = "<group>"; };
@@ -199,6 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				0C991F941DCE3E9B002F3140 /* Venue.entitlements */,
+				50A8E0211E657BF800FE69BC /* Venue.h */,
+				50A8E01F1E657BEB00FE69BC /* AXUtilities.m */,
 				38ECB41D1D8844FE0068DCD0 /* Categories */,
 				0C2AAFA71CDBA3F000BFD587 /* Data */,
 				0CCEDE061C3C44EE009F8C4D /* Managers */,
@@ -287,6 +295,8 @@
 				0CCEDE1B1C3D9F08009F8C4D /* AXCourseTableViewCell.m */,
 				38CF9BAF1DF12380006FE982 /* AXHeaderFooterView.h */,
 				38CF9BB01DF12380006FE982 /* AXHeaderFooterView.m */,
+				50A9C9631E6F52F900BAE280 /* AXEventHeaderView.h */,
+				50A9C9641E6F52F900BAE280 /* AXEventHeaderView.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -502,7 +512,9 @@
 				0C96B2581C377B8B000A78FB /* AppDelegate.m in Sources */,
 				0CCEDE0C1C3C4678009F8C4D /* AXAPI.m in Sources */,
 				0C2AAFAD1CDBA8EE00BFD587 /* AXCourse.m in Sources */,
+				50A9C9651E6F52F900BAE280 /* AXEventHeaderView.m in Sources */,
 				38F801431D567A9A005FD6B3 /* AXWebLoginViewController.m in Sources */,
+				50A8E0201E657BEB00FE69BC /* AXUtilities.m in Sources */,
 				0C2AAFAA1CDBA41700BFD587 /* AXEvent.m in Sources */,
 				0C5794481C4962FD00E35F4E /* AXLoginViewController.m in Sources */,
 				0CCEDE1C1C3D9F08009F8C4D /* AXCourseTableViewCell.m in Sources */,

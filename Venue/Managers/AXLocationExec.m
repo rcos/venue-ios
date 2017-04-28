@@ -17,8 +17,7 @@
 @implementation AXLocationExec
 @synthesize locationManager, executeOnNextUpdate;
 
-+(AXLocationExec*) exec
-{
++ (AXLocationExec *)exec {
     static AXLocationExec* exec = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -30,11 +29,9 @@
 
 #pragma mark - Init
 
--(instancetype)init
-{
+- (instancetype)init {
     self = [super init];
-    if(self)
-    {
+    if(self) {
         locationManager = [[CLLocationManager alloc] init];
         [locationManager setDelegate:self];
         [self checkAuthorization];
@@ -44,29 +41,26 @@
 
 #pragma mark - Location
 
--(void)getLocationWithCompletion:(void(^)(CLLocation* location))completion
-{
-	if([self checkAuthorization] == kCLAuthorizationStatusAuthorizedWhenInUse) {
+- (void)getLocationWithCompletion:(void(^)(CLLocation *location))completion {
+	if ([self checkAuthorization] == kCLAuthorizationStatusAuthorizedWhenInUse) {
 		[locationManager startUpdatingLocation];
 		
-		if(!self.location)executeOnNextUpdate = completion;
-		else
-		{
+		if (!self.location) {
+			executeOnNextUpdate = completion;
+		}
+		else {
 			completion(self.location);
 		}
 	}
 }
 
 // Checks if we're allowed to use location services
--(CLAuthorizationStatus)checkAuthorization
-{
-    if([CLLocationManager locationServicesEnabled])
-    {
+- (CLAuthorizationStatus)checkAuthorization {
+    if ([CLLocationManager locationServicesEnabled]) {
         CLAuthorizationStatus authStat = [CLLocationManager authorizationStatus];
         
         //If we don't know about authorization, we need to ask the user
-        if(authStat == kCLAuthorizationStatusNotDetermined)
-        {
+        if (authStat == kCLAuthorizationStatusNotDetermined) {
             //request ability to use location services
             if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
                 [self.locationManager requestWhenInUseAuthorization];
@@ -80,18 +74,15 @@
 
 // This is called at starting of location services, no matter if there is actually a change in auth
 // Which means this will be our starting point which says "We're ready to use location services" after init
--(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-    if([CLLocationManager locationServicesEnabled] && status == kCLAuthorizationStatusAuthorizedWhenInUse)
-    {
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if ([CLLocationManager locationServicesEnabled] && status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         //Good to start using location services
         [locationManager startUpdatingLocation];
     }
 }
 
 // If we got actual locations from the manager, they appear here
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.location = [locations lastObject];
     if(executeOnNextUpdate) {
         executeOnNextUpdate(self.location);
@@ -102,9 +93,8 @@
 }
 
 //Handle our errors here
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"Location error: %@", error);
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    AXLog(@"Location error: %@", error);
 }
 
 @end

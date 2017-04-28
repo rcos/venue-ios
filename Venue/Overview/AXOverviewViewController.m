@@ -10,29 +10,28 @@
 #import "AXCourseTableViewCell.h"
 #import "AXAppCoordinator.h"
 #import "AXAPI.h"
+#import "AXEventHeaderView.h"
 
 @interface AXOverviewViewController ()
-@property UITableView* tableView;
-@property UIProgressView* progressView;
-@property (nonatomic) AXContentMode contentMode;
-@property UIRefreshControl* refreshControl;
-@property UILabel* emptyLabel;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, assign) AXContentMode contentMode;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UILabel *emptyLabel;
 
-@property NSArray* events;
-@property NSArray* filteredEvents;
-@property NSArray* courses;
-@property NSArray* filteredCourses;
+@property (nonatomic, strong) NSArray *events;
+@property (nonatomic, strong) NSArray *filteredEvents;
+@property (nonatomic, strong) NSArray *courses;
+@property (nonatomic, strong) NSArray *filteredCourses;
 
-@property UISearchController* searchController;
+@property (nonatomic, strong) UISearchController *searchController;
 @end
 
 @implementation AXOverviewViewController
 @synthesize progressView, contentMode, emptyLabel, searchController;
 
--(instancetype)init
-{
-    self = [super init];
-    if(self) {
+- (instancetype)init {
+	if ((self = [super init])) {
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -51,34 +50,25 @@
 		[emptyLabel setTextAlignment:NSTextAlignmentCenter];
 		
 		[self setContentMode:AXContentModeEvents];
-		
-        // Initialize the refresh control
+
         
         self.refreshControl = [[UIRefreshControl alloc] init];
         self.refreshControl.backgroundColor = [UIColor whiteColor];
         self.refreshControl.tintColor = [UIColor accentColor];
-        [self.refreshControl addTarget:self
-                                action:@selector(refresh)
-                      forControlEvents:UIControlEventValueChanged];
+        [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
         [self.tableView insertSubview:self.refreshControl atIndex:0];
-        
-        // init search controller
-        
+
         searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         searchController.searchResultsUpdater = self;
         searchController.dimsBackgroundDuringPresentation = false;
 		searchController.hidesNavigationBarDuringPresentation = false;
         searchController.searchBar.barTintColor = [UIColor primaryColor];
+		searchController.definesPresentationContext = YES;
 		
-		// Hack to keep search bar from moving
-		UIView* container = [[UIView alloc] initWithFrame:searchController.searchBar.frame];
-		[container addSubview:searchController.searchBar];
-		[container setClipsToBounds:YES];
+		self.tableView.tableHeaderView = self.searchController.searchBar;
 		
-        
-        self.definesPresentationContext = false;
-        
-        self.tableView.tableHeaderView = container;
+		self.extendedLayoutIncludesOpaqueBars = YES;
+        self.definesPresentationContext = YES;
         
         // Watch events and courses to update search on refresh of results from server
         [self.KVOController observe:self keyPath:@"events" options:NSKeyValueObservingOptionInitial block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
@@ -121,94 +111,181 @@
     }];
 }
 
-#pragma mark - Actions
-
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
-    if([self.searchController.searchBar.text isEqualToString:@""]) {
-        self.filteredEvents = self.events;
-        self.filteredCourses = self.courses;
-    } else {
-        self.filteredEvents = [self.events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
-        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
-    }
-    
-    [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-    } completion:nil];
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	NSLog(@"viewDidAppear::");
+	self.view.frame = [UIScreen mainScreen].bounds;
+	[self.view setNeedsLayout];
 }
 
--(void)refresh
-{
-    [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray * events) {
-        self.events = events;
-        if(contentMode == AXContentModeEvents)
-        {
+#pragma mark - Actions
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    if ([self.searchController.searchBar.text isEqualToString:@""]) {
+        self.filteredEvents = self.events;
+        self.filteredCourses = self.courses;
+    }
+	else {
+		NSMutableArray *nEvents = [[NSMutableArray alloc] init];
+		
+		for (NSArray *ar in self.events) {
+			
+			NSArray *filteredEvents = [ar filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+			
+			if ([filteredEvents count] > 0) {
+				[nEvents addObject:filteredEvents];
+			}
+			
+		}
+		
+		self.filteredEvents = nEvents;
+		
+        self.filteredCourses = [self.courses filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.name contains %@", self.searchController.searchBar.text]];
+    }
+	
+	[_tableView reloadData];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	if (contentMode == AXContentModeCourses) return 0;
+	if ([self.events count] > 0)
+		return 32.0f;
+	else
+		return 0.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if (contentMode == AXContentModeCourses) return nil;
+	
+	
+	if ([self.filteredEvents count] > 0) {
+		AXEventHeaderView *header = [[AXEventHeaderView alloc] init];
+	
+		AXEvent *evt = self.filteredEvents[section][0];
+		
+		NSDate *dayDate = [[NSCalendar currentCalendar] startOfDayForDate:evt.startDate];
+		
+		NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+		[fmt setDateFormat:@"EEEE, MMMM dd, yyyy"];
+		NSString *ret = [fmt stringFromDate:dayDate];
+		
+		[header setDateString:ret];
+
+		return header;
+	}
+	else {
+		return nil;
+	}
+}
+
+NSDate *dayOfDate(NSDate *given) {
+	return [[NSCalendar currentCalendar] startOfDayForDate:given];
+}
+
+- (void)sortEvents:(NSArray *)events {
+	
+	NSMutableArray *compose = [[NSMutableArray alloc] init];
+	
+	// this may look confusing, but that's ok. that's what comments are for.
+	// this is just an insertion sort based on the date, and tries to put
+	// events that are on the same day into buckets.
+	
+	for (AXEvent *ev in events) {
+		NSMutableArray *insertArray = nil;
+		
+		for (int i = 0; i < [compose count]; i++) {
+			NSMutableArray *array = compose[i];
+			
+			NSDate *radix = dayOfDate([array[0] startDate]);
+			NSDate *date = dayOfDate([ev startDate]);
+			
+			if ([date compare:radix] < 0) {
+				insertArray = [[NSMutableArray alloc] init];
+				[compose insertObject:insertArray atIndex:i];
+				
+				break;
+			}
+			else if ([date compare:radix] > 0) {
+				continue;
+			}
+			else {
+				insertArray = array;
+				break;
+			}
+		}
+		
+		if (!insertArray) {
+			insertArray = [[NSMutableArray alloc] init];
+			[compose addObject:insertArray];
+		}
+		
+		[insertArray addObject:ev];
+	}
+	
+	self.filteredEvents = compose;
+	self.events = compose;
+}
+
+- (void)refresh {
+    [[AXAPI API] getEventsWithProgressView:progressView completion:^(NSArray *events) {
+		[self sortEvents:events];
+        if (contentMode == AXContentModeEvents) {
 			self.emptyLabel.hidden = self.events.count > 0;
-            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-            } completion:^(BOOL finished) {
-                [self.refreshControl endRefreshing];
-            }];
+			
+			[_tableView reloadData];
+			
+			[self.refreshControl endRefreshing];
         }
     }];
     
     [[AXAPI API] getCoursesWithProgressView:progressView completion:^(NSArray * courses) {
         self.courses = courses;
-        if(contentMode == AXContentModeCourses)
-        {
+        if (contentMode == AXContentModeCourses) {
 			self.emptyLabel.hidden = self.courses.count > 0;
-            [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-            } completion:^(BOOL finished) {
-                [self.refreshControl endRefreshing];
-            }];
+			
+			[_tableView reloadData];
+			
+			[self.refreshControl endRefreshing];
         }
     }];
 }
 
 #pragma mark - UITableView
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(!contentMode) {
-        [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.row]];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!contentMode) {
+        [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.section][indexPath.row]];
     }
     else {
         [[AXAppCoordinator sharedInstance] navigateToCourse:self.filteredCourses[indexPath.row]];
     }
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return (contentMode ? self.filteredCourses.count : self.filteredEvents.count);
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return (contentMode ? self.filteredCourses.count : [self.filteredEvents[section] count]);
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return (contentMode ? 1 :  self.filteredEvents.count);
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AXCourseTableViewCell* cell;
     
     cell = [tableView dequeueReusableCellWithIdentifier:[AXCourseTableViewCell reuseIdentifier]];
-    if(!cell)
-    {
+    if (!cell) {
         cell = [[AXCourseTableViewCell alloc] init];
     }
     
     NSMutableDictionary* object = [[NSMutableDictionary alloc] init];
     [object setObject:@(contentMode) forKey:@"contentMode"];
     
-    
-    
-    if(contentMode == AXContentModeEvents)
-    {
-        [cell configureWithEvent:self.events[indexPath.row]];
+    if (contentMode == AXContentModeEvents) {
+		NSArray *evts = self.filteredEvents[indexPath.section];
+		
+        [cell configureWithEvent:evts[indexPath.row]];
     }
-    else
-    {
+    else {
         [cell configureWithCourse:self.courses[indexPath.row]];
     }
     
@@ -217,13 +294,14 @@
 
 #pragma mark - AXNavigationBarDelegate
 
--(void)contentModeDidChange:(AXContentMode)mode
-{
+- (void)contentModeDidChange:(AXContentMode)mode {
 	[self setContentMode:mode];
 	
 	emptyLabel.hidden = true;
+	
     [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
-        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+		[_tableView reloadData];
+//        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     } completion:^(BOOL finished) {
 		if (contentMode == AXContentModeEvents) {
 			self.emptyLabel.hidden = self.events.count > 0;
@@ -235,10 +313,9 @@
 
 #pragma mark - ContentMode
 
--(void)setContentMode:(AXContentMode)mode
-{
+- (void)setContentMode:(AXContentMode)mode {
 	contentMode = mode;
-	NSString* contentType = (contentMode == AXContentModeEvents ? @"events" : @"courses");
+	NSString *contentType = (contentMode == AXContentModeEvents ? @"events" : @"courses");
 	
 	[emptyLabel setText:[NSString stringWithFormat:@"No %@ yet", contentType]];
 }

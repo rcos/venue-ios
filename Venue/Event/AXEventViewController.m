@@ -24,20 +24,17 @@
 @property NSArray* submissions;
 @property AXEvent* event;
 
-
 @end
 
 @implementation AXEventViewController
 @synthesize event;
 
--(instancetype)initWithEvent:(AXEvent*)_event
-{
-	event = _event;
-    self = [super init];
-    if(self)
-    {
-//        [self checkIfSubmittedBefore];
-    }
+- (instancetype)initWithEvent:(AXEvent *)_event {
+	if ((self = [super init])) {
+		event = _event;
+		//        [self checkIfSubmittedBefore];
+	}
+
     return self;
 }
 
@@ -45,46 +42,41 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem* barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CheckinFull"] style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CheckinFull"] style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
     [self.navigationItem setRightBarButtonItem:barButton];
 }
 
 #pragma mark - Action
 
--(void)refresh
-{
+- (void)refresh {
     [self fetchSubmissions];
 }
 
 #pragma mark - Navigation
 
-- (void)navButtonPressed
-{
-    NSString* link = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&dirflg=d", [event.address stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+- (void)navButtonPressed {
+    NSString *link = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&dirflg=d", [event.address stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
 }
 
 #pragma mark - Check In
 
--(void)checkIfSubmittedBefore
-{
+- (void)checkIfSubmittedBefore {
     [[AXAPI API] getMySubmissionsWithEventId:event.eventId progressView:nil completion:^(NSArray *submissions) {
-        if(submissions.count == 0)
-        {
+        if (submissions.count == 0) {
             //No submissions from us.
         }
-        else
-        {
+        else {
             //We've submitted before.
         }
     }];
 }
 
--(void)fetchSubmissions
-{
+- (void)fetchSubmissions {
     [[AXAPI API] getSubmissionsWithEventId:event.eventId progressView:self.progressView completion:^(NSArray *submissions) {
         self.submissions = submissions;
 //        self.emptyLabel.hidden = self.submissions.count > 0;
+		
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView transitionWithView:self.view duration:.3 options:0 animations:^{
                 [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationFade];
@@ -95,66 +87,91 @@
     }];
 }
 
--(void)checkIn
-{
+- (void)checkIn {
     UIImagePickerController *camera = [[UIImagePickerController alloc] init];
     camera.sourceType = ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == YES) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     camera.delegate = self;
+	camera.modalPresentationStyle = UIModalPresentationOverFullScreen;
     
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         switch (status) {
             case PHAuthorizationStatusAuthorized:
                 [self presentViewController:camera animated:YES completion:nil];
                 break;
-                
             default:
+				[self presentErrorDialogue];
                 break;
         }
-    }];}
+    }];
+}
+
+- (void)presentErrorDialogue {
+	UIAlertController *altc = [[UIAlertController alloc] init];
+	[altc setTitle:@"Unauthorized :("];
+	[altc setMessage:@"I'm unauthorized to access your photo or camera. Please change this in Settings."];
+	[altc addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		[altc dismissViewControllerAnimated:YES completion:NULL];
+	}]];
+	
+	[self presentViewController:altc animated:YES completion:NULL];
+}
+
+- (void)repairViewHierarchy {
+	// seems to be a result of UIImagePickerViewController trashing everything.
+	// will fix.
+	
+	self.view.frame = [UIScreen mainScreen].bounds;
+}
 
 #pragma mark - UIImagePickerController Delegate
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-	[self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-		UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+		[picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+	[picker dismissViewControllerAnimated:YES completion:^{
+		[self repairViewHierarchy];
+		
+		UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 		[self attemptSubmissionWithImage:image];
 	}];
 }
 
--(void)attemptSubmissionWithImage:(UIImage*)image
-{
+- (void)attemptSubmissionWithImage:(UIImage *)image {
+	
 	SCLAlertViewBuilder *builder = [SCLAlertViewBuilder new];
 	SCLAlertViewShowBuilder *showBuilder = [SCLAlertViewShowBuilder new]
 	.style(Waiting)
 	.title(@"Verifying Submission")
 	.subTitle(@"We're checking your attendance, please wait.")
 	.duration(0);
-	[showBuilder showAlertView:builder.alertView onViewController:self];
+	[showBuilder showAlertView:builder.alertView onViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 	
-	NSLog(@"Start submission");
+	AXLog(@"Start submission");
 	[[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success, NSError* error) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[builder.alertView hideView];
 		});
 		
-		if(success)
-		{
-			NSLog(@"Finish successful submission");
+
+		if(success) {
+			AXLog(@"Finish successful submission");
 			dispatch_async(dispatch_get_main_queue(), ^{
 				SCLAlertViewBuilder *successBuilder = [SCLAlertViewBuilder new];
 				SCLAlertViewShowBuilder *successShowBuilder = [SCLAlertViewShowBuilder new]
 				.style(Success)
-				.title(@"Submission Verified");
+				.title(@"Success!");
 				successBuilder.addButtonWithActionBlock(@"Close", ^{
 					[self fetchSubmissions];
+					
 				});
-				[successShowBuilder showAlertView:successBuilder.alertView onViewController:self];
+				[successShowBuilder showAlertView:successBuilder.alertView onViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 			});
 		}
-		else
-		{
+		else {
 			SCLAlertViewBuilder *failureBuilder = [SCLAlertViewBuilder new];
 			SCLAlertViewShowBuilder *failureShowBuilder = [SCLAlertViewShowBuilder new]
 			.style(Error)
@@ -168,7 +185,7 @@
 			});
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
-				[failureShowBuilder showAlertView:failureBuilder.alertView onViewController:self];
+				[failureShowBuilder showAlertView:failureBuilder.alertView onViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 			});
 		}
 		
@@ -177,13 +194,11 @@
 
 #pragma mark - UITableViewDelegate
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
 		// description
 		case 0:
@@ -222,7 +237,7 @@
 
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	if(section == 0) {
 		return nil;
 	}
@@ -252,7 +267,7 @@
 	return view;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if(indexPath.section == 1) {
 		[self navButtonPressed];
 	} else if(indexPath.section == 2 && indexPath.row == 0) {
@@ -260,7 +275,7 @@
 	}
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	UITableViewCell* outCell;
 	AXSubmissionTableViewCell* subCell;

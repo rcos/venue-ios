@@ -38,23 +38,26 @@
 	return self;
 }
 
--(void)configureWithEvent:(AXEvent*)event {
+- (void)configureWithEvent:(AXEvent*)event {
     annotation.coordinate = event.coords;
     annotation.title      = event.name;
+	
+	// switch this to MKMapSnapshotter incase of lag.
 	
 	[mapView setRegion:MKCoordinateRegionMake(event.coords, MKCoordinateSpanMake(.1, .1)) animated:YES];
 }
 
--(MKAnnotationView *)mapView:(MKMapView *)_mapView viewForAnnotation:(id<MKAnnotation>)localAnnotation {
+- (MKAnnotationView *)mapView:(MKMapView *)_mapView viewForAnnotation:(id<MKAnnotation>)localAnnotation {
 	if([localAnnotation isKindOfClass:MKUserLocation.class]) {
 		return nil;
 	}
 	
 	MKAnnotationView* annotationView = [_mapView dequeueReusableAnnotationViewWithIdentifier:@"annoview"];
-	if(annotationView == nil) {
+	if (annotationView == nil) {
 		annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:localAnnotation reuseIdentifier:@"annoview"];
 		annotationView.canShowCallout = false;
-	} else {
+	}
+	else {
 		annotationView.annotation = localAnnotation;
 	}
 	

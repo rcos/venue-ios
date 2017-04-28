@@ -54,7 +54,7 @@
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    NSLog(@"URL: %@", request.URL);
+    AXLog(@"URL: %@", request.URL);
     
     if([request.URL.absoluteString containsString:@"jsessionid="] || [request.URL.absoluteString containsString:@"ticket="]) {
         [activityView startAnimating];

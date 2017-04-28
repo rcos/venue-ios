@@ -12,13 +12,8 @@
 @interface AXAppCoordinator : NSObject
 
 + (instancetype)sharedInstance;
-
 - (void)setNewWindow:(UIWindow *)window;
-
 - (void)navigateToCourse:(AXCourse *)course;
-
 - (void)navigateToEvent:(AXEvent *)event;
-
 - (void)navigateToSettings;
-
 @end

@@ -10,11 +10,8 @@
 
 @implementation AXEvent
 
--(instancetype)initWithDictionary:(NSDictionary*)dictionary
-{
-    self = [super init];
-    if(self)
-    {
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary {
+	if ((self = [super init])) {
         NSDictionary* dict = dictionary[@"info"];
         _eventId = dictionary[@"_id"];
         _name = dict[@"title"];
@@ -22,8 +19,7 @@
 		_submissionInstructions = dictionary[@"submissionInstructions"];
         
         NSArray* times = dict[@"times"];
-        if(times.count > 0)
-        {
+        if(times.count > 0) {
             NSDictionary* time = [times firstObject];
             NSString* start = time[@"start"];
             NSString* end = time[@"end"];
@@ -42,7 +38,7 @@
         
         _imageUrl = [dict[@"imageURLs"] firstObject];
 //        _imageUrl = [_imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-        NSLog(@"%@", _imageUrl);
+        AXLog(@"%@", _imageUrl);
         
         CLLocationDegrees lon = [dict[@"location"][@"geo"][@"coordinates"][0] doubleValue];
         CLLocationDegrees lat = [dict[@"location"][@"geo"][@"coordinates"][1] doubleValue];

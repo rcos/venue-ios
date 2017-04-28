@@ -10,8 +10,8 @@
 
 @implementation NSString (Venue)
 
--(BOOL)isEmpty {
-	return self == nil || [self isEqualToString:@""];
+- (BOOL)isEmpty {
+	return [[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0;
 }
 
 @end

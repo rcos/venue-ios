@@ -20,8 +20,7 @@
 
 @implementation AppDelegate
 
--(void)setLoggedIn
-{
+- (void)setLoggedIn {
     self.isLoggingIn = false;
     
     [AXLocationExec exec];
@@ -30,8 +29,7 @@
 
 }
 
--(void)setLoggedOut
-{
+-(void)setLoggedOut {
     self.isLoggingIn = true;
     [[AXAPI API] logOut];
     AXWebLoginViewController* viewController = [[AXWebLoginViewController alloc] init];
@@ -60,17 +58,14 @@
     [self configureAppearances];
     
     [Fabric with:@[[Crashlytics class]]];
-
     
-//    [self setLoggedOut];
-    
-    if([[FXKeychain defaultKeychain] objectForKey:kSessionToken])
-    {
+    if ([[FXKeychain defaultKeychain] objectForKey:kSessionToken]) {
         [self setLoggedIn];
     }
     else [self setLoggedOut];
     
     [self.window makeKeyAndVisible];
+	
     return YES;
 }
 

@@ -10,37 +10,35 @@
 
 @implementation UIFont (Venue)
 
-+(UIFont*)thinFont
-{
-    return [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
++ (UIFont *)thinFont {
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
 }
 
-+(UIFont*)thinFontOfSize:(NSInteger)size
-{
-    return [UIFont fontWithName:@"HelveticaNeue-Thin" size:size];
++ (UIFont *)thinFontOfSize:(NSInteger)size {
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:size];
 }
 
-+(UIFont*)boldFont {
++ (UIFont *)boldFont {
     return [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
 }
 
-+(UIFont*)mediumFont {
++ (UIFont *)mediumFont {
     return [UIFont fontWithName:@"HelveticaNeue-Medium" size:18];
 }
 
-+(UIFont*)mediumFontOfSize:(NSInteger)size {
++ (UIFont *)mediumFontOfSize:(NSInteger)size {
     return [UIFont fontWithName:@"HelveticaNeue-Medium" size:size];
 }
 
-+(UIFont*)boldFontOfSize:(NSInteger)size {
++ (UIFont *)boldFontOfSize:(NSInteger)size {
     return [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
 }
 
-+(UIFont*)regularFont {
++ (UIFont *)regularFont {
     return [UIFont fontWithName:@"HelveticaNeue-Regular" size:16];
 }
 
-+(UIFont*)regularFontOfSize:(NSInteger)size {
++ (UIFont *)regularFontOfSize:(NSInteger)size {
     return [UIFont fontWithName:@"HelveticaNeue" size:size];
 }
 

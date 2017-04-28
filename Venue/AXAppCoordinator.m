@@ -37,11 +37,9 @@
 - (void)setNewWindow:(UIWindow *)window {
     AXOverviewViewController *viewController = [[AXOverviewViewController alloc] init];
     [layoutController setRootViewController:viewController];
-    
-    [UIView transitionWithView:window
-                      duration:.25
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
+	
+    [UIView transitionWithView:window duration:.25 options:UIViewAnimationOptionTransitionCrossDissolve
+					animations:^{
                         [window setRootViewController:layoutController];
                     } completion:nil];
 }
@@ -59,16 +57,15 @@
 }
 
 - (void)navigateToSettings {
-    NSLog(@"Navigate to Settings");
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Log out?"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleActionSheet];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Log out" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        AppDelegate* del = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        AppDelegate *del = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [del setLoggedOut];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil]];
+	[alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
     [layoutController presentViewController:alert animated:YES completion:nil];
 }
 
