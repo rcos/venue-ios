@@ -42,7 +42,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem* barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CheckinFull"] style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CheckinFull"] style:UIBarButtonItemStylePlain target:self action:@selector(checkIn)];
     [self.navigationItem setRightBarButtonItem:barButton];
 }
 
@@ -55,7 +55,7 @@
 #pragma mark - Navigation
 
 - (void)navButtonPressed {
-    NSString* link = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&dirflg=d", [event.address stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+    NSString *link = [NSString stringWithFormat:@"http://maps.apple.com/?daddr=%@&dirflg=d", [event.address stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
 }
 
@@ -91,6 +91,7 @@
     UIImagePickerController *camera = [[UIImagePickerController alloc] init];
     camera.sourceType = ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == YES) ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
     camera.delegate = self;
+	camera.modalPresentationStyle = UIModalPresentationOverFullScreen;
     
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         switch (status) {
@@ -115,23 +116,38 @@
 	[self presentViewController:altc animated:YES completion:NULL];
 }
 
+- (void)repairViewHierarchy {
+	// seems to be a result of UIImagePickerViewController trashing everything.
+	// will fix.
+	
+	self.view.frame = [UIScreen mainScreen].bounds;
+}
+
 #pragma mark - UIImagePickerController Delegate
 
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+		[picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-	[self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-		UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+	[picker dismissViewControllerAnimated:YES completion:^{
+		[self repairViewHierarchy];
+		
+		UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 		[self attemptSubmissionWithImage:image];
 	}];
 }
 
--(void)attemptSubmissionWithImage:(UIImage *)image {
+- (void)attemptSubmissionWithImage:(UIImage *)image {
+	
 	SCLAlertViewBuilder *builder = [SCLAlertViewBuilder new];
 	SCLAlertViewShowBuilder *showBuilder = [SCLAlertViewShowBuilder new]
 	.style(Waiting)
 	.title(@"Verifying Submission")
 	.subTitle(@"We're checking your attendance, please wait.")
 	.duration(0);
-	[showBuilder showAlertView:builder.alertView onViewController:self];
+	[showBuilder showAlertView:builder.alertView onViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 	
 	AXLog(@"Start submission");
 	[[AXAPI API] verifySubmissionForEventId:event.eventId withImage:image withProgressView:nil completion:^(BOOL success, NSError* error) {
@@ -140,21 +156,22 @@
 			[builder.alertView hideView];
 		});
 		
+
 		if(success) {
 			AXLog(@"Finish successful submission");
 			dispatch_async(dispatch_get_main_queue(), ^{
 				SCLAlertViewBuilder *successBuilder = [SCLAlertViewBuilder new];
 				SCLAlertViewShowBuilder *successShowBuilder = [SCLAlertViewShowBuilder new]
 				.style(Success)
-				.title(@"Submission Verified");
+				.title(@"Success!");
 				successBuilder.addButtonWithActionBlock(@"Close", ^{
 					[self fetchSubmissions];
+					
 				});
-				[successShowBuilder showAlertView:successBuilder.alertView onViewController:self];
+				[successShowBuilder showAlertView:successBuilder.alertView onViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 			});
 		}
-		else
-		{
+		else {
 			SCLAlertViewBuilder *failureBuilder = [SCLAlertViewBuilder new];
 			SCLAlertViewShowBuilder *failureShowBuilder = [SCLAlertViewShowBuilder new]
 			.style(Error)
@@ -168,7 +185,7 @@
 			});
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
-				[failureShowBuilder showAlertView:failureBuilder.alertView onViewController:self];
+				[failureShowBuilder showAlertView:failureBuilder.alertView onViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 			});
 		}
 		
@@ -220,7 +237,7 @@
 
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	if(section == 0) {
 		return nil;
 	}
@@ -250,7 +267,7 @@
 	return view;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if(indexPath.section == 1) {
 		[self navButtonPressed];
 	} else if(indexPath.section == 2 && indexPath.row == 0) {
@@ -258,7 +275,7 @@
 	}
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	UITableViewCell* outCell;
 	AXSubmissionTableViewCell* subCell;

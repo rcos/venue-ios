@@ -264,14 +264,23 @@
             [formData appendPartWithFileData:data name:@"files[0]" fileName:@"img.jpg" mimeType:@"image/jpeg"];
         }
           progress:^(NSProgress * _Nonnull downloadProgress) {
-              if(progressView)
-              {
+              if(progressView) {
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [progressView setProgress:downloadProgress.fractionCompleted animated:YES];
                   });
               }
           } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            completion(1, nil);
+			  NSLog(@"NETWORK RESPONSE: %@", responseObject);
+			  
+			  if ([responseObject isKindOfClass:[NSDictionary class]]) {
+				  if ([[responseObject objectForKey:@"images"] count] != 0) {
+					  completion(YES, nil);
+					  // properly handle this bettter. 
+				  }
+			  }
+			  else {
+				  completion(NO, nil);
+			  }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             completion(0, error);
         }];

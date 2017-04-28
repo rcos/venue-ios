@@ -111,6 +111,13 @@
     }];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	NSLog(@"viewDidAppear::");
+	self.view.frame = [UIScreen mainScreen].bounds;
+	[self.view setNeedsLayout];
+}
+
 #pragma mark - Actions
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -246,7 +253,7 @@ NSDate *dayOfDate(NSDate *given) {
 #pragma mark - UITableView
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(!contentMode) {
+    if (!contentMode) {
         [[AXAppCoordinator sharedInstance] navigateToEvent:self.filteredEvents[indexPath.section][indexPath.row]];
     }
     else {
